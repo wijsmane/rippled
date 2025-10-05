@@ -61,6 +61,16 @@ struct LoanPaymentParts
     Number valueChange;
     /// fee_paid is the amount of fee that the payment covered.
     Number feeToPay;
+
+    LoanPaymentParts&
+    operator+=(LoanPaymentParts const& other)
+    {
+        principalPaid += other.principalPaid;
+        interestPaid += other.interestPaid;
+        valueChange += other.valueChange;
+        feeToPay += other.feeToPay;
+        return *this;
+    }
 };
 
 namespace detail {
@@ -267,7 +277,7 @@ doPayment(
             principalOutstandingProxy == payment.roundedPrincipal,
             "ripple::detail::doPayment",
             "Full principal payment");
-        XRPL_ASSSERT_PARTS(
+        XRPL_ASSERT_PARTS(
             totalValueOutstandingProxy ==
                 payment.roundedPrincipal + payment.roundedInterest,
             "ripple::detail::doPayment",
@@ -918,6 +928,8 @@ loanMakePayment(
         nextDueDateProxy,
         paymentInterval);
 
+    std::size_t numPayments = 1;
+
     while (totalPaid < amount && paymentRemainingProxy > 0)
     {
         // Try to make more payments
@@ -957,7 +969,21 @@ loanMakePayment(
             prevPaymentDateProxy,
             nextDueDateProxy,
             paymentInterval);
+        ++numPayments;
     }
+
+    XRPL_ASSERT_PARTS(
+        totalParts.principalPaid + totalParts.interestPaid == totalPaid,
+        "ripple::loanMakePayment",
+        "payment parts add up");
+    XRPL_ASSERT_PARTS(
+        totalParts.valueChange == 0,
+        "ripple::loanMakePayment",
+        "no value change");
+    XRPL_ASSERT_PARTS(
+        totalParts.feeToPay == periodic.fee * numPayments,
+        "ripple::loanMakePayment",
+        "fee parts add up");
 
     return Unexpected(temDISABLED);
 #if LOANCOMPLETE
