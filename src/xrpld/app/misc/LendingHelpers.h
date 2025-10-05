@@ -254,7 +254,7 @@ struct PaymentComponentsPlus : public PaymentComponents
     }
 };
 
-template <class NumberProxy, class Int32Proxy>
+template <class NumberProxy, class Int32Proxy, class Int32OptionalProxy>
 LoanPaymentParts
 doPayment(
     PaymentComponentsPlus const& payment,
@@ -263,9 +263,13 @@ doPayment(
     NumberProxy& referencePrincipalProxy,
     Int32Proxy& paymentRemainingProxy,
     Int32Proxy& prevPaymentDateProxy,
-    Int32Proxy& nextDueDateProxy,
+    Int32OptionalProxy& nextDueDateProxy,
     std::uint32_t paymentInterval)
 {
+    XRPL_ASSERT_PARTS(
+        nextDueDateProxy,
+        "ripple::detail::doPayment",
+        "Next due date proxy set");
     if (payment.final)
     {
         paymentRemainingProxy = 0;
@@ -283,16 +287,19 @@ doPayment(
             "ripple::detail::doPayment",
             "Full value payment");
 
-        prevPaymentDateProxy = nextDueDateProxy;
-        // May as well...
-        nextDueDateProxy = 0;
+        prevPaymentDateProxy = *nextDueDateProxy;
+        // Remove the field. This is the only condition where nextDueDate is
+        // allowed to be removed.
+        nextDueDateProxy = std::nullopt;
     }
     else
     {
         paymentRemainingProxy -= 1;
 
-        prevPaymentDateProxy = nextDueDateProxy;
-        nextDueDateProxy += paymentInterval;
+        prevPaymentDateProxy = *nextDueDateProxy;
+        // STObject::OptionalField does not define operator+=, and I don't want
+        // to add one right now.
+        nextDueDateProxy = *nextDueDateProxy + paymentInterval;
     }
     // A single payment always pays the same amount of principal. Only the
     // interest and fees are extra for a late payment
@@ -321,21 +328,21 @@ doPayment(
  *   labeled "the payment is late"
  * * section 3.2.4.1.2 (Late Payment)
  */
-template <AssetType A, class NumberProxy, class Int32Proxy>
+template <AssetType A>
 Expected<PaymentComponentsPlus, TER>
 handleLatePayment(
     A const& asset,
-    ApplyView& view,
-    NumberProxy& principalOutstandingProxy,
-    Int32Proxy& nextDueDateProxy,
+    ApplyView const& view,
+    Number const& principalOutstanding,
+    std::int32_t nextDueDate,
     PaymentComponentsPlus const& periodic,
-    TenthBips32 const lateInterestRate,
+    TenthBips32 lateInterestRate,
     std::int32_t loanScale,
     Number const& latePaymentFee,
     STAmount const& amount,
     beast::Journal j)
 {
-    if (!hasExpired(view, nextDueDateProxy))
+    if (!hasExpired(view, nextDueDate))
         return Unexpected(tesSUCCESS);
 
     // the payment is late
@@ -343,10 +350,10 @@ handleLatePayment(
     // being late, as computed by 3.2.4.1.2.
     auto const latePaymentInterest = loanLatePaymentInterest(
         asset,
-        principalOutstandingProxy,
+        principalOutstanding,
         lateInterestRate,
         view.parentCloseTime(),
-        nextDueDateProxy,
+        nextDueDate,
         loanScale);
     XRPL_ASSERT(
         latePaymentInterest >= 0,
@@ -770,10 +777,27 @@ loanMakePayment(
      * This function is an implementation of the XLS-66 spec,
      * section 3.2.4.3 (Transaction Pseudo-code)
      */
+    auto principalOutstandingProxy = loan->at(sfPrincipalOutstanding);
+    auto paymentRemainingProxy = loan->at(sfPaymentRemaining);
+
+    if (paymentRemainingProxy == 0 || principalOutstandingProxy == 0)
+    {
+        // Loan complete
+        JLOG(j.warn()) << "Loan is already paid off.";
+        return Unexpected(tecKILLED);
+    }
+
+    // Next payment due date must be set unless the loan is complete
+    auto nextDueDateProxy = loan->at(~sfNextPaymentDueDate);
+    if (!nextDueDateProxy)
+    {
+        JLOG(j.warn()) << "Loan next payment due date is not set.";
+        return Unexpected(tecINTERNAL);
+    }
+
     std::int32_t const loanScale = loan->at(sfLoanScale);
     auto totalValueOutstandingProxy = loan->at(sfTotalValueOutstanding);
     auto interestOwedProxy = loan->at(sfInterestOwed);
-    auto principalOutstandingProxy = loan->at(sfPrincipalOutstanding);
     auto referencePrincipalProxy = loan->at(sfReferencePrincipal);
     bool const allowOverpayment = loan->isFlag(lsfLoanOverpayment);
 
@@ -790,18 +814,9 @@ loanMakePayment(
     TenthBips32 const overpaymentFee{loan->at(sfOverpaymentFee)};
 
     auto const periodicPayment = loan->at(sfPeriodicPayment);
-    auto paymentRemainingProxy = loan->at(sfPaymentRemaining);
 
     auto prevPaymentDateProxy = loan->at(sfPreviousPaymentDate);
     std::uint32_t const startDate = loan->at(sfStartDate);
-    auto nextDueDateProxy = loan->at(sfNextPaymentDueDate);
-
-    if (paymentRemainingProxy == 0 || principalOutstandingProxy == 0)
-    {
-        // Loan complete
-        JLOG(j.warn()) << "Loan is already paid off.";
-        return Unexpected(tecKILLED);
-    }
 
     std::uint32_t const paymentInterval = loan->at(sfPaymentInterval);
     // Compute the normal periodic rate, payment, etc.
@@ -840,7 +855,7 @@ loanMakePayment(
             asset,
             view,
             principalOutstandingProxy,
-            nextDueDateProxy,
+            *nextDueDateProxy,
             periodic,
             lateInterestRate,
             loanScale,

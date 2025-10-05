@@ -562,7 +562,7 @@ LEDGER_ENTRY(ltLOAN, 0x0089, Loan, loan, ({
     {sfGracePeriod,          soeREQUIRED},
     {sfPeriodicPayment,      soeREQUIRED},
     {sfPreviousPaymentDate,  soeDEFAULT},
-    {sfNextPaymentDueDate,   soeREQUIRED},
+    {sfNextPaymentDueDate,   soeOPTIONAL},
     {sfPaymentRemaining,     soeDEFAULT},
     {sfPrincipalOutstanding, soeDEFAULT},
     {sfTotalValueOutstanding, soeDEFAULT},
