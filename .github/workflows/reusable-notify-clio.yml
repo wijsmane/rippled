@@ -37,10 +37,16 @@ defaults:
     shell: bash
 
 jobs:
+  # Define the SHA of the CI Docker images to use for Linux builds.
+  docker-image:
+    outputs:
+      sha: 6f723eb
+
   upload:
+    needs: docker-image
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
-    container: ghcr.io/xrplf/ci/ubuntu-noble:gcc-13-sha-5dd7158
+    container: ghcr.io/xrplf/ci/ubuntu-noble:gcc-13-sha-${{ needs.docker-image.outputs.sha }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
