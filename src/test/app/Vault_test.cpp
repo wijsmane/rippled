@@ -2300,6 +2300,7 @@ class Vault_test : public beast::unit_test::suite
         struct CaseArgs
         {
             int initialXRP = 1000;
+            double transferRate = 1.0;
         };
 
         auto testCase =
@@ -2327,7 +2328,7 @@ class Vault_test : public beast::unit_test::suite
                 env.trust(asset(1000), owner);
                 env.trust(asset(1000), charlie);
                 env(pay(issuer, owner, asset(200)));
-                env(rate(issuer, 1.25));
+                env(rate(issuer, args.transferRate));
                 env.close();
 
                 auto const vaultAccount =
@@ -2488,73 +2489,81 @@ class Vault_test : public beast::unit_test::suite
             env.close();
         });
 
-        testCase([&, this](
-                     Env& env,
-                     Account const& owner,
-                     Account const& issuer,
-                     Account const& charlie,
-                     auto vaultAccount,
-                     Vault& vault,
-                     PrettyAsset const& asset,
-                     auto issuanceId) {
-            testcase("IOU transfer fees not applied");
+        testCase(
+            [&, this](
+                Env& env,
+                Account const& owner,
+                Account const& issuer,
+                Account const& charlie,
+                auto vaultAccount,
+                Vault& vault,
+                PrettyAsset const& asset,
+                auto issuanceId) {
+                testcase("IOU transfer fees not applied");
 
-            auto [tx, keylet] = vault.create({.owner = owner, .asset = asset});
-            env(tx);
-            env.close();
-
-            env(vault.deposit(
-                {.depositor = owner, .id = keylet.key, .amount = asset(100)}));
-            env.close();
-
-            auto const issue = asset.raw().get<Issue>();
-            Asset const share = Asset(issuanceId(keylet));
-
-            // transfer fees ignored on deposit
-            BEAST_EXPECT(env.balance(owner, issue) == asset(100));
-            BEAST_EXPECT(
-                env.balance(vaultAccount(keylet), issue) == asset(100));
-
-            {
-                auto tx = vault.clawback(
-                    {.issuer = issuer,
-                     .id = keylet.key,
-                     .holder = owner,
-                     .amount = asset(50)});
+                auto [tx, keylet] =
+                    vault.create({.owner = owner, .asset = asset});
                 env(tx);
                 env.close();
-            }
 
-            // transfer fees ignored on clawback
-            BEAST_EXPECT(env.balance(owner, issue) == asset(100));
-            BEAST_EXPECT(env.balance(vaultAccount(keylet), issue) == asset(50));
-
-            env(vault.withdraw(
-                {.depositor = owner,
-                 .id = keylet.key,
-                 .amount = share(20'000'000)}));
-
-            // transfer fees ignored on withdraw
-            BEAST_EXPECT(env.balance(owner, issue) == asset(120));
-            BEAST_EXPECT(env.balance(vaultAccount(keylet), issue) == asset(30));
-
-            {
-                auto tx = vault.withdraw(
+                env(vault.deposit(
                     {.depositor = owner,
                      .id = keylet.key,
-                     .amount = share(30'000'000)});
-                tx[sfDestination] = charlie.human();
-                env(tx);
-            }
+                     .amount = asset(100)}));
+                env.close();
 
-            // transfer fees ignored on withdraw to 3rd party
-            BEAST_EXPECT(env.balance(owner, issue) == asset(120));
-            BEAST_EXPECT(env.balance(charlie, issue) == asset(30));
-            BEAST_EXPECT(env.balance(vaultAccount(keylet), issue) == asset(0));
+                auto const issue = asset.raw().get<Issue>();
+                Asset const share = Asset(issuanceId(keylet));
 
-            env(vault.del({.owner = owner, .id = keylet.key}));
-            env.close();
-        });
+                // transfer fees ignored on deposit
+                BEAST_EXPECT(env.balance(owner, issue) == asset(100));
+                BEAST_EXPECT(
+                    env.balance(vaultAccount(keylet), issue) == asset(100));
+
+                {
+                    auto tx = vault.clawback(
+                        {.issuer = issuer,
+                         .id = keylet.key,
+                         .holder = owner,
+                         .amount = asset(50)});
+                    env(tx);
+                    env.close();
+                }
+
+                // transfer fees ignored on clawback
+                BEAST_EXPECT(env.balance(owner, issue) == asset(100));
+                BEAST_EXPECT(
+                    env.balance(vaultAccount(keylet), issue) == asset(50));
+
+                env(vault.withdraw(
+                    {.depositor = owner,
+                     .id = keylet.key,
+                     .amount = share(20'000'000)}));
+
+                // transfer fees ignored on withdraw
+                BEAST_EXPECT(env.balance(owner, issue) == asset(120));
+                BEAST_EXPECT(
+                    env.balance(vaultAccount(keylet), issue) == asset(30));
+
+                {
+                    auto tx = vault.withdraw(
+                        {.depositor = owner,
+                         .id = keylet.key,
+                         .amount = share(30'000'000)});
+                    tx[sfDestination] = charlie.human();
+                    env(tx);
+                }
+
+                // transfer fees ignored on withdraw to 3rd party
+                BEAST_EXPECT(env.balance(owner, issue) == asset(120));
+                BEAST_EXPECT(env.balance(charlie, issue) == asset(30));
+                BEAST_EXPECT(
+                    env.balance(vaultAccount(keylet), issue) == asset(0));
+
+                env(vault.del({.owner = owner, .id = keylet.key}));
+                env.close();
+            },
+            CaseArgs{.transferRate = 1.25});
 
         testCase([&, this](
                      Env& env,
@@ -2737,28 +2746,58 @@ class Vault_test : public beast::unit_test::suite
                 BEAST_EXPECT(trustline == nullptr);
 
                 // Fail because not enough reserve to create trust line
-                auto const tx1 = [&](ripple::Keylet keylet) {
-                    auto tx = vault.withdraw(
-                        {.depositor = owner,
-                         .id = keylet.key,
-                         .amount = asset(10)});
-                    return tx;
-                }(keylet);
-                env(tx1, ter{tecNO_LINE_INSUF_RESERVE});
+                tx = vault.withdraw(
+                    {.depositor = owner,
+                     .id = keylet.key,
+                     .amount = asset(10)});
+                env(tx, ter{tecNO_LINE_INSUF_RESERVE});
                 env.close();
 
                 env(pay(charlie, owner, XRP(incReserve)));
                 env.close();
 
-                // Withdraw without trust line, will succeed
-                auto const tx2 = [&](ripple::Keylet keylet) {
-                    auto tx = vault.withdraw(
-                        {.depositor = owner,
-                         .id = keylet.key,
-                         .amount = asset(10)});
-                    return tx;
-                }(keylet);
-                env(tx2);
+                // Withdraw can now create trust line, will succeed
+                env(tx);
+                env.close();
+            },
+            CaseArgs{.initialXRP = acctReserve + incReserve * 4 - 1});
+
+        testCase(
+            [&, this](
+                Env& env,
+                Account const& owner,
+                Account const& issuer,
+                Account const& charlie,
+                auto,
+                Vault& vault,
+                PrettyAsset const& asset,
+                auto&&...) {
+                testcase("IOU no reserve for share MPToken");
+                auto [tx, keylet] =
+                    vault.create({.owner = owner, .asset = asset});
+                env(tx);
+                env.close();
+
+                env(pay(owner, charlie, asset(100)));
+                env.close();
+
+                // Use up some reserve on tickets
+                env(ticket::create(charlie, 2));
+                env.close();
+
+                // Fail because not enough reserve to create MPToken for shares
+                tx = vault.deposit(
+                    {.depositor = charlie,
+                     .id = keylet.key,
+                     .amount = asset(100)});
+                env(tx, ter{tecINSUFFICIENT_RESERVE});
+                env.close();
+
+                env(pay(issuer, charlie, XRP(incReserve)));
+                env.close();
+
+                // Deposit can now create MPToken, will succeed
+                env(tx);
                 env.close();
             },
             CaseArgs{.initialXRP = acctReserve + incReserve * 4 - 1});
