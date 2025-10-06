@@ -564,6 +564,20 @@ LEDGER_ENTRY(ltLOAN, 0x0089, Loan, loan, ({
     {sfPreviousPaymentDate,  soeDEFAULT},
     {sfNextPaymentDueDate,   soeOPTIONAL},
     {sfPaymentRemaining,     soeDEFAULT},
+    // The loan object tracks three values:
+    // - TotalValueOutstanding: The total amount owed by the borrower to
+    //   the lender / vault.
+    // - PrincipalOutstanding: The portion of the TotalValueOutstanding
+    //   that is from the prinicpal borrowed.
+    // - InterestOwed: The portion of the TotalValueOutstanding that
+    //   represents interest owed to the vault.
+    // There are two additional values that can be computed from these:
+    // - InterestOutstanding: TotalValueOutstanding - PrincipalOutstanding
+    //   This is the total amount of interest still pending on the loan,
+    //   independent of management fees.
+    // - ManagementFeeOwed: InterestOutstanding - InterestOwed
+    //   This is the amount of the total interest that will be sent to the
+    //   broker as management fees.
     {sfPrincipalOutstanding, soeDEFAULT},
     {sfTotalValueOutstanding, soeDEFAULT},
     {sfInterestOwed,         soeDEFAULT},

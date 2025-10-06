@@ -151,7 +151,8 @@ computePaymentComponents(
         roundPeriodicPayment(asset, periodicPayment, scale);
     if (paymentRemaining == 1 || totalValueOutstanding <= periodicPayment)
     {
-        // If there's only one payment left, we need to pay off the principal.
+        // If there's only one payment left, we need to pay off each of the loan
+        // parts.
         //
         // The totalValueOutstanding should never be less than the
         // periodicPayment until the last scheduled payment, but if it ever is,
@@ -217,8 +218,9 @@ computePaymentComponents(
             totalValueOutstanding - roundedPeriodicPayment)
             return roundedPeriodicPayment;
         // Use the amount that will get principal outstanding as close to
-        // reference principal as possible.
-        return p;
+        // reference principal as possible, but don't pay more than the rounded
+        // periodic payment, or we'll end up with negative interest.
+        return std::min(p, roundedPeriodicPayment);
     }();
 
     // if(count($A20), if(AB19 < $B$5, AB19 - Z19, CEILING($B$10-W20, 1)), "")
@@ -234,13 +236,10 @@ computePaymentComponents(
         "ripple::detail::computePaymentComponents",
         "valid rounded interest");
     XRPL_ASSERT_PARTS(
-        roundedPrincipal >= 0 && roundedPrincipal <= principalOutstanding,
+        roundedPrincipal >= 0 && roundedPrincipal <= principalOutstanding &&
+            isRounded(asset, roundedPrincipal, scale),
         "ripple::detail::computePaymentComponents",
         "valid rounded principal");
-    XRPL_ASSERT_PARTS(
-        isRounded(asset, roundedPrincipal, scale),
-        "ripple::detail::computePaymentComponents",
-        "principal is rounded");
 
     return {
         .rawInterest = rawInterest,
