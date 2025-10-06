@@ -234,8 +234,10 @@ LoanPay::doApply()
         LoanManage::unimpairLoan(view, loanSle, vaultSle, j_);
     }
 
+    TenthBips16 managementFeeRate{brokerSle->at(sfManagementFeeRate)};
+
     Expected<LoanPaymentParts, TER> paymentParts =
-        loanMakePayment(asset, view, loanSle, amount, j_);
+        loanMakePayment(asset, view, loanSle, amount, managementFeeRate, j_);
 
     if (!paymentParts)
         return paymentParts.error();
@@ -245,11 +247,12 @@ LoanPay::doApply()
     view.update(loanSle);
 
     XRPL_ASSERT_PARTS(
-        // It is possible to pay 0 interest
+        // It is possible to pay 0 principal
         paymentParts->principalPaid >= 0,
         "ripple::LoanPay::doApply",
         "valid principal paid");
     XRPL_ASSERT_PARTS(
+        // It is possible to pay 0 interest
         paymentParts->interestPaid >= 0,
         "ripple::LoanPay::doApply",
         "valid interest paid");
@@ -272,7 +275,6 @@ LoanPay::doApply()
     // LoanBroker object state changes
     view.update(brokerSle);
 
-    TenthBips32 managementFeeRate{brokerSle->at(sfManagementFeeRate)};
     auto interestOwedProxy = loanSle->at(sfInterestOwed);
 
     auto const [managementFee, interestPaidToVault] = [&]() {
@@ -283,7 +285,7 @@ LoanPay::doApply()
         auto const interest = paymentParts->interestPaid - managementFee;
         auto const owed = *interestOwedProxy;
         if (interest > owed)
-            return std::make_pair(interest - owed, owed);
+            return std::make_pair(paymentParts->interestPaid - owed, owed);
         return std::make_pair(managementFee, interest);
     }();
     XRPL_ASSERT_PARTS(
