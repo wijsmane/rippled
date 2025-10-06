@@ -166,7 +166,6 @@ computePaymentComponents(
             "ripple::detail::computePaymentComponents",
             "last payment is complete");
 
-        Number const interest = totalValueOutstanding - principalOutstanding;
         return {
             .rawInterest = rawInterest,
             .rawPrincipal = referencePrincipal,
@@ -830,7 +829,6 @@ loanMakePayment(
     auto totalValueOutstandingProxy = loan->at(sfTotalValueOutstanding);
     auto interestOwedProxy = loan->at(sfInterestOwed);
     auto referencePrincipalProxy = loan->at(sfReferencePrincipal);
-    bool const allowOverpayment = loan->isFlag(lsfLoanOverpayment);
 
     TenthBips32 const interestRate{loan->at(sfInterestRate)};
     TenthBips32 const lateInterestRate{loan->at(sfLateInterestRate)};
@@ -1035,7 +1033,7 @@ loanMakePayment(
     // -------------------------------------------------------------
     // overpayment handling
     Number overpaymentInterestPortion = 0;
-    if (allowOverpayment)
+    if (loan->isFlag(lsfLoanOverpayment))
     {
         Number const overpayment = std::min(
             principalOutstandingProxy.value(),
@@ -1068,8 +1066,8 @@ loanMakePayment(
         }
     }
 
-    loanValueChange =
-        (newInterest - totalInterestOutstanding) + overpaymentInterestPortion;
+    totalParts.valueChange += (newTotalInterest - totalInterestOutstanding) +
+        overpaymentInterestPortion;
 
     // Check the final results are rounded, to double-check that the
     // intermediate steps were rounded.
