@@ -313,6 +313,28 @@ VaultWithdraw::doApply()
         return account_;
     }();
 
+    if (!vaultAsset.native() && vaultAsset.holds<Issue>() &&
+        dstAcct != vaultAsset.getIssuer())
+    {
+        auto const sleAcct = view().read(keylet::account(dstAcct));
+        if (!sleAcct)
+            return tecINTERNAL;  // LCOV_EXCL_LINE
+
+        if (auto const sleLine =
+                view().read(keylet::line(dstAcct, vaultAsset.get<Issue>()));
+            sleLine == nullptr)
+        {
+            // This should be enforced by `requireAuth` called in `preclaim`
+            if (dstAcct != account_)
+                return tecINTERNAL;  // LCOV_EXCL_LINE
+
+            // Can the account cover the trust line's reserve ?
+            std::uint32_t const ownerCount = sleAcct->at(sfOwnerCount);
+            if (mPriorBalance < view().fees().accountReserve(ownerCount + 1))
+                return tecNO_LINE_INSUF_RESERVE;
+        }
+    }
+
     // Transfer assets from vault to depositor or destination account.
     if (auto const ter = accountSend(
             view(),

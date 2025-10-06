@@ -1889,6 +1889,37 @@ class Vault_test : public beast::unit_test::suite
                 }
 
                 {
+                    // Withdrawal to other (authorized) account works
+                    tx = vault.withdraw(
+                        {.depositor = depositor,
+                         .id = keylet.key,
+                         .amount = asset(100)});
+                    tx[sfDestination] = owner.human();
+                    env(tx);
+                    env.close();
+                }
+
+                {
+                    // Withdrawal to other account fails if also unauthorized
+                    env(pay(owner, issuer, asset(100)));
+                    env.close();
+
+                    mptt.authorize(
+                        {.account = owner, .flags = tfMPTUnauthorize});
+                    env.close();
+                    auto const mptoken =
+                        env.le(keylet::mptoken(mptt.issuanceID(), owner));
+                    BEAST_EXPECT(mptoken == nullptr);
+
+                    tx = vault.withdraw(
+                        {.depositor = depositor,
+                         .id = keylet.key,
+                         .amount = asset(100)});
+                    tx[sfDestination] = owner.human();
+                    env(tx, ter(tecNO_AUTH));
+                }
+
+                {
                     // Restore depositor's MPToken and withdraw will succeed
                     mptt.authorize({.account = depositor});
                     env.close();
@@ -1896,7 +1927,7 @@ class Vault_test : public beast::unit_test::suite
                     tx = vault.withdraw(
                         {.depositor = depositor,
                          .id = keylet.key,
-                         .amount = asset(1000)});
+                         .amount = asset(900)});
                     env(tx);
                     env.close();
 
@@ -2266,23 +2297,29 @@ class Vault_test : public beast::unit_test::suite
     {
         using namespace test::jtx;
 
+        struct CaseArgs
+        {
+            int initialXRP = 1000;
+        };
+
         auto testCase =
-            [&,
-             this](std::function<void(
-                       Env & env,
-                       Account const& owner,
-                       Account const& issuer,
-                       Account const& charlie,
-                       std::function<Account(ripple::Keylet)> vaultAccount,
-                       Vault& vault,
-                       PrettyAsset const& asset,
-                       std::function<MPTID(ripple::Keylet)> issuanceId)> test) {
+            [&, this](
+                std::function<void(
+                    Env & env,
+                    Account const& owner,
+                    Account const& issuer,
+                    Account const& charlie,
+                    std::function<Account(ripple::Keylet)> vaultAccount,
+                    Vault& vault,
+                    PrettyAsset const& asset,
+                    std::function<MPTID(ripple::Keylet)> issuanceId)> test,
+                CaseArgs args = {}) {
                 Env env{*this, testable_amendments() | featureSingleAssetVault};
                 Account const owner{"owner"};
                 Account const issuer{"issuer"};
                 Account const charlie{"charlie"};
                 Vault vault{env};
-                env.fund(XRP(1000), issuer, owner, charlie);
+                env.fund(XRP(args.initialXRP), issuer, owner, charlie);
                 env(fset(issuer, asfAllowTrustLineClawback));
                 env.close();
 
@@ -2658,6 +2695,64 @@ class Vault_test : public beast::unit_test::suite
             }(keylet);
             env(tx1);
         });
+
+        testCase(
+            [&, this](
+                Env& env,
+                Account const& owner,
+                Account const& issuer,
+                Account const& charlie,
+                auto,
+                Vault& vault,
+                PrettyAsset const& asset,
+                auto&&...) {
+                testcase("IOU no trust line to depositor no reserve");
+                auto [tx, keylet] =
+                    vault.create({.owner = owner, .asset = asset});
+                env(tx);
+                env.close();
+
+                // reset limit, so deposit of all funds will delete the trust
+                // line
+                env.trust(asset(0), owner);
+                env.close();
+
+                env(vault.deposit(
+                    {.depositor = owner,
+                     .id = keylet.key,
+                     .amount = asset(200)}));
+                env.close();
+
+                auto trustline =
+                    env.le(keylet::line(owner, asset.raw().get<Issue>()));
+                BEAST_EXPECT(trustline == nullptr);
+
+                // Fail because not enough reserve to create trust line
+                auto const tx1 = [&](ripple::Keylet keylet) {
+                    auto tx = vault.withdraw(
+                        {.depositor = owner,
+                         .id = keylet.key,
+                         .amount = asset(10)});
+                    return tx;
+                }(keylet);
+                env(tx1, ter{tecNO_LINE_INSUF_RESERVE});
+                env.close();
+
+                env(pay(charlie, owner, XRP(51)));
+                env.close();
+
+                // Withdraw without trust line, will succeed
+                auto const tx2 = [&](ripple::Keylet keylet) {
+                    auto tx = vault.withdraw(
+                        {.depositor = owner,
+                         .id = keylet.key,
+                         .amount = asset(10)});
+                    return tx;
+                }(keylet);
+                env(tx2);
+                env.close();
+            },
+            CaseArgs{.initialXRP = 350});
 
         testCase([&, this](
                      Env& env,
