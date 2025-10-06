@@ -39,6 +39,10 @@ defaults:
 jobs:
   # Define the SHA of the CI Docker images to use for Linux builds.
   docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: No-op
+        run: true
     outputs:
       sha: 6f723eb
 
