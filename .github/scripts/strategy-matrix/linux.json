@@ -66,43 +66,37 @@
     },
     {
       "distro_name": "rhel",
-      "distro_version": "9.4",
+      "distro_version": "9",
       "compiler_name": "gcc",
       "compiler_version": "12"
     },
     {
       "distro_name": "rhel",
-      "distro_version": "9.4",
+      "distro_version": "9",
       "compiler_name": "gcc",
       "compiler_version": "13"
     },
     {
       "distro_name": "rhel",
-      "distro_version": "9.4",
+      "distro_version": "9",
       "compiler_name": "gcc",
       "compiler_version": "14"
     },
     {
       "distro_name": "rhel",
-      "distro_version": "9.6",
-      "compiler_name": "gcc",
-      "compiler_version": "13"
-    },
-    {
-      "distro_name": "rhel",
-      "distro_version": "9.6",
-      "compiler_name": "gcc",
-      "compiler_version": "14"
-    },
-    {
-      "distro_name": "rhel",
-      "distro_version": "9.4",
+      "distro_version": "9",
       "compiler_name": "clang",
       "compiler_version": "any"
     },
     {
       "distro_name": "rhel",
-      "distro_version": "9.6",
+      "distro_version": "10",
+      "compiler_name": "gcc",
+      "compiler_version": "14"
+    },
+    {
+      "distro_name": "rhel",
+      "distro_version": "10",
       "compiler_name": "clang",
       "compiler_version": "any"
     },
