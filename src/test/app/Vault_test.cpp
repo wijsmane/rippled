@@ -2696,6 +2696,15 @@ class Vault_test : public beast::unit_test::suite
             env(tx1);
         });
 
+        auto const [acctReserve, incReserve] = [this]() -> std::pair<int, int> {
+            Env env{*this, testable_amendments()};
+            return {
+                env.current()->fees().accountReserve(0).drops() /
+                    DROPS_PER_XRP.drops(),
+                env.current()->fees().increment.drops() /
+                    DROPS_PER_XRP.drops()};
+        }();
+
         testCase(
             [&, this](
                 Env& env,
@@ -2738,7 +2747,7 @@ class Vault_test : public beast::unit_test::suite
                 env(tx1, ter{tecNO_LINE_INSUF_RESERVE});
                 env.close();
 
-                env(pay(charlie, owner, XRP(51)));
+                env(pay(charlie, owner, XRP(incReserve)));
                 env.close();
 
                 // Withdraw without trust line, will succeed
@@ -2752,7 +2761,7 @@ class Vault_test : public beast::unit_test::suite
                 env(tx2);
                 env.close();
             },
-            CaseArgs{.initialXRP = 350});
+            CaseArgs{.initialXRP = acctReserve + incReserve * 4 - 1});
 
         testCase([&, this](
                      Env& env,
