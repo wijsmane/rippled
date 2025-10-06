@@ -31,6 +31,9 @@ struct PreflightContext;
 bool
 checkLendingProtocolDependencies(PreflightContext const& ctx);
 
+Number
+loanPeriodicRate(TenthBips32 interestRate, std::uint32_t paymentInterval);
+
 // This structure is used internally to compute the breakdown of a
 // single loan payment
 struct PaymentComponents
@@ -73,12 +76,20 @@ struct LoanPaymentParts
     }
 };
 
+/// Ensure the periodic payment is always rounded consistently
+template <AssetType A>
+Number
+roundPeriodicPayment(
+    A const& asset,
+    Number const& periodicPayment,
+    std::int32_t scale)
+{
+    return roundToAsset(asset, periodicPayment, scale, Number::upward);
+}
+
 namespace detail {
 // These functions should rarely be used directly. More often, the ultimate
 // result needs to be roundToAsset'd.
-
-Number
-loanPeriodicRate(TenthBips32 interestRate, std::uint32_t paymentInterval);
 
 Number
 loanPeriodicPayment(
@@ -137,7 +148,7 @@ computePaymentComponents(
         "ripple::detail::computePaymentComponents",
         "Outstanding values are rounded");
     auto const roundedPeriodicPayment =
-        roundToAsset(asset, periodicPayment, scale, Number::upward);
+        roundPeriodicPayment(asset, periodicPayment, scale);
     if (paymentRemaining == 1 || totalValueOutstanding <= periodicPayment)
     {
         // If there's only one payment left, we need to pay off the principal.
@@ -394,15 +405,15 @@ handleLatePayment(
  * full payment, the return will be an Unexpected(tesSUCCESS). Otherwise, it'll
  * be an Unexpected with the error code the caller is expected to return.
  */
-template <AssetType A, class NumberProxy, class Int32Proxy>
+template <AssetType A>
 Expected<PaymentComponentsPlus, TER>
 handleFullPayment(
     A const& asset,
     ApplyView& view,
-    NumberProxy& principalOutstandingProxy,
-    NumberProxy& referencePrincipalProxy,
-    Int32Proxy& paymentRemainingProxy,
-    Int32Proxy& prevPaymentDateProxy,
+    Number const& principalOutstanding,
+    Number const& referencePrincipal,
+    std::uint32_t paymentRemaining,
+    std::uint32_t prevPaymentDate,
     std::uint32_t const startDate,
     std::uint32_t const paymentInterval,
     TenthBips32 const closeInterestRate,
@@ -413,36 +424,24 @@ handleFullPayment(
     STAmount const& amount,
     beast::Journal j)
 {
-    if (paymentRemainingProxy <= 1)
+    if (paymentRemaining <= 1)
         // If this is the last payment, it has to be a regular payment
         return Unexpected(tesSUCCESS);
 
-    // If there is more than one payment remaining, see if enough was
-    // paid for a full payment
-    auto const accruedInterest = roundToAsset(
+    auto const totalInterest = calculateFullPaymentInterest(
         asset,
-        detail::loanAccruedInterest(
-            principalOutstandingProxy,
-            periodicRate,
-            view.parentCloseTime(),
-            startDate,
-            prevPaymentDateProxy,
-            paymentInterval),
-        loanScale);
-    XRPL_ASSERT(
-        accruedInterest >= 0,
-        "ripple::detail::handleFullPayment : valid accrued interest");
-    auto const prepaymentPenalty = roundToAsset(
-        asset,
-        tenthBipsOfValue(principalOutstandingProxy.value(), closeInterestRate),
-        loanScale);
-    XRPL_ASSERT(
-        prepaymentPenalty >= 0,
-        "ripple::detail::handleFullPayment : valid prepayment "
-        "interest");
-    auto const totalInterest = accruedInterest + prepaymentPenalty;
+        referencePrincipal,
+        periodicRate,
+        view.parentCloseTime(),
+        paymentInterval,
+        prevPaymentDate,
+        startDate,
+        closeInterestRate,
+        loanScale,
+        closePaymentFee);
+
     auto const closeFullPayment =
-        principalOutstandingProxy + totalInterest + closePaymentFee;
+        principalOutstanding + totalInterest + closePaymentFee;
 
     if (amount < closeFullPayment)
         // If the payment is less than the full payment amount, it's not
@@ -453,11 +452,11 @@ handleFullPayment(
 
     PaymentComponentsPlus const result{
         PaymentComponents{
-            .rawInterest = principalOutstandingProxy + totalInterest -
-                referencePrincipalProxy,
-            .rawPrincipal = referencePrincipalProxy,
+            .rawInterest =
+                principalOutstanding + totalInterest - referencePrincipal,
+            .rawPrincipal = referencePrincipal,
             .roundedInterest = totalInterest,
-            .roundedPrincipal = principalOutstandingProxy,
+            .roundedPrincipal = principalOutstanding,
             .roundedPayment = closeFullPayment,
             .final = true},
         // A full payment only pays the single close payment fee
@@ -504,8 +503,7 @@ computeLoanProperties(
     std::uint32_t paymentsRemaining,
     TenthBips32 managementFeeRate)
 {
-    auto const periodicRate =
-        detail::loanPeriodicRate(interestRate, paymentInterval);
+    auto const periodicRate = loanPeriodicRate(interestRate, paymentInterval);
     XRPL_ASSERT(
         interestRate == 0 || periodicRate > 0,
         "ripple::loanMakePayment : valid rate");
@@ -572,13 +570,47 @@ computeLoanProperties(
         .firstPaymentPrincipal = firstPaymentPrincipal};
 }
 
-#if LOANCOMPLETE
-inline Number
-loanPeriodicRate(TenthBips32 interestRate, std::uint32_t paymentInterval)
+template <AssetType A>
+Number
+calculateFullPaymentInterest(
+    A const& asset,
+    Number const& referencePrincipal,
+    Number const& periodicRate,
+    NetClock::time_point parentCloseTime,
+    std::uint32_t paymentInterval,
+    std::uint32_t prevPaymentDate,
+    std::uint32_t startDate,
+    TenthBips32 closeInterestRate,
+    std::int32_t loanScale,
+    Number const& closePaymentFee)
 {
-    return detail::loanPeriodicRate(interestRate, paymentInterval);
+    // If there is more than one payment remaining, see if enough was
+    // paid for a full payment
+    auto const accruedInterest = roundToAsset(
+        asset,
+        detail::loanAccruedInterest(
+            referencePrincipal,
+            periodicRate,
+            parentCloseTime,
+            startDate,
+            prevPaymentDate,
+            paymentInterval),
+        loanScale);
+    XRPL_ASSERT(
+        accruedInterest >= 0,
+        "ripple::detail::handleFullPayment : valid accrued interest");
+    auto const prepaymentPenalty = roundToAsset(
+        asset,
+        tenthBipsOfValue(referencePrincipal, closeInterestRate),
+        loanScale);
+    XRPL_ASSERT(
+        prepaymentPenalty >= 0,
+        "ripple::detail::handleFullPayment : valid prepayment "
+        "interest");
+    return accruedInterest + prepaymentPenalty;
 }
 
+#if LOANCOMPLETE
 template <AssetType A>
 Number
 loanPeriodicPayment(
@@ -588,12 +620,11 @@ loanPeriodicPayment(
     std::uint32_t paymentsRemaining,
     std::int32_t scale)
 {
-    return roundToAsset(
+    return roundPeriodicPayment(
         asset,
         detail::loanPeriodicPayment(
             principalOutstanding, periodicRate, paymentsRemaining),
-        scale,
-        Number::upward);
+        scale);
 }
 
 template <AssetType A>
@@ -821,8 +852,7 @@ loanMakePayment(
     std::uint32_t const paymentInterval = loan->at(sfPaymentInterval);
     // Compute the normal periodic rate, payment, etc.
     // We'll need it in the remaining calculations
-    Number const periodicRate =
-        detail::loanPeriodicRate(interestRate, paymentInterval);
+    Number const periodicRate = loanPeriodicRate(interestRate, paymentInterval);
     XRPL_ASSERT(
         interestRate == 0 || periodicRate > 0,
         "ripple::loanMakePayment : valid rate");

@@ -42,6 +42,84 @@ LoanPay::preflight(PreflightContext const& ctx)
     return tesSUCCESS;
 }
 
+XRPAmount
+LoanPay::calculateBaseFee(ReadView const& view, STTx const& tx)
+{
+    auto const normalCost = Transactor::calculateBaseFee(view, tx);
+    auto const paymentsPerFeeIncrement = 20;
+
+    // The fee is based on the number of potential payments, unless the loan is
+    // being fully paid off.
+    auto const amount = tx[sfAmount];
+    auto const loanID = tx[sfLoanID];
+
+    auto const loanSle = view.read(keylet::loan(loanID));
+    if (!loanSle)
+        // Let preclaim worry about the error for this
+        return normalCost;
+
+    if (loanSle->at(sfPaymentRemaining) <= paymentsPerFeeIncrement)
+    {
+        // If there are fewer than paymentsPerFeeIncrement payments left, we can
+        // skip the computations.
+        return normalCost;
+    }
+
+    if (hasExpired(view, loanSle->at(sfNextPaymentDueDate)))
+        // If the payment is late, it'll only make one payment
+        return normalCost;
+
+    auto const brokerSle =
+        view.read(keylet::loanbroker(loanSle->at(sfLoanBrokerID)));
+    if (!brokerSle)
+        // Let preclaim worry about the error for this
+        return normalCost;
+    auto const vaultSle = view.read(keylet::vault(loanSle->at(sfVaultID)));
+    if (vaultSle)
+        // Let preclaim worry about the error for this
+        return normalCost;
+
+    auto const asset = vaultSle->at(sfAsset);
+    auto const scale = loanSle->at(sfLoanScale);
+
+    auto const regularPayment =
+        roundPeriodicPayment(asset, loanSle->at(sfPeriodicPayment), scale) +
+        loanSle->at(sfLoanServiceFee);
+
+    if (amount < regularPayment * paymentsPerFeeIncrement)
+        // This is definitely paying fewer than paymentsPerFeeIncrement payments
+        return normalCost;
+
+    // This computation isn't free, but it's relatively straightforward
+    if (auto const fullInterest = calculateFullPaymentInterest(
+            asset,
+            loanSle->at(sfReferencePrincipal),
+            loanPeriodicRate(
+                TenthBips32(loanSle->at(sfInterestRate)),
+                loanSle->at(sfPaymentInterval)),
+            view.parentCloseTime(),
+            loanSle->at(sfPaymentInterval),
+            loanSle->at(sfPreviousPaymentDate),
+            loanSle->at(sfStartDate),
+            TenthBips32(loanSle->at(sfCloseInterestRate)),
+            scale,
+            loanSle->at(sfClosePaymentFee));
+        amount > loanSle->at(sfPrincipalOutstanding) + fullInterest +
+            loanSle->at(sfClosePaymentFee))
+        return normalCost;
+
+    NumberRoundModeGuard mg(Number::downward);
+    // Figure out how many payments will be made
+    auto const numPaymentEstimate =
+        static_cast<std::int64_t>(amount / regularPayment);
+    // Charge one base fee per paymentsPerFeeIncrement payments - use integer
+    // math (round down), then add one to ensure all this extra math is worth
+    // it.
+    auto const feeIncrements = numPaymentEstimate / paymentsPerFeeIncrement + 1;
+
+    return feeIncrements * normalCost;
+}
+
 TER
 LoanPay::preclaim(PreclaimContext const& ctx)
 {

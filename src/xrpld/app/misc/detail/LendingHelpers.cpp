@@ -30,8 +30,6 @@ checkLendingProtocolDependencies(PreflightContext const& ctx)
         VaultCreate::checkExtraFeatures(ctx);
 }
 
-namespace detail {
-
 Number
 loanPeriodicRate(TenthBips32 interestRate, std::uint32_t paymentInterval)
 {
@@ -45,6 +43,8 @@ loanPeriodicRate(TenthBips32 interestRate, std::uint32_t paymentInterval)
     return tenthBipsOfValue(Number(paymentInterval), interestRate) /
         (365 * 24 * 60 * 60);
 }
+
+namespace detail {
 
 Number
 loanPeriodicPayment(
