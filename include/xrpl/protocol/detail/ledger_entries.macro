@@ -573,12 +573,13 @@ LEDGER_ENTRY(ltLOAN, 0x0089, Loan, loan, ({
     //   represents interest owed to the vault.
     // There are two additional values that can be computed from these:
     // - InterestOutstanding: TotalValueOutstanding - PrincipalOutstanding
-    //   This is the total amount of interest still pending on the loan,
+    //   The total amount of interest still pending on the loan,
     //   independent of management fees.
     // - ManagementFeeOwed: InterestOutstanding - InterestOwed
-    //   This is the amount of the total interest that will be sent to the
+    //   The amount of the total interest that will be sent to the
     //   broker as management fees.
     {sfPrincipalOutstanding, soeDEFAULT},
+    {sfReferencePrincipal, soeDEFAULT},
     {sfTotalValueOutstanding, soeDEFAULT},
     {sfInterestOwed,         soeDEFAULT},
     // Based on the original principal borrowed, used for

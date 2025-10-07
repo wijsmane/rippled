@@ -145,10 +145,13 @@ LoanManage::defaultLoan(
     // Calculate the amount of the Default that First-Loss Capital covers:
 
     std::int32_t const loanScale = loanSle->at(sfLoanScale);
-    TenthBips32 const managementFeeRate{brokerSle->at(sfManagementFeeRate)};
     auto brokerDebtTotalProxy = brokerSle->at(sfDebtTotal);
 
-    Number const totalDefaultAmount = loanSle->at(sfTotalValueOutstanding);
+    auto principalOutstandingProxy = loanSle->at(sfPrincipalOutstanding);
+    auto interestOwedProxy = loanSle->at(sfInterestOwed);
+
+    Number const totalDefaultAmount =
+        principalOutstandingProxy + interestOwedProxy;
 
     // Apply the First-Loss Capital to the Default Amount
     TenthBips32 const coverRateMinimum{brokerSle->at(sfCoverRateMinimum)};
@@ -191,16 +194,14 @@ LoanManage::defaultLoan(
         // The loss has been realized
         if (loanSle->isFlag(lsfLoanImpaired))
         {
-            Number const lossRealized = loanSle->at(sfPrincipalOutstanding) +
-                loanSle->at(sfInterestOwed);
             auto vaultLossUnrealizedProxy = vaultSle->at(sfLossUnrealized);
-            if (vaultLossUnrealizedProxy < lossRealized)
+            if (vaultLossUnrealizedProxy < totalDefaultAmount)
             {
                 JLOG(j.warn())
                     << "Vault unrealized loss is less than the default amount";
                 return tefBAD_LEDGER;
             }
-            vaultLossUnrealizedProxy -= lossRealized;
+            vaultLossUnrealizedProxy -= totalDefaultAmount;
         }
         view.update(vaultSle);
     }
@@ -234,8 +235,11 @@ LoanManage::defaultLoan(
 
     // Update the Loan object:
     loanSle->setFlag(lsfLoanDefault);
+    loanSle->at(sfTotalValueOutstanding) = 0;
     loanSle->at(sfPaymentRemaining) = 0;
-    loanSle->at(sfPrincipalOutstanding) = 0;
+    loanSle->at(sfReferencePrincipal) = 0;
+    principalOutstandingProxy = 0;
+    interestOwedProxy = 0;
     view.update(loanSle);
 
     // Return funds from the LoanBroker pseudo-account to the

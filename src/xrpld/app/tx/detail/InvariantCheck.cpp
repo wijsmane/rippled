@@ -2466,17 +2466,54 @@ ValidLoan::finalize(
                 << "Invariant failed: Loan Overpayment flag changed";
             return false;
         }
-        if (after->at(sfAssetsAvailable) < 0)
+        // Must not be negative - STNumber
+        for (auto const field :
+             {&sfLoanServiceFee,
+              &sfLatePaymentFee,
+              &sfClosePaymentFee,
+              &sfPrincipalOutstanding,
+              &sfReferencePrincipal,
+              &sfTotalValueOutstanding,
+              &sfInterestOwed})
         {
-            JLOG(j.fatal())
-                << "Invariant failed: Loan assets available is negative";
-            return false;
+            if (after->at(*field) < 0)
+            {
+                JLOG(j.fatal()) << "Invariant failed: " << field->getName()
+                                << " is negative ";
+                return false;
+            }
         }
-        if (after->at(sfPrincipalOutstanding) < 0)
+        // Must not be negative - STUInt32
+        for (auto const field :
+             {&sfOverpaymentFee,
+              &sfInterestRate,
+              &sfLateInterestRate,
+              &sfCloseInterestRate,
+              &sfOverpaymentInterestRate,
+              &sfStartDate,
+              &sfPaymentInterval,
+              &sfGracePeriod,
+              &sfPreviousPaymentDate,
+              &sfPaymentRemaining})
         {
-            JLOG(j.fatal())
-                << "Invariant failed: Loan principal outstanding is negative";
-            return false;
+            if (after->at(*field) < 0)
+            {
+                JLOG(j.fatal()) << "Invariant failed: " << field->getName()
+                                << " is negative ";
+                return false;
+            }
+        }
+        // Must be positive
+        for (auto const field : {
+                 &sfPeriodicPayment,
+             })
+        {
+            if (after->at(*field) <= 0)
+            {
+                JLOG(j.fatal()) << "Invariant failed: " << field->getName()
+                                << " is zero or negative ";
+                return false;
+            }
         }
     }
     return true;

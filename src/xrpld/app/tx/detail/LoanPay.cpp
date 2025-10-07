@@ -369,10 +369,19 @@ LoanPay::doApply()
 #if !NDEBUG
     auto const accountBalanceBefore =
         accountHolds(view, account_, asset, fhIGNORE_FREEZE, ahIGNORE_AUTH, j_);
-    auto const vaultBalanceBefore = accountHolds(
-        view, vaultPseudoAccount, asset, fhIGNORE_FREEZE, ahIGNORE_AUTH, j_);
-    auto const brokerBalanceBefore = accountHolds(
-        view, brokerPayee, asset, fhIGNORE_FREEZE, ahIGNORE_AUTH, j_);
+    auto const vaultBalanceBefore = account_ == vaultPseudoAccount
+        ? STAmount{asset, 0}
+        : accountHolds(
+              view,
+              vaultPseudoAccount,
+              asset,
+              fhIGNORE_FREEZE,
+              ahIGNORE_AUTH,
+              j_);
+    auto const brokerBalanceBefore = account_ == brokerPayee
+        ? STAmount{asset, 0}
+        : accountHolds(
+              view, brokerPayee, asset, fhIGNORE_FREEZE, ahIGNORE_AUTH, j_);
 #endif
 
     if (auto const ter = accountSend(
@@ -395,10 +404,19 @@ LoanPay::doApply()
 #if !NDEBUG
     auto const accountBalanceAfter =
         accountHolds(view, account_, asset, fhIGNORE_FREEZE, ahIGNORE_AUTH, j_);
-    auto const vaultBalanceAfter = accountHolds(
-        view, vaultPseudoAccount, asset, fhIGNORE_FREEZE, ahIGNORE_AUTH, j_);
-    auto const brokerBalanceAfter = accountHolds(
-        view, brokerPayee, asset, fhIGNORE_FREEZE, ahIGNORE_AUTH, j_);
+    auto const vaultBalanceAfter = account_ == vaultPseudoAccount
+        ? STAmount{asset, 0}
+        : accountHolds(
+              view,
+              vaultPseudoAccount,
+              asset,
+              fhIGNORE_FREEZE,
+              ahIGNORE_AUTH,
+              j_);
+    auto const brokerBalanceAfter = account_ == brokerPayee
+        ? STAmount{asset, 0}
+        : accountHolds(
+              view, brokerPayee, asset, fhIGNORE_FREEZE, ahIGNORE_AUTH, j_);
 
     auto const balanceScale = std::max(
         {accountBalanceBefore.exponent(),
