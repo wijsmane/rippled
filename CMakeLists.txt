@@ -121,7 +121,25 @@ find_package(nudb REQUIRED)
 find_package(date REQUIRED)
 find_package(xxHash REQUIRED)
 
+
+# LibSTARK
+file(GLOB_RECURSE LIBSTARK_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/libstark/src/*.cpp
+)
+
+add_library(stark STATIC ${LIBSTARK_SOURCES})
+
+target_include_directories(stark PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/libstark/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/algebra/algebralib/headers
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/algebra/algebralib/algebra/FFT/src
+)
+
+target_link_libraries(stark PUBLIC gmp gmpxx)
+
+
 target_link_libraries(ripple_libs INTERFACE
+  stark
   ed25519::ed25519
   lz4::lz4
   OpenSSL::Crypto

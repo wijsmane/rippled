@@ -1,0 +1,161 @@
+2025-Oct-03 09:06:04.177752483 UTC Application:NFO Process starting: rippled-2.6.1-rc1, Instance Cookie: 11306620360696956442
+2025-Oct-03 09:06:04.179466908 UTC Amendments:DBG Amendment 8CC0774A3BF66D1D22E76BBDA8E8A232E6B6313834301B3B23E8601196AE6455 (AMM) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179498121 UTC Amendments:DBG Amendment 726F944886BCDF7433203787E93DD9AA87FAB74DFE3AF4785BA03BEFC97ADA1F (AMMClawback) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179508175 UTC Amendments:DBG Amendment 894646DD5284E97DECFE6674A6D6152686791C4A95F8C132CCA9BAF9E5812FB6 (Batch) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179516770 UTC Amendments:DBG Amendment 98DECF327BF79997AEC178323AD51A830E457BFC6D454DAF3E46E5EC42DC619F (CheckCashMakesTrustLine) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179526648 UTC Amendments:DBG Amendment 157D2D480E006395B76F948E3E07A45A05FE10230D88A7993C71F97AE4B1F2D1 (Checks) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179534799 UTC Amendments:DBG Amendment 56B241D7A43D40354D02A9DC4C8DF5C7A1F930D92A9035C4E12291B3CA3E1C2B (Clawback) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179543193 UTC Amendments:DBG Amendment 1CB67D082CF7D9102412D34258CEDB400E659352D3B207348889297A6D90F5EF (Credentials) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179551321 UTC Amendments:DBG Amendment 1562511F573A19AE9BD103B5D6B9E01B3B46805AEC5D3C4805C902B514399146 (CryptoConditions) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179560294 UTC Amendments:DBG Amendment 86E83A7D2ECE3AD5FA87AB2195AE015C950469ABF0B72EAACED318F74886AE90 (CryptoConditionsSuite) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179571744 UTC Amendments:DBG Amendment DB432C3A09D9D5DFC7859F39AE5FF767ABC59AED0A9FB441E83B814D8946C109 (DID) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179584598 UTC Amendments:DBG Amendment DAF3A6EB04FA5DC51E8E4F23E9B7022B693EFA636F23F22664746C77B5786B23 (DeepFreeze) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179600152 UTC Amendments:DBG Amendment 30CD365592B8EE40489BA01AE2F7555CAC9C983145871DC82A42A31CF5BAE7D9 (DeletableAccounts) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179612570 UTC Amendments:DBG Amendment F64E1EABBE79D55B3BB82020516CEC2C582A98A6BFE20FBE9BB6A0D233418064 (DepositAuth) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179625925 UTC Amendments:DBG Amendment 3CBC5C4E630A1B82380295CDA84B32B49DD066602E74E39B85EF64137FA65194 (DepositPreauth) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179638475 UTC Amendments:DBG Amendment 47C3002ABA31628447E8E9A8B315FAA935CE30183F9A9B86845E469CA2CDC3DF (DisallowIncoming) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179651176 UTC Amendments:DBG Amendment C1CE18F2A268E6A849C27B3DE485006771B4C01B2FCEC4F18356FE92ECD6BB74 (DynamicNFT) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179663714 UTC Amendments:DBG Amendment DC9CA96AEA1DCF83E527D1AFC916EFAF5D27388ECA4060A88817C1238CAEE0BF (EnforceInvariants) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179676136 UTC Amendments:DBG Amendment 07D43DCE529B15A10827E5E04943B496762F9A88E3268269D69C44BE49E21104 (Escrow) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179688345 UTC Amendments:DBG Amendment B2A4DB846F0891BF2C76AB2F2ACC8F5B4EC64437135C6E56F3F859DE5FFD5856 (ExpandedSignerList) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179708597 UTC Amendments:DBG Amendment 42426C4D4F1009EE67080A9B7965B44656D7714D104A72F9B4369F97ABF044EE (FeeEscalation) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179721438 UTC Amendments:DBG Amendment 740352F2412A9909880C23A559FCECEDA3BE2126FED62FC7660D628A06927F11 (Flow) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179733596 UTC Amendments:DBG Amendment 3012E8230864E95A58C60FD61430D7E1B4D3353195F2981DC12B0C7C0950FFAC (FlowCross) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179745187 UTC Amendments:DBG Amendment AF8DF7465C338AE64B1E937D6C8DA138C0D63AD5134A68792BBBE1F63356C422 (FlowSortStrands) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179759569 UTC Amendments:DBG Amendment 1F4AFA8FA1BC8827AD4C0F682C03A8B671DCDF6B5C4DE36D44243A684103EF88 (HardenedValidations) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179771763 UTC Amendments:DBG Amendment 75A7E01C505DD5A179DFE3E000A9B6F1EDDEB55A12F95579A23E15B15DC8BE5A (ImmediateOfferKilled) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179784685 UTC Amendments:DBG Amendment 950AE2EA4654E47F04AA8739C0B214E242097E802FD372D24047A89AB1F5EC38 (MPTokensV1) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179797842 UTC Amendments:DBG Amendment 4C97EBA926031A7CF7D7B36FDE3ED66DDA5421192D63DE53FFB46E43B9DC8373 (MultiSign) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179810801 UTC Amendments:DBG Amendment 586480873651E106F1D6339B0C4A8945BA705A777F3F4524626FF1FC07EFE41D (MultiSignReserve) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179824528 UTC Amendments:DBG Amendment EE3CF852F0506782D05E65D49E5DCC3D16D50898CD1B646BAE274863401CC3CE (NFTokenMintOffer) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179836974 UTC Amendments:DBG Amendment B4E4F5D2D6FB84DF7399960A732309C9FD530EAE5941838160042833625A6076 (NegativeUNL) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179846498 UTC Amendments:DBG Amendment 3C43D9A973AA4443EF3FC38E42DD306160FBFFDAB901CD8BAA15D09F2597EB87 (NonFungibleTokensV1) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179859195 UTC Amendments:DBG Amendment 32A122F1352A4C7B3A6D790362CC34749C5E57FCE896377BFDC6CCD14F6CD627 (NonFungibleTokensV1_1) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179869345 UTC Amendments:DBG Amendment 08DE7D96082187F6E6578530258C77FAABABE4C20474BDB82F04B021F1A68647 (PayChan) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179884420 UTC Amendments:DBG Amendment AE6AB9028EEB7299EBB03C7CBCC3F2A4F5FBE00EA28B8223AA3118A0B436C1C5 (PermissionDelegation) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179894510 UTC Amendments:DBG Amendment 677E401A423E3708363A36BA8B3A7D019D21AC5ABD00387BDBEA6BDE4C91247E (PermissionedDEX) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179904341 UTC Amendments:DBG Amendment A730EB18A9D4BB52502C898589558B4CCEB4BE10044500EE5581137A2E80E849 (PermissionedDomains) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179913586 UTC Amendments:DBG Amendment 96FD2F293A519AE1DB6F8BED23E4AD9119342DA7CB6BAFD00953D16C54205D8B (PriceOracle) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179926973 UTC Amendments:DBG Amendment 00C1FC4A53E60AB02C864641002B3172F38677E29C26C5406685179B37E1EDAC (RequireFullyCanonicalSig) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179950499 UTC Amendments:DBG Amendment CC5ABAE4F3EC92E94A59B1908C2BE82D2228B6485C00AFF8F22DF930D89C194E (SortedDirectories) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179962632 UTC Amendments:DBG Amendment 532651B4FD58DF8922A49BA101AB3E996E5BFBF95A913B3E392504863E63B164 (TickSize) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179974748 UTC Amendments:DBG Amendment 955DF3FA5891195A9DAEFA1DDC6BB244B545DDE1BAA84CBB25D5F12A8DA68A0C (TicketBatch) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179986502 UTC Amendments:DBG Amendment 138B968F25822EFBF54C00F97031221C47B1EAB8321D93C7C2AEAF85F04EC5DF (TokenEscrow) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.179998164 UTC Amendments:DBG Amendment 6781F8368C4771B83E8B821D88F580202BCB4228075297B19E4FDC5233F1EFDC (TrustSetAuth) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180010074 UTC Amendments:DBG Amendment C98D98EE9616ACD36E81FDEB8D41D349BF5F1B41DD64A0ABC1FE9AA5EA267E9C (XChainBridge) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180021868 UTC Amendments:DBG Amendment 93E516234E35E08CA689FA33A6D38E103881F8DCB53023F728C307AA89D515A7 (XRPFees) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180033341 UTC Amendments:DBG Amendment B4D44CC3111ADD964E846FC57760C8B50FFCD5A82C86A72756F6B058DDDF96AD (fix1201) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180044978 UTC Amendments:DBG Amendment E2E6F2866106419B88C50045ACE96368558C345566AC8F2BDF5A5B5587F0E6FA (fix1368) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180056925 UTC Amendments:DBG Amendment 42EEA5E28A97824821D4EF97081FE36A54E9593C6E4F20CBAE098C69D2E072DC (fix1373) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180068615 UTC Amendments:DBG Amendment 6C92211186613F9647A89DFFBAB8F94C99D4C7E956D495270789128569177DA1 (fix1512) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180080487 UTC Amendments:DBG Amendment 67A34F2CF55BFC0F93AACD5B281413176FEE195269FA6D95219A2DF738671172 (fix1513) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180094117 UTC Amendments:DBG Amendment 5D08145F0A4983F23AFFFF514E83FAD355C5ABFBB6CAB76FB5BC8519FF5F33BE (fix1515) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180106353 UTC Amendments:DBG Amendment B9E739B8296B4A1BB29BE990B17D66E21B62A300A909F25AC55C22D6C72E1F9D (fix1523) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180118052 UTC Amendments:DBG Amendment 1D3463A5891F9E589C5AE839FFAC4A917CE96197098A1EF22304E1BC5B98A454 (fix1528) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180129775 UTC Amendments:DBG Amendment CA7C02118BA27599528543DFE77BA6838D1B0F43B447D4D7F53523CE6A0E9AC2 (fix1543) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180142401 UTC Amendments:DBG Amendment 7117E2EC2DBF119CA55181D69819F1999ECEE1A0225A7FD2B9ED47940968479C (fix1571) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180154126 UTC Amendments:DBG Amendment FBD513F1B893AC765B78F250E6FFA6A11B573209D1842ADC787C850696741288 (fix1578) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180180920 UTC Amendments:DBG Amendment 58BE9B5968C4DA7C59BA900961828B113E5490699B21877DEF9A31E9D0FE5D5F (fix1623) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180194603 UTC Amendments:DBG Amendment 25BA44241B3BD880770BFA4DA21C7180576831855368CBEC6A3154FDE4A7676E (fix1781) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180202850 UTC Amendments:DBG Amendment 5E9586DB3D765B4C5794658FB6BB385071E9838DF4016027E6E26820C8526724 (fixAMMClawbackRounding) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180214667 UTC Amendments:DBG Amendment 12523DF04B553A0B1AD74F42DDB741DE8DC06A03FC089A0EF197E2A87F1D8107 (fixAMMOverflowOffer) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180224709 UTC Amendments:DBG Amendment 35291ADD2D79EB6991343BDA0912269C817D0F094B02226C1C14AD2858962ED4 (fixAMMv1_1) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180233941 UTC Amendments:DBG Amendment 1E7ED950F2F13C4F8E2A54103B74D57D5D298FFDBD005936164EE9E6484C438C (fixAMMv1_2) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180243114 UTC Amendments:DBG Amendment 7CA70A7674A26FA517412858659EBC7EDEEF7D2D608824464E6FDEFD06854E14 (fixAMMv1_3) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180252412 UTC Amendments:DBG Amendment 4F46DF03559967AC60F2EB272FEFE3928A7594A45FF774B87A7E540DB0F8F068 (fixAmendmentMajorityCalc) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180262493 UTC Amendments:DBG Amendment 8F81B066ED20DAECA20DF57187767685EEF3980B228E0667A650BAF24426D3B4 (fixCheckThreading) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180271983 UTC Amendments:DBG Amendment 15D61F0C6DB6A2F86BCF96F1E2444FEC54E705923339EC175BD3E517C8B3FF91 (fixDisallowIncomingV1) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180281991 UTC Amendments:DBG Amendment 755C971C29971C9F20C6F080F2ED96F87884E40AD19554A5EBECDCEC8A1F77FE (fixEmptyDID) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180291304 UTC Amendments:DBG Amendment 763C37B352BE8C7A04E810F8E462644C45AFEAD624BF3894A08E5C917CF9FF39 (fixEnforceNFTokenTrustline) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180301068 UTC Amendments:DBG Amendment B32752F7DCC41FB86534118FC4EEC8F56E7BD0A7DB60FD73F93F257233C08E3A (fixEnforceNFTokenTrustlineV2) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180313539 UTC Amendments:DBG Amendment 3318EA0CF0755AF15DAC19F2B5C5BCBFF4B78BDD57609ACCAABE2C41309B051A (fixFillOrKill) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180323089 UTC Amendments:DBG Amendment 83FD6594FF83C1D105BD2B41D7E242D86ECB4A8220BD9AF4DA35CB0F69E39B2A (fixFrozenLPTokenTransfer) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180332279 UTC Amendments:DBG Amendment 6143A27B71F7DAF9330ECA7C5EC3D54C8083A4FDEF7016737EEC06AB61E82EE0 (fixIncludeKeyletFields) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180341891 UTC Amendments:DBG Amendment C393B3AEEBF575E475F0C60D5E4241B2070CC4D0EB6C4846B1A07508FAEFC485 (fixInnerObjTemplate) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180351705 UTC Amendments:DBG Amendment 9196110C23EA879B4229E51C286180C7D02166DA712559F634372F5264D0EC59 (fixInnerObjTemplate2) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180361626 UTC Amendments:DBG Amendment 8EC4304A06AF03BE953EA6EDA494864F6F3F30AA002BABA35869FBB8C6AE5D52 (fixInvalidTxFlags) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180373684 UTC Amendments:DBG Amendment C4483A1896170C66C098DEA5B0E024309C60DC960DE5F01CD7AF986AA3D9AD37 (fixMasterKeyAsRegularKey) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180383746 UTC Amendments:DBG Amendment 0285B7E5E08E1A8E4C15636F0591D87F73CB6A7B6452A932AD72BBC8E5D1CBE3 (fixNFTokenDirV1) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180393112 UTC Amendments:DBG Amendment 36799EA497B1369B170805C078AEFE6188345F9B3E324C21E9CA3FF574E3C3D6 (fixNFTokenNegOffer) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180402849 UTC Amendments:DBG Amendment C7981B764EC4439123A86CC7CCBA436E9B3FF73B3F10A0AE51882E404522FC41 (fixNFTokenPageLinks) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180412694 UTC Amendments:DBG Amendment AE35ABDEFBDE520372B31C957020B34A7A4A9DC3115A69803A44016477C84D6E (fixNFTokenRemint) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180421932 UTC Amendments:DBG Amendment 03BDC0099C4E14163ADA272C1B6F6FABB448CC3E51F522F978041E4B57D9158C (fixNFTokenReserve) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180431049 UTC Amendments:DBG Amendment 73761231F7F3D94EC3D8C63D91BDD0D89045C6F71B917D1925C01253515A6669 (fixNonFungibleTokensV1_2) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180440481 UTC Amendments:DBG Amendment D3456A862DC07E382827981CA02E21946E641877F19B8889031CC57FDCAC83E2 (fixPayChanCancelAfter) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180450132 UTC Amendments:DBG Amendment 621A0B264970359869E3C0363A899909AAB7A887C8B73519E4ECF952D33258A8 (fixPayChanRecipientOwnerDir) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180459624 UTC Amendments:DBG Amendment 7BB62DC13EC72B775091E9C71BF8CF97E122647693B50C5E87A80DFD6FCFAC50 (fixPreviousTxnID) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180469187 UTC Amendments:DBG Amendment FF2D1E13CF6D22427111B967BD504917F63A900CECD320D6FD3AC9FA90344631 (fixPriceOracleOrder) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180479033 UTC Amendments:DBG Amendment 89308AF3B8B10B7192C4E613E1D2E4D9BA64B2EE2D5232402AE82A6A7220D953 (fixQualityUpperBound) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180488664 UTC Amendments:DBG Amendment 27CD95EE8E1E5A537FF2F89B6CEB7C622E78E9374EBD7DCBEDFAE21CD6F16E0A (fixReducedOffersV1) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180498443 UTC Amendments:DBG Amendment 31E0DA76FB8FB527CADCDF0E61CB9C94120966328EFA9DCA202135BAF319C0BA (fixReducedOffersV2) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180508241 UTC Amendments:DBG Amendment DF8B4536989BDACE3F934F29423848B9F1D76D09BE6A1FCFE7E7F06AA26ABEAD (fixRemoveNFTokenAutoTrustLine) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180517746 UTC Amendments:DBG Amendment B6B3EEDC0267AB50491FDC450A398AF30DBCD977CECED8BEF2499CAB5DAC19E2 (fixRmSmallIncreasedQOffers) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180527253 UTC Amendments:DBG Amendment 452F5906C46D46F407883344BFDD90E672B672C5E9943DB4891E3A34FEEEB9DB (fixSTAmountCanonicalize) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180537072 UTC Amendments:DBG Amendment 2CD5286D8D687E98B41102BDD797198E81EA41DF7BD104E6561FEB104EFF2561 (fixTakerDryOfferRemoval) is supported and will be up voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180549513 UTC Amendments:DBG Amendment 32B8614321F7E070419115ABEAB1742EA20F3E3AF34432B5E2F474F8083260DC (fixTokenEscrowV1) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180559350 UTC Amendments:DBG Amendment F1ED6B4A411D8B872E65B9DCB4C8B100375B0DD3D62D07192E011D6D7F339013 (fixTrustLinesToSelf) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180569025 UTC Amendments:DBG Amendment 2E2FB9CF8A44EB80F4694D38AADAE9B8B7ADAFD2F092E10068E61C98C4F092B0 (fixUniversalNumber) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180578331 UTC Amendments:DBG Amendment 2BF037D90E1B676B17592A8AF55E88DB465398B4B597AE46EECEE1399AB05699 (fixXChainRewardRounding) is supported and will be down voted by default if not enabled on the ledger.
+2025-Oct-03 09:06:04.180835837 UTC Application:DBG startUp: 0
+2025-Oct-03 09:06:04.180847450 UTC Application:NFO Starting new Ledger
+2025-Oct-03 09:06:04.180860757 UTC Amendments:NFO Voting for amendment fixSTAmountCanonicalize
+2025-Oct-03 09:06:04.180869344 UTC Amendments:NFO Voting for amendment fixRmSmallIncreasedQOffers
+2025-Oct-03 09:06:04.180877685 UTC Amendments:NFO Voting for amendment fixPayChanRecipientOwnerDir
+2025-Oct-03 09:06:04.180885825 UTC Amendments:NFO Voting for amendment fixQualityUpperBound
+2025-Oct-03 09:06:04.180894068 UTC Amendments:NFO Voting for amendment fixMasterKeyAsRegularKey
+2025-Oct-03 09:06:04.180901957 UTC Amendments:NFO Voting for amendment fixCheckThreading
+2025-Oct-03 09:06:04.180910044 UTC Amendments:NFO Voting for amendment fixAmendmentMajorityCalc
+2025-Oct-03 09:06:04.180918015 UTC Amendments:NFO Voting for amendment fixAMMOverflowOffer
+2025-Oct-03 09:06:04.180926210 UTC Amendments:NFO Voting for amendment fix1515
+2025-Oct-03 09:06:04.180934978 UTC Amendments:NFO Voting for amendment DepositPreauth
+2025-Oct-03 09:06:04.180942993 UTC Amendments:NFO Voting for amendment Flow
+2025-Oct-03 09:06:04.180950882 UTC Amendments:NFO Voting for amendment fix1571
+2025-Oct-03 09:06:04.180959037 UTC Amendments:NFO Voting for amendment RequireFullyCanonicalSig
+2025-Oct-03 09:06:04.180966835 UTC Amendments:NFO Voting for amendment MultiSignReserve
+2025-Oct-03 09:06:04.180974908 UTC Amendments:NFO Voting for amendment fix1623
+2025-Oct-03 09:06:04.180982853 UTC Amendments:NFO Voting for amendment Checks
+2025-Oct-03 09:06:04.180990759 UTC Amendments:NFO Voting for amendment DepositAuth
+2025-Oct-03 09:06:04.180998849 UTC Amendments:NFO Voting for amendment fixTakerDryOfferRemoval
+2025-Oct-03 09:06:04.181006792 UTC Amendments:NFO Voting for amendment FlowSortStrands
+2025-Oct-03 09:06:04.181014972 UTC Amendments:NFO Voting for amendment fixRemoveNFTokenAutoTrustLine
+2025-Oct-03 09:06:04.181023204 UTC Amendments:NFO Voting for amendment fix1781
+2025-Oct-03 09:06:04.181031077 UTC Amendments:NFO Voting for amendment DeletableAccounts
+2025-Oct-03 09:06:04.181038824 UTC Amendments:NFO Voting for amendment fix1543
+2025-Oct-03 09:06:04.181046626 UTC Amendments:NFO Voting for amendment HardenedValidations
+2025-Oct-03 09:06:04.181054588 UTC Amendments:NFO Voting for amendment fix1513
+2025-Oct-03 09:06:04.181062590 UTC Amendments:NFO Voting for amendment NegativeUNL
+2025-Oct-03 09:06:04.181070606 UTC Amendments:NFO Voting for amendment TicketBatch
+2025-Oct-03 09:06:04.181078696 UTC Amendments:NFO Voting for amendment fix1578
+2025-Oct-03 09:06:04.202239075 UTC LedgerMaster:DBG Ledger 2 accepted :9299901DA362D2CB3CD4F38DE8D03DDD69B6ABFA375573FB9BCA711FD1FC9B01
+2025-Oct-03 09:06:04.202582341 UTC OrderBookDB:DBG Full order book update: 0 to 2
+2025-Oct-03 09:06:04.202603311 UTC OrderBookDB:DBG Beginning update (2)
+2025-Oct-03 09:06:04.202633033 UTC OrderBookDB:DBG Update completed (2): 0 books found
+2025-Oct-03 09:06:04.202644103 UTC JobQueue:DBG addRefCountedJob : Adding job : advanceLedger : 24
+2025-Oct-03 09:06:04.202943520 UTC ValidatorList:DBG Loading configured trusted validator list publisher keys
+2025-Oct-03 09:06:04.202954475 UTC ValidatorList:DBG Validator list threshold computed as 1
+2025-Oct-03 09:06:04.202971851 UTC ValidatorList:DBG Loaded 0 keys
+2025-Oct-03 09:06:04.202977758 UTC ValidatorList:DBG Loading configured validator keys
+2025-Oct-03 09:06:04.202983778 UTC ValidatorList:DBG Loaded 0 entries
+2025-Oct-03 09:06:04.202990539 UTC ValidatorSite:DBG Loading configured validator list sites
+2025-Oct-03 09:06:04.299259444 UTC NetworkOPs:NFO Consensus time for #3 with LCL 9299901DA362D2CB3CD4F38DE8D03DDD69B6ABFA375573FB9BCA711FD1FC9B01
+2025-Oct-03 09:06:04.299327778 UTC ValidatorList:DBG 0  of 0 listed validators eligible for inclusion in the trusted set
+2025-Oct-03 09:06:04.299337794 UTC ValidatorList:DBG Using quorum of 0 for new set of 0 trusted validators (0 added, 0 removed)
+2025-Oct-03 09:06:04.299347260 UTC LedgerConsensus:NFO Entering consensus process, watching, synced=no
+2025-Oct-03 09:06:04.299356164 UTC LedgerConsensus:DBG transitioned to ConsensusPhase::open 
+2025-Oct-03 09:06:04.299363155 UTC LedgerConsensus:NFO Consensus mode change before=observing, after=observing
+2025-Oct-03 09:06:04.299370336 UTC NetworkOPs:DBG Initiating consensus engine
+2025-Oct-03 09:06:04.301117983 UTC Server:NFO Opened 'port_rpc_admin_local' (ip=127.0.0.1:5005, admin nets:127.0.0.1/32, http)
+2025-Oct-03 09:06:04.301280571 UTC Server:NFO Opened 'port_ws_admin_local' (ip=127.0.0.1:6006, admin nets:127.0.0.1/32, ws)
+2025-Oct-03 09:06:04.301334364 UTC Application:WRN Running in standalone mode
+2025-Oct-03 09:06:04.301350555 UTC NetworkOPs:NFO STATE->full
+2025-Oct-03 09:06:04.301384960 UTC Application:FTL Startup RPC: 
+{
+	"command" : "log_level",
+	"severity" : "warning"
+}
+
+
+2025-Oct-03 09:06:04.301431354 UTC Application:FTL Result: {}
+
+
+2025-Oct-03 13:52:06.813905867 UTC Application:WRN Server stopping: Signal: 2
