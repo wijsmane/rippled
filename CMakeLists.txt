@@ -122,21 +122,35 @@ find_package(date REQUIRED)
 find_package(xxHash REQUIRED)
 
 
-# LibSTARK
-file(GLOB_RECURSE LIBSTARK_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/libstark/src/*.cpp
+# LibSTARK 
+
+set(LIBSTARK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK)
+set(LIBSTARK_LIB ${LIBSTARK_DIR}/bin/libstark.a)
+
+add_custom_target(libstark_build ALL
+    COMMAND $(MAKE) -C ${LIBSTARK_DIR} libstark
+    WORKING_DIRECTORY ${LIBSTARK_DIR}
+    COMMENT "building libSTARK with its Makefile"
 )
 
-add_library(stark STATIC ${LIBSTARK_SOURCES})
-
-target_include_directories(stark PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/libstark/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/algebra/algebralib/headers
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/algebra/algebralib/algebra/FFT/src
+# libstark.a is library we can link to
+add_library(stark STATIC IMPORTED)
+set_target_properties(stark PROPERTIES
+    IMPORTED_LOCATION ${LIBSTARK_LIB}
 )
 
-target_link_libraries(stark PUBLIC gmp gmpxx)
+# where to find libSTARK headers
+target_include_directories(stark INTERFACE
+    ${LIBSTARK_DIR}/libstark/src
+    ${LIBSTARK_DIR}/algebra/algebralib/headers/algebraLIB
+    ${LIBSTARK_DIR}/algebra/fft/src
+    ${LIBSTARK_DIR}/libstark/src/common
+    ${LIBSTARK_DIR}/libstark/src/protocols
+    ${LIBSTARK_DIR}/libstark/src/languages
+    ${LIBSTARK_DIR}/libstark/src/reductions
+)
 
+add_dependencies(stark libstark_build)
 
 target_link_libraries(ripple_libs INTERFACE
   stark
@@ -148,6 +162,7 @@ target_link_libraries(ripple_libs INTERFACE
   soci::soci
   SQLite::SQLite3
 )
+
 
 # Work around changes to Conan recipe for now.
 if(TARGET nudb::core)

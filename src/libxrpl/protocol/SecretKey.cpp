@@ -46,6 +46,8 @@
 #include <stdexcept>
 #include <utility>
 
+#include <protocols/common/CryptoCommitment/MerkleCommitment.hpp>
+
 namespace ripple {
 
 SecretKey::~SecretKey()
