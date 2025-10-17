@@ -164,6 +164,7 @@ class Xrpl(ConanFile):
             'xrpl.libpb',
             'ed25519',
             'secp256k1',
+            'stark'
         ]
         # TODO: Fix the protobufs to include each other relative to
         # `include/`, not `include/ripple/proto/`.

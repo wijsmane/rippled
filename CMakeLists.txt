@@ -125,43 +125,57 @@ find_package(xxHash REQUIRED)
 # LibSTARK 
 
 set(LIBSTARK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK)
-set(LIBSTARK_LIB ${LIBSTARK_DIR}/bin/libstark.a)
+set(LIBSTARK_LIB ${LIBSTARK_DIR}/bin/libstark/libstark.a)
 
+message(STATUS "libSTARK directory: ${LIBSTARK_DIR}")
+message(STATUS "expected static library: ${LIBSTARK_LIB}")
+
+# use makefile to build libSTARK
 add_custom_target(libstark_build ALL
     COMMAND $(MAKE) -C ${LIBSTARK_DIR} libstark
     WORKING_DIRECTORY ${LIBSTARK_DIR}
     COMMENT "building libSTARK with its Makefile"
 )
 
-# libstark.a is library we can link to
-add_library(stark STATIC IMPORTED)
-set_target_properties(stark PROPERTIES
-    IMPORTED_LOCATION ${LIBSTARK_LIB}
-)
+if (EXISTS "${LIBSTARK_LIB}")
+  # libstark.a is a prebuilt library we can link to
+  add_library(stark STATIC IMPORTED GLOBAL)
+  set_target_properties(stark PROPERTIES
+      IMPORTED_LOCATION ${LIBSTARK_LIB} # where to find the library
+  )
 
-# where to find libSTARK headers
-target_include_directories(stark INTERFACE
-    ${LIBSTARK_DIR}/libstark/src
-    ${LIBSTARK_DIR}/algebra/algebralib/headers/algebraLIB
-    ${LIBSTARK_DIR}/algebra/fft/src
-    ${LIBSTARK_DIR}/libstark/src/common
-    ${LIBSTARK_DIR}/libstark/src/protocols
-    ${LIBSTARK_DIR}/libstark/src/languages
-    ${LIBSTARK_DIR}/libstark/src/reductions
-)
+  # where to find libSTARK headers
+  include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/libstark/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/algebra/algebralib/headers/algebraLib
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/libSTARK/algebra/FFT/src
+  )
 
-add_dependencies(stark libstark_build)
+  message(STATUS "added directories for libSTARK")
 
-target_link_libraries(ripple_libs INTERFACE
-  stark
-  ed25519::ed25519
-  lz4::lz4
-  OpenSSL::Crypto
-  OpenSSL::SSL
-  secp256k1::secp256k1
-  soci::soci
-  SQLite::SQLite3
-)
+  # stark depends on libSTARK being built first
+  add_dependencies(stark libstark_build)
+
+  target_link_libraries(ripple_libs INTERFACE
+    stark
+    ed25519::ed25519
+    lz4::lz4
+    OpenSSL::Crypto
+    OpenSSL::SSL
+    secp256k1::secp256k1
+    soci::soci
+    SQLite::SQLite3
+  )
+
+  # check if link works
+  get_target_property(RIPPLE_INCLUDES ripple_libs INTERFACE_INCLUDE_DIRECTORIES)
+  message(STATUS "Ripple include dirs: ${RIPPLE_INCLUDES}")
+else()
+  message(WARNING "libstark.a not found at ${LIBSTARK_LIB}")
+endif()
+
+get_property(INCLUDE_DIRS DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+message(STATUS "All global include directories: ${INCLUDE_DIRS}")
 
 
 # Work around changes to Conan recipe for now.
