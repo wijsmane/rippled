@@ -17,8 +17,8 @@
 */
 //==============================================================================
 
-#ifndef RIPPLE_SHAMAP_SHAMAPTREENODE_H_INCLUDED
-#define RIPPLE_SHAMAP_SHAMAPTREENODE_H_INCLUDED
+#ifndef XRPL_SHAMAP_SHAMAPTREENODE_H_INCLUDED
+#define XRPL_SHAMAP_SHAMAPTREENODE_H_INCLUDED
 
 #include <xrpl/basics/IntrusivePointer.h>
 #include <xrpl/basics/IntrusiveRefCounts.h>

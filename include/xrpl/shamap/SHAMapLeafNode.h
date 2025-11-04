@@ -17,8 +17,8 @@
 */
 //==============================================================================
 
-#ifndef RIPPLE_SHAMAP_SHAMAPLEAFNODE_H_INCLUDED
-#define RIPPLE_SHAMAP_SHAMAPLEAFNODE_H_INCLUDED
+#ifndef XRPL_SHAMAP_SHAMAPLEAFNODE_H_INCLUDED
+#define XRPL_SHAMAP_SHAMAPLEAFNODE_H_INCLUDED
 
 #include <xrpl/shamap/SHAMapItem.h>
 #include <xrpl/shamap/SHAMapTreeNode.h>

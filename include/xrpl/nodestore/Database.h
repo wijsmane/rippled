@@ -17,8 +17,8 @@
 */
 //==============================================================================
 
-#ifndef RIPPLE_NODESTORE_DATABASE_H_INCLUDED
-#define RIPPLE_NODESTORE_DATABASE_H_INCLUDED
+#ifndef XRPL_NODESTORE_DATABASE_H_INCLUDED
+#define XRPL_NODESTORE_DATABASE_H_INCLUDED
 
 #include <xrpl/basics/BasicConfig.h>
 #include <xrpl/basics/Log.h>
