@@ -21,6 +21,7 @@
 
 #include <doctest/doctest.h>
 
+
 using namespace ripple;
 
 TEST_CASE("get values")

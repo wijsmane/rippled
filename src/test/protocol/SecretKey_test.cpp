@@ -27,6 +27,9 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include "AffinePolynomial.hpp"
+#include <cassert>
+#include <iostream>
 
 namespace ripple {
 
@@ -347,6 +350,33 @@ public:
     }
 
     void
+    testLibstarkLinkage()
+    {
+        testcase("libSTARK linkage");
+
+    using namespace Algebra;
+
+    // Create a simple affine polynomial with coefficients {1, 1, 1}
+    std::vector<FieldElement> coeffs;
+    coeffs.push_back(FieldElement(1));
+    coeffs.push_back(FieldElement(1));
+    coeffs.push_back(FieldElement(1));
+
+    // Pick a test input
+    FieldElement x(2);
+
+    // Evaluate the linear part using libSTARK's AffinePolynomial helper
+    FieldElement result = evalLinearPart(x, coeffs);
+
+    // For testing linkage purposes, we just check that it produced a value
+    assert(result != zero());
+
+    std::cout << "evalLinearPart(" << x << ") = " << result << std::endl;
+
+       
+    }
+
+    void
     run() override
     {
         testBase58();
@@ -360,6 +390,8 @@ public:
         // Ed25519
         testKeyDerivationEd25519();
         testSigning(KeyType::ed25519);
+
+        testLibstarkLinkage();
     }
 
 private:
