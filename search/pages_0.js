@@ -7,5 +7,5 @@ var searchData=
   ['and_20validation_4',['Consensus and Validation',['../md__2____w_2rippled_2rippled_2docs_2consensus.html',1,'']]],
   ['antithesis_20c_20sdk_5',['Antithesis C++ SDK',['../md__2____w_2rippled_2rippled_2external_2antithesis-sdk_2README.html',1,'']]],
   ['api_20changelog_6',['API Changelog',['../md__2____w_2rippled_2rippled_2API-CHANGELOG.html',1,'']]],
-  ['architecture_7',['first draft of architecture',['../md__2____w_2rippled_2rippled_2docs_2zkSTARK_2stark-integration-architecture.html',1,'']]]
+  ['architecture_7',['Second Draft of Architecture',['../md__2____w_2rippled_2rippled_2docs_2zkSTARK_2stark-integration-architecture.html',1,'']]]
 ];
