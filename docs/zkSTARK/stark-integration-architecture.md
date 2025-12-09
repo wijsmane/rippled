@@ -73,7 +73,7 @@ Prover
 
         libstark::Protocols::Ali::Verifier::verifier_t(bairInstance, RSVerifierFactory, securityParameter)
 
-        vector<message> allMessages;.
+        vector<message> allMessages;
 
         while(!verifier.doneInteracting) {
 
@@ -113,6 +113,7 @@ Prover
     - send to verifier
 
 *Proof only proves that the transaction satisfies constraints, doesn't prove inclusion in ledger
+    -> how to prove inclusion? can provisionally add to shamap and validators will decide in consensus process?
 
 Verifier
 
@@ -129,10 +130,8 @@ Verifier
 
     - would need to again run the interaction between prover and verifier
 
-4. If signature and proof were both valid, add to ledger
+4. If signature and proof were both valid, make the ledger version immutable
 
     - add to SHAMap
 
         SHAMap::addItem(SHAMapNodeType type, boost::intrusive_ptr<SHAMapItem const> new SHAMapItem(getTransactionID(), serializedTransaction));
-
-    - SHAMap handles inclusion, will automatically recompute new root
