@@ -1,9 +1,0 @@
-cc_library(
-    name = "fakegpu",
-    srcs = glob(["*.cpp"]),
-    hdrs = glob(["*.h"]),
-    visibility = ["//visibility:public"],
-    deps = [
-        "//hal/cpu",
-    ],
-)

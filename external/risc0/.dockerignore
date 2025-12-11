@@ -1,9 +1,0 @@
-target
-.git
-.github
-.gitignore
-.gitmodules
-examples
-external
-groth16_proof
-web
