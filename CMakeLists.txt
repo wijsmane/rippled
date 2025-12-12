@@ -16,6 +16,26 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#risc0
+
+include(FetchContent)
+
+FetchContent_Declare(
+    Corrosion
+    GIT_REPOSITORY https://github.com/corrosion-rs/corrosion.git
+    GIT_TAG v0.6
+)
+FetchContent_MakeAvailable(Corrosion)
+
+# Build the Rust crate
+corrosion_import_crate(MANIFEST_PATH external/risc0_adapter/Cargo.toml)
+
+# Include generated cxx headers
+target_include_directories(xrpl_libs PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/risc0_adapter/include
+    ${CMAKE_CURRENT_BINARY_DIR}/cxxbridge/include
+)
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     # GCC-specific fixes
     add_compile_options(-Wno-unknown-pragmas -Wno-subobject-linkage)
@@ -116,6 +136,7 @@ find_package(secp256k1 REQUIRED)
 find_package(xxHash REQUIRED)
 
 target_link_libraries(xrpl_libs INTERFACE
+  risc0_adapter
   ed25519::ed25519
   lz4::lz4
   OpenSSL::Crypto
