@@ -19,6 +19,7 @@ pub extern "C" fn risc0_init() -> bool {
     true
 }
 
+//some functions just to test
 #[no_mangle]
 pub extern "C" fn risc0_add(a: c_int, b: c_int) -> c_int {
     a + b
