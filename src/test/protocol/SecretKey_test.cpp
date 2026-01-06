@@ -5,6 +5,9 @@
 #include <xrpl/protocol/SecretKey.h>
 #include <xrpl/protocol/Seed.h>
 
+#include <risc0-ffi.h>
+
+
 #include <algorithm>
 #include <string>
 #include <vector>
@@ -23,6 +26,46 @@ class SecretKey_test : public beast::unit_test::suite
 
 public:
     using blob = std::vector<std::uint8_t>;
+
+    void testRisc0Integration()
+    {
+        testcase("test linking with RISC0 FFI call");
+
+        bool init_result = risc0_init();
+        BEAST_EXPECT(init_result);
+
+        int result = risc0_add(2, 3);
+        std::cerr << "[RISC0] risc0_add(2,3) = " << result << std::endl;
+        BEAST_EXPECT(result == 5);
+
+        char* hello = risc0_hello();
+        BEAST_EXPECT(hello != nullptr);
+        std::cerr << "[RISC0] risc0_hello() = " << hello << std::endl;
+        risc0_free_string(hello);
+
+        const uint8_t input_data[] = {1, 2, 3, 4, 5};
+        uint8_t* proof_data = nullptr;
+        size_t proof_len = 0;
+
+        bool proof_created = risc0_create_proof(
+            input_data,
+            sizeof(input_data),
+            &proof_data,
+            &proof_len
+        );
+
+        BEAST_EXPECT(proof_created);
+        BEAST_EXPECT(proof_data != nullptr);
+        BEAST_EXPECT(proof_len > 0);
+
+        std::cerr << "[RISC0] Proof created, size: " << proof_len << " bytes" << std::endl;
+
+        bool verified = risc0_verify_proof(proof_data, proof_len);
+        BEAST_EXPECT(verified);
+        std::cerr << "[RISC0] Proof verified successfully" << std::endl;
+
+        risc0_free_proof(proof_data, proof_len);
+    }
 
     // Ensure that verification does the right thing with
     // respect to the matrix of canonicality variables.
@@ -341,6 +384,8 @@ public:
         // Ed25519
         testKeyDerivationEd25519();
         testSigning(KeyType::ed25519);
+
+        testRisc0Integration(); 
     }
 
 private:

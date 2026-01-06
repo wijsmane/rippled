@@ -1,3 +1,0 @@
-[submodule "external/risc0"]
-	path = external/risc0
-	url = https://github.com/wijsmane/risc0.git
