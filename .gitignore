@@ -66,3 +66,4 @@ DerivedData
 /.augment
 /.claude
 /CLAUDE.md
+external/risc0-ffi/target/
