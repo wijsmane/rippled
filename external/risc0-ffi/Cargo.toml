@@ -1,0 +1,14 @@
+[package]
+name = "risc0-ffi"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+risc0-zkvm = { version = "4.0", default-features = false, features = ["prove", "std"], path = "../risc0/risc0/zkvm" }
+serde = { version = "1.0", features = ["derive"] }
+bincode = "1.3"
+risc0-ffi-methods = { path = "./methods" }
+
