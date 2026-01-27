@@ -1,158 +1,72 @@
-use std::os::raw::{c_char, c_int};
-use std::ffi::CString;
-use std::slice;
-use std::ptr;
-use risc0_zkvm::{ExecutorEnv, Receipt, Prover};
+//host code for use in C++
+
+use risc0_zkvm::{default_prover, ExecutorEnv};
+use sha2::{Digest, Sha512};
+use std::{panic, slice};
 
 use risc0_ffi_methods::{RISC0_FFI_METHODS_GUEST_ELF, RISC0_FFI_METHODS_GUEST_ID};
 
-static mut INITIALIZED: bool = false;
-
-#[no_mangle]
-pub extern "C" fn risc0_init() -> bool {
-    unsafe {
-        if INITIALIZED {
-            return true;
-        }
-        INITIALIZED = true;
-    }
-    true
+// sha512Half function to compute the first 32 bytes of the SHA-512 hash
+fn sha512_half(data: &[u8]) -> [u8; 32] {
+    let mut hasher = Sha512::new();
+    hasher.update(data);
+    let result = hasher.finalize();
+    let mut out = [0u8; 32];
+    out.copy_from_slice(&result[..32]);
+    out
 }
 
-//some functions just to test
+/* prove that the given XRPL transaction blob has the given tx hash.
+
+ return:
+   0  = success (proof generated & verified)
+ - 1  = null pointer
+  -2  = panic or internal error */
 #[no_mangle]
-pub extern "C" fn risc0_add(a: c_int, b: c_int) -> c_int {
-    a + b
-}
-
-#[no_mangle]
-pub extern "C" fn risc0_hello() -> *mut c_char {
-    match CString::new("Hello from RISC0!") {
-        Ok(s) => s.into_raw(),
-        Err(_) => ptr::null_mut(),
-    }
-}
-
-#[no_mangle]
-pub extern "C" fn risc0_free_string(s: *mut c_char) {
-    if !s.is_null() {
-        unsafe {
-            let _ = CString::from_raw(s);
+pub extern "C" fn risc0_prove_tx(tx_ptr: *const u8, tx_len: usize) -> i32 {
+    // Catch panics
+    let result = panic::catch_unwind(|| unsafe {
+        if tx_ptr.is_null() || tx_len == 0 {
+            return Err(-1);
         }
-    }
-}
 
-#[no_mangle]
-pub extern "C" fn risc0_create_proof(
-    input_data: *const u8,
-    input_len: usize,
-    proof_data: *mut *mut u8,
-    proof_len: *mut usize,
-) -> bool {
-    if input_data.is_null() || proof_data.is_null() || proof_len.is_null() {
-        eprintln!("[RISC0] Error: Null pointer passed to risc0_create_proof");
-        return false;
-    }
+        // Turn raw pointer into slice
+        let tx_blob_slice: &[u8] = slice::from_raw_parts(tx_ptr, tx_len);
+        // Make it an owned Vec<u8> so it's Sized and Serializable
+        let tx_blob: Vec<u8> = tx_blob_slice.to_vec();
 
-    let input_slice = unsafe { slice::from_raw_parts(input_data, input_len) };
-    let input_vec = input_slice.to_vec();
+        // Compute expected_tx_hash = sha512Half("TXN\0" || tx_blob)
+        const TX_PREFIX: [u8; 4] = [0x54, 0x58, 0x4E, 0x00]; // "TXN\0"
 
-    // build zkVM environment and give it the inputs
-    let env = match ExecutorEnv::builder()
-        .write(&input_vec)
-        .unwrap()
-        .build()
-    {
-        Ok(env) => env,
-        Err(e) => {
-            eprintln!("[RISC0] Error building executor environment: {:?}", e);
-            return false;
-        }
-    };
+        let mut hash_input = Vec::with_capacity(TX_PREFIX.len() + tx_blob.len());
+        hash_input.extend_from_slice(&TX_PREFIX);
+        hash_input.extend_from_slice(&tx_blob);
 
-    // use local prover to generate proofs
-    use risc0_zkvm::LocalProver;
-    let prover = LocalProver::new("local");
+        let expected_tx_hash = sha512_half(&hash_input);
 
-    // proves the inputs againt the elf (guest/src/main.rs)
-    let prove_info = match prover.prove(env, RISC0_FFI_METHODS_GUEST_ELF) {
-        Ok(info) => info,
-        Err(e) => {
-            eprintln!("[RISC0] Error generating proof: {:?}", e);
-            return false;
-        }
-    };
+        // build env in same order to match guest
+        let mut builder = ExecutorEnv::builder();
+        builder.write(&tx_blob).map_err(|_| -2)?;           // tx_blob first env::read() in guest
+        builder.write(&expected_tx_hash).map_err(|_| -2)?;  // expected_tx_hash second
+        let env = builder.build().map_err(|_| -2)?;
 
-    let receipt = prove_info.receipt;
+        let prover = default_prover();
 
-    let serialized = match bincode::serialize(&receipt) {
-        Ok(data) => data,
-        Err(e) => {
-            eprintln!("[RISC0] Error serializing receipt: {:?}", e);
-            return false;
-        }
-    };
+        // Run prover with guest ELF
+        let prove_info = prover
+            .prove(env, RISC0_FFI_METHODS_GUEST_ELF)
+            .map_err(|_| -2)?;
 
-    let len = serialized.len();
-    let boxed = serialized.into_boxed_slice();
+        // Verify the receipt with image ID
+        prove_info.receipt.verify(RISC0_FFI_METHODS_GUEST_ID).map_err(|_| -2)?;
 
-    unsafe {
-        *proof_data = Box::into_raw(boxed) as *mut u8;
-        *proof_len = len;
-    }
+        // Optional: you could inspect receipt.journal here or expose it to C++
+        Ok(0)
+    });
 
-    eprintln!("[RISC0] Proof generated successfully, size: {} bytes", len);
-    true
-}
-
-#[no_mangle]
-pub extern "C" fn risc0_verify_proof(
-    proof_data: *const u8,
-    proof_len: usize,
-) -> bool {
-    if proof_data.is_null() {
-        eprintln!("[RISC0] Error: Null pointer passed to risc0_verify_proof");
-        return false;
-    }
-
-    let proof_slice = unsafe { slice::from_raw_parts(proof_data, proof_len) };
-
-    let receipt: Receipt = match bincode::deserialize(proof_slice) {
-        Ok(r) => r,
-        Err(e) => {
-            eprintln!("[RISC0] Error deserializing receipt: {:?}", e);
-            return false;
-        }
-    };
-
-    match receipt.verify(RISC0_FFI_METHODS_GUEST_ID) {
-        Ok(_) => {
-            eprintln!("[RISC0] Proof verified successfully");
-            true
-        }
-        Err(e) => {
-            eprintln!("[RISC0] Proof verification failed: {:?}", e);
-            false
-        }
-    }
-}
-
-#[no_mangle]
-pub extern "C" fn risc0_free_proof(proof_data: *mut u8, proof_len: usize) {
-    if !proof_data.is_null() && proof_len > 0 {
-        unsafe {
-            let _ = Vec::from_raw_parts(proof_data, proof_len, proof_len);
-        }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = risc0_add(2, 2);
-        assert_eq!(result, 4);
+    match result {
+        Ok(Ok(code)) => code,
+        Ok(Err(code)) => code,
+        Err(_) => -2, // panic
     }
 }

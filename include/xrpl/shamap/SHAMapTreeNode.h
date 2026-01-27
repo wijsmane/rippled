@@ -20,12 +20,14 @@ static constexpr unsigned char const wireTypeAccountState = 1;
 static constexpr unsigned char const wireTypeInner = 2;
 static constexpr unsigned char const wireTypeCompressedInner = 3;
 static constexpr unsigned char const wireTypeTransactionWithMeta = 4;
+static constexpr unsigned char const wireTypeZkTransaction = 5; //new for xk
 
 enum class SHAMapNodeType {
     tnINNER = 1,
     tnTRANSACTION_NM = 2,  // transaction, no metadata
     tnTRANSACTION_MD = 3,  // transaction, with metadata
-    tnACCOUNT_STATE = 4
+    tnACCOUNT_STATE = 4,
+    tnZK_TRANSACTION_NM = 5 // new for zk transaction, no metadata
 };
 
 class SHAMapTreeNode : public IntrusiveRefCounts
@@ -168,6 +170,11 @@ private:
 
     static intr_ptr::SharedPtr<SHAMapTreeNode>
     makeTransactionWithMeta(Slice data, SHAMapHash const& hash, bool hashValid);
+
+    // new for ZK
+    static intr_ptr::SharedPtr<SHAMapTreeNode>
+    makeZkTransaction(Slice data, SHAMapHash const& hash, bool hashValid);
+
 };
 
 }  // namespace ripple

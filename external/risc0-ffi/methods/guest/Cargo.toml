@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 risc0-zkvm = { path = "../../../risc0/risc0/zkvm", default-features = false, features = ["std"] }
+sha2 = { version = "0.10", default-features = false }

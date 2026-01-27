@@ -8,5 +8,7 @@ risc0-build = { path = "../../risc0/risc0/build" }
 
 [dependencies]
 risc0-zkvm = { path = "../../risc0/risc0/zkvm" }
+sha2 = { version = "0.10", default-features = false }
+
 [package.metadata.risc0]
 methods = ["guest"]

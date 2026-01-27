@@ -2988,6 +2988,7 @@ dependencies = [
  "risc0-ffi-methods",
  "risc0-zkvm",
  "serde",
+ "sha2",
 ]
 
 [[package]]
@@ -2996,6 +2997,7 @@ version = "0.1.0"
 dependencies = [
  "risc0-build",
  "risc0-zkvm",
+ "sha2",
 ]
 
 [[package]]
