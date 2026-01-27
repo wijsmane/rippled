@@ -1,0 +1,11 @@
+<map id="ripple::SHAMapZkTxLeafNode" name="ripple::SHAMapZkTxLeafNode">
+<area shape="rect" id="Node000001" title="seperate leaf node for zk transaction Mostly the same except for getType and serialiseForWire" alt="" coords="100,240,317,265"/>
+<area shape="rect" id="Node000002" href="$classripple_1_1SHAMapLeafNode.html" title=" " alt="" coords="9,159,193,185"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,191,194,238,191,242,126,195"/>
+<area shape="rect" id="Node000003" href="$classripple_1_1SHAMapTreeNode.html" title=" " alt="" coords="9,79,192,104"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,118,103,159,98,159,98,118"/>
+<area shape="rect" id="Node000004" href="$structripple_1_1IntrusiveRefCounts.html" title="Implement the strong count, weak count, and bit flags for an intrusive pointer." alt="" coords="5,5,196,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="103,44,103,79,98,79,98,44"/>
+<area shape="rect" id="Node000005" href="$classripple_1_1CountedObject.html" title=" " alt="" coords="217,152,419,192"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="282,202,227,242,224,237,279,198"/>
+</map>

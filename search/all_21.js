@@ -11,6 +11,7 @@ var searchData=
   ['zerohash_8',['zerohash',['../classripple_1_1RPC_1_1LedgerRequestRPC__test.html#abcecdcec6422dc1575eed82af80462f7',1,'ripple::RPC::LedgerRequestRPC_test']]],
   ['zeroonedist_5f_9',['zeroOneDist_',['../classripple_1_1test_1_1RandomAccountParams.html#a214d1020f20f43adc31d7c673a347698',1,'ripple::test::RandomAccountParams']]],
   ['zetta_10',['zetta',['http://en.cppreference.com/w/cpp/numeric/ratio/ratio.html',1,'std']]],
-  ['zoned_5ftime_11',['zoned_time',['http://en.cppreference.com/w/cpp/chrono/zoned_time.html',1,'std::chrono::zoned_time'],['http://en.cppreference.com/w/cpp/chrono/zoned_time/zoned_time.html',1,'std::chrono::zoned_time::zoned_time()']]],
-  ['zoned_5ftraits_12',['zoned_traits',['http://en.cppreference.com/w/cpp/chrono/zoned_traits.html',1,'std::chrono']]]
+  ['zktxpayload_11',['ZkTxPayload',['../structripple_1_1ZkTxPayload.html',1,'ripple']]],
+  ['zoned_5ftime_12',['zoned_time',['http://en.cppreference.com/w/cpp/chrono/zoned_time.html',1,'std::chrono::zoned_time'],['http://en.cppreference.com/w/cpp/chrono/zoned_time/zoned_time.html',1,'std::chrono::zoned_time::zoned_time()']]],
+  ['zoned_5ftraits_13',['zoned_traits',['http://en.cppreference.com/w/cpp/chrono/zoned_traits.html',1,'std::chrono']]]
 ];

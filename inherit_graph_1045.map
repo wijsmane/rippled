@@ -1,33 +1,29 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,299,81,324"/>
-<area shape="rect" id="Node000001" href="$classripple_1_1BookStep.html" title=" " alt="" coords="148,5,363,60"/>
-<area shape="poly" id="edge838_Node000000_Node000001" title=" " alt="" coords="44,285,50,239,64,181,89,121,106,94,128,69,146,55,149,60,131,73,111,97,94,124,69,183,55,240,49,285"/>
-<area shape="rect" id="Node000003" href="$classripple_1_1BookStep.html" title=" " alt="" coords="163,84,347,139"/>
-<area shape="poly" id="edge840_Node000000_Node000003" title=" " alt="" coords="49,285,76,217,99,181,128,149,162,129,164,133,131,153,103,184,81,220,54,287"/>
-<area shape="rect" id="Node000005" href="$classripple_1_1DirectStepI.html" title=" " alt="" coords="149,163,361,203"/>
-<area shape="poly" id="edge842_Node000000_Node000005" title=" " alt="" coords="58,285,87,248,106,229,128,213,152,201,154,206,131,218,110,233,91,251,62,289"/>
-<area shape="rect" id="Node000007" href="$classripple_1_1DirectStepI.html" title=" " alt="" coords="165,227,346,267"/>
-<area shape="poly" id="edge844_Node000000_Node000007" title=" " alt="" coords="87,291,129,277,170,265,171,270,130,282,89,296"/>
-<area shape="rect" id="Node000009" href="$classripple_1_1XRPEndpointStep.html" title=" " alt="" coords="129,291,381,331"/>
-<area shape="poly" id="edge846_Node000000_Node000009" title=" " alt="" coords="95,309,129,309,129,314,95,314"/>
-<area shape="rect" id="Node000011" href="$classripple_1_1XRPEndpointStep.html" title=" " alt="" coords="145,355,366,395"/>
-<area shape="poly" id="edge848_Node000000_Node000011" title=" " alt="" coords="89,326,130,341,171,353,170,358,129,346,87,331"/>
-<area shape="rect" id="Node000013" href="$classripple_1_1BookStep.html" title=" " alt="" coords="171,419,339,459"/>
-<area shape="poly" id="edge850_Node000000_Node000013" title=" " alt="" coords="62,334,91,371,110,390,131,405,172,423,170,428,128,410,106,394,87,375,58,337"/>
-<area shape="rect" id="Node000014" href="$classripple_1_1DirectStepI.html" title=" " alt="" coords="186,483,325,523"/>
-<area shape="poly" id="edge851_Node000000_Node000014" title=" " alt="" coords="54,337,64,368,80,404,102,439,131,469,157,484,187,494,185,499,155,489,128,473,98,443,75,406,59,370,49,338"/>
-<area shape="rect" id="Node000015" href="$classripple_1_1XRPEndpointStep.html" title=" " alt="" coords="166,547,345,587"/>
-<area shape="poly" id="edge852_Node000000_Node000015" title=" " alt="" coords="50,337,56,380,71,433,95,487,111,512,131,533,148,545,167,554,164,558,145,550,128,537,107,515,90,490,66,435,51,381,44,338"/>
-<area shape="rect" id="Node000002" href="$classripple_1_1BookOfferCrossingStep.html" title=" " alt="" coords="453,13,641,53"/>
-<area shape="poly" id="edge839_Node000001_Node000002" title=" " alt="" coords="376,30,453,30,453,35,376,35"/>
-<area shape="rect" id="Node000004" href="$classripple_1_1BookPaymentStep.html" title=" " alt="" coords="454,91,641,131"/>
-<area shape="poly" id="edge841_Node000003_Node000004" title=" " alt="" coords="361,109,454,109,454,114,361,114"/>
-<area shape="rect" id="Node000006" href="$classripple_1_1DirectIOfferCrossingStep.html" title=" " alt="" coords="434,171,661,196"/>
-<area shape="poly" id="edge843_Node000005_Node000006" title=" " alt="" coords="375,181,434,181,434,186,375,186"/>
-<area shape="rect" id="Node000008" href="$classripple_1_1DirectIPaymentStep.html" title=" " alt="" coords="449,235,645,260"/>
-<area shape="poly" id="edge845_Node000007_Node000008" title=" " alt="" coords="360,245,449,245,449,250,360,250"/>
-<area shape="rect" id="Node000010" href="$classripple_1_1XRPEndpointOfferCrossingStep.html" title=" " alt="" coords="456,291,639,331"/>
-<area shape="poly" id="edge847_Node000009_Node000010" title=" " alt="" coords="395,309,456,309,456,314,395,314"/>
-<area shape="rect" id="Node000012" href="$classripple_1_1XRPEndpointPaymentStep.html" title=" " alt="" coords="429,363,665,388"/>
-<area shape="poly" id="edge849_Node000011_Node000012" title=" " alt="" coords="380,373,429,373,429,378,380,378"/>
+<area shape="rect" id="Node000000" href="/__w/rippled/rippled/.build/docs/cppreference-doxygen-web.tag.xml$cpp/error/exception.html" title=" " alt="" coords="5,169,120,195"/>
+<area shape="rect" id="Node000001" href="$structJson_1_1JsonMissingKeyError.html" title=" " alt="" coords="178,5,367,31"/>
+<area shape="poly" id="edge797_Node000000_Node000001" title=" " alt="" coords="73,156,109,97,135,66,167,40,189,28,192,33,169,44,139,70,113,100,78,158"/>
+<area shape="rect" id="Node000002" href="$structJson_1_1JsonTypeMismatchError.html" title=" " alt="" coords="168,55,377,80"/>
+<area shape="poly" id="edge798_Node000000_Node000002" title=" " alt="" coords="83,157,120,122,167,90,199,78,201,83,169,95,123,127,86,161"/>
+<area shape="rect" id="Node000003" href="$structbeast_1_1unit__test_1_1suite_1_1abort__exception.html" title=" " alt="" coords="191,105,354,145"/>
+<area shape="poly" id="edge799_Node000000_Node000003" title=" " alt="" coords="123,163,198,142,200,147,124,168"/>
+<area shape="rect" id="Node000004" href="$structripple_1_1RPC_1_1Status.html" title="Status represents the results of an operation that might fail." alt="" coords="201,169,344,195"/>
+<area shape="poly" id="edge800_Node000000_Node000004" title=" " alt="" coords="134,179,201,179,201,185,134,185"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/.build/docs/cppreference-doxygen-web.tag.xml$cpp/types/bad_cast.html" title=" " alt="" coords="219,219,327,244"/>
+<area shape="poly" id="edge801_Node000000_Node000005" title=" " alt="" coords="131,195,219,216,218,221,130,200"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/.build/docs/cppreference-doxygen-web.tag.xml$cpp/error/logic_error.html" title=" " alt="" coords="213,268,332,293"/>
+<area shape="poly" id="edge803_Node000000_Node000007" title=" " alt="" coords="91,202,127,228,169,253,214,268,212,273,167,258,124,233,87,206"/>
+<area shape="rect" id="Node000009" href="/__w/rippled/rippled/.build/docs/cppreference-doxygen-web.tag.xml$cpp/error/runtime_error.html" title=" " alt="" coords="203,375,342,400"/>
+<area shape="poly" id="edge805_Node000000_Node000009" title=" " alt="" coords="84,204,122,251,170,303,215,342,255,372,252,377,211,346,166,307,118,255,80,207"/>
+<area shape="rect" id="Node000006" href="$structbeast_1_1BadLexicalCast.html" title="Thrown when a conversion is not possible with LexicalCast." alt="" coords="445,211,612,236"/>
+<area shape="poly" id="edge802_Node000005_Node000006" title=" " alt="" coords="341,227,445,223,445,229,341,232"/>
+<area shape="rect" id="Node000008" href="$structripple_1_1test_1_1jtx_1_1parse__error.html" title="Thrown when parse fails." alt="" coords="466,261,591,301"/>
+<area shape="poly" id="edge804_Node000007_Node000008" title=" " alt="" coords="346,278,466,278,466,283,346,283"/>
+<area shape="rect" id="Node000010" href="$structJson_1_1error.html" title=" " alt="" coords="485,325,573,351"/>
+<area shape="poly" id="edge806_Node000009_Node000010" title=" " alt="" coords="352,369,484,344,485,349,353,375"/>
+<area shape="rect" id="Node000011" href="$classripple_1_1SHAMapMissingNode.html" title=" " alt="" coords="425,375,632,400"/>
+<area shape="poly" id="edge807_Node000009_Node000011" title=" " alt="" coords="356,385,425,385,425,390,356,390"/>
+<area shape="rect" id="Node000012" href="$classripple_1_1STObject_1_1FieldErr.html" title=" " alt="" coords="437,424,620,449"/>
+<area shape="poly" id="edge808_Node000009_Node000012" title=" " alt="" coords="353,400,462,421,461,427,352,405"/>
+<area shape="rect" id="Node000013" href="$structripple_1_1bad__expected__access.html" title="Expected is an approximation of std::expected (hoped for in C++23)" alt="" coords="449,474,608,514"/>
+<area shape="poly" id="edge809_Node000009_Node000013" title=" " alt="" coords="310,404,364,432,426,460,459,471,457,476,424,464,362,437,308,409"/>
 </map>
