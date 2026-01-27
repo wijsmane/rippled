@@ -6,6 +6,8 @@ use std::{panic, slice};
 
 use risc0_ffi_methods::{RISC0_FFI_METHODS_GUEST_ELF, RISC0_FFI_METHODS_GUEST_ID};
 
+//just testing proof 
+
 // sha512Half function to compute the first 32 bytes of the SHA-512 hash
 fn sha512_half(data: &[u8]) -> [u8; 32] {
     let mut hasher = Sha512::new();
@@ -16,7 +18,7 @@ fn sha512_half(data: &[u8]) -> [u8; 32] {
     out
 }
 
-/* prove that the given XRPL transaction blob has the given tx hash.
+/* prove that the given XRPL transaction blob has the given tx hash
 
  return:
    0  = success (proof generated & verified)
@@ -24,7 +26,6 @@ fn sha512_half(data: &[u8]) -> [u8; 32] {
   -2  = panic or internal error */
 #[no_mangle]
 pub extern "C" fn risc0_prove_tx(tx_ptr: *const u8, tx_len: usize) -> i32 {
-    // Catch panics
     let result = panic::catch_unwind(|| unsafe {
         if tx_ptr.is_null() || tx_len == 0 {
             return Err(-1);
@@ -60,13 +61,12 @@ pub extern "C" fn risc0_prove_tx(tx_ptr: *const u8, tx_len: usize) -> i32 {
         // Verify the receipt with image ID
         prove_info.receipt.verify(RISC0_FFI_METHODS_GUEST_ID).map_err(|_| -2)?;
 
-        // Optional: you could inspect receipt.journal here or expose it to C++
         Ok(0)
     });
 
     match result {
         Ok(Ok(code)) => code,
         Ok(Err(code)) => code,
-        Err(_) => -2, // panic
+        Err(_) => -2,
     }
 }
