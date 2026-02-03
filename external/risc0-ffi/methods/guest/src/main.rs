@@ -5,43 +5,73 @@ use sha2::{Digest, Sha512};
 
 risc0_zkvm::guest::entry!(main);
 
-/* this is the guest program - add logic to check if transaction is valid (this is the code that will be proven)
-    read tx data env::read()
-    commit result env::commit()
+/* this is the guest program - logic to check if transaction is valid (this is the code that will be proven)
+    read input tx data env::read()
+    commit public outputs env::commit() (anyone can read these, not just verifier)
 */
 
-// XRPL uses sha512Half for txID: SHA-512, then first 32 bytes
-fn sha512_half(data: &[u8]) -> [u8; 32] {
+// sha512half helper
+fn sha512_half_parts(parts: &[&[u8]]) -> [u8; 32] {
     let mut hasher = Sha512::new();
-    hasher.update(data);
-    let result = hasher.finalize();
-
+    for p in parts {
+        hasher.update(p);
+    }
+    let digest = hasher.finalize();
     let mut out = [0u8; 32];
-    out.copy_from_slice(&result[..32]);
+    out.copy_from_slice(&digest[..32]);
     out
 }
 
-// prove that a given transaction blob (private input) actually hashes to the (publicly) claimed XRPL transaction ID
+fn compute_commitment(value_be: &[u8; 8], rho: &[u8; 32], r: &[u8; 32], a_pk: &[u8; 32]) -> [u8; 32] {
+    sha512_half_parts(&[
+        &[0x01],
+        value_be,
+        rho,
+        r,
+        a_pk,
+    ])
+}
+
+// nullifier = sha512Half( 0x02 || a_sk(32) || rho(32) )
+fn compute_nullifier(a_sk: &[u8; 32], rho: &[u8; 32]) -> [u8; 32] {
+    sha512_half_parts(&[
+        &[0x02],
+        a_sk,
+        rho,
+    ])
+}
+
 fn main() {
-    // private input: serialized tx
-    let tx_blob: Vec<u8> = env::read();
+    // read in the same order that the host writes
+    let pub_bytes: Vec<u8> = env::read();
+    let priv_bytes: Vec<u8> = env::read();
 
-    // public input: expected transaction hash
-    let expected_tx_hash: [u8; 32] = env::read();
+    // public = commitment(32) || nullifier(32)
+    assert_eq!(pub_bytes.len(), 64);
 
-    //compute the txID = sha512Half(HashPrefix::transactionID || tx_blob)
-    // HashPrefix::transactionID is "TXN\0" -> 0x54 0x58 0x4E 0x00
-    const TX_PREFIX: [u8; 4] = [0x54, 0x58, 0x4E, 0x00];
+    // split the public bytes to get the computed commitment and nullifier that will be checked
+    let pub_commitment: [u8; 32] = pub_bytes[0..32].try_into().unwrap();
+    let pub_nullifier:  [u8; 32] = pub_bytes[32..64].try_into().unwrap();
 
-    let mut data = Vec::with_capacity(TX_PREFIX.len() + tx_blob.len());
-    data.extend_from_slice(&TX_PREFIX);
-    data.extend_from_slice(&tx_blob);
+    // private = value(8) || rho(32) || r(32) || a_pk(32) || a_sk(32)
+    assert_eq!(priv_bytes.len(), 136);
 
-    let tx_hash = sha512_half(&data);
+    //split to get all the inputs
+    let amount: [u8; 8] = priv_bytes[0..8].try_into().unwrap(); //8 for amount
+    let rho: [u8; 32]     = priv_bytes[8..40].try_into().unwrap(); //32 for uniqueness randomizer
+    let r: [u8; 32]       = priv_bytes[40..72].try_into().unwrap(); //32 for commitment randomness
+    let a_pk: [u8; 32]    = priv_bytes[72..104].try_into().unwrap(); //32 for paying key   
+    let a_sk: [u8; 32]    = priv_bytes[104..136].try_into().unwrap(); //32 for spending key
 
-    // make sure computed hash equals public one
-    assert_eq!(tx_hash, expected_tx_hash);
+    //recompute
+    let cm = compute_commitment(&value_be, &rho, &r, &a_pk);
+    let nf = compute_nullifier(&a_sk, &rho);
 
-    // commit hash to journal (public output) so the host can see what was computed
-    env::commit(&tx_hash);
+    assert_eq!(cm, pub_commitment);
+    assert_eq!(nf, pub_nullifier);
+
+    // commit the public commitment and nullifier to the journal so others can use to verify
+    env::commit(&pub_commitment);
+    env::commit(&pub_nullifier);
+
 }

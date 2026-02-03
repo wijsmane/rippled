@@ -9,8 +9,8 @@ extern "C" {
 #include <stdbool.h>
 
 
-int
-risc0_prove_tx(unsigned char const* tx_ptr, std::size_t tx_len);
+int // private inputs, public inputs, and full tx blob
+risc0_prove_zk_inputs(const uint8_t* pub_ptr, size_t pub_len, const uint8_t* priv_ptr, size_t priv_len);
 
 
 #ifdef __cplusplus
