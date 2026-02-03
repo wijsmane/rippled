@@ -15,7 +15,7 @@ var searchData=
   ['seq_12',['seq',['../classripple_1_1SeqProxy.html#a5f784f2f26fb8ede1c7386011509beada51ec7e9612a7b14a45bce831cb5a9e2b',1,'ripple::SeqProxy']]],
   ['servercounts_13',['ServerCounts',['../namespaceripple_1_1CrawlOptions.html#a3eb1f0ee45e2bebf02e98c910742fa06a002498907e85bf42f9c5eeb3ce3d60f0',1,'ripple::CrawlOptions']]],
   ['serverinfo_14',['ServerInfo',['../namespaceripple_1_1CrawlOptions.html#a3eb1f0ee45e2bebf02e98c910742fa06a423358ab70da686bed8972314f8abc68',1,'ripple::CrawlOptions']]],
-  ['set_15',['set',['../classripple_1_1test_1_1LoanBroker__test.html#a726cf73163e73375798638550a855f01abccf5b61d90937b6315ec1530bc71ee4',1,'ripple::test::LoanBroker_test::Set'],['../classripple_1_1SetSignerList.html#a6a367d4aa89f471f6d9b44eb6a49e2d4a6b13b8b0769f0c541d403b2839af3628',1,'ripple::SetSignerList::set']]],
+  ['set_15',['set',['../classripple_1_1SetSignerList.html#a6a367d4aa89f471f6d9b44eb6a49e2d4a6b13b8b0769f0c541d403b2839af3628',1,'ripple::SetSignerList::set'],['../classripple_1_1test_1_1LoanBroker__test.html#a726cf73163e73375798638550a855f01abccf5b61d90937b6315ec1530bc71ee4',1,'ripple::test::LoanBroker_test::Set']]],
   ['setkeeprounds_16',['setKeepRounds',['../namespaceripple.html#ab21b53ea53b083bb4202fbbcd82ae5d4a866cad0b09656c8a4c38c59f8b089d3f',1,'ripple']]],
   ['share_5fcas_5fobject_17',['share_cas_object',['../classripple_1_1TrafficCount.html#adbaee77c7a063c9aac783e54594aeda7ae974117fa0a7da52af1de0b16e40cf7a',1,'ripple::TrafficCount']]],
   ['share_5ffetch_5fpack_18',['share_fetch_pack',['../classripple_1_1TrafficCount.html#adbaee77c7a063c9aac783e54594aeda7ace6a8a16555daa7e04ba5ccaf9672cb7',1,'ripple::TrafficCount']]],

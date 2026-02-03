@@ -5,5 +5,7 @@ var searchData=
   ['zerocopyinputstream_2',['ZeroCopyInputStream',['../classripple_1_1ZeroCopyInputStream.html#a63bdd32f690ea18dbd3c0cc6734dc82d',1,'ripple::ZeroCopyInputStream']]],
   ['zerocopyoutputstream_3',['ZeroCopyOutputStream',['../classripple_1_1ZeroCopyOutputStream.html#a5e82fa3da78858b5c5b50c2a2382d16c',1,'ripple::ZeroCopyOutputStream']]],
   ['zeroed_4',['zeroed',['../classripple_1_1STAmount.html#af8fda98bf85bb681409a8d601a3f08dc',1,'ripple::STAmount']]],
-  ['zoned_5ftime_5',['zoned_time',['http://en.cppreference.com/w/cpp/chrono/zoned_time/zoned_time.html',1,'std::chrono::zoned_time']]]
+  ['zkhash_5',['zkHash',['../namespaceripple_1_1zkp.html#ad2a1758a80dba53965962fef9001f84c',1,'ripple::zkp']]],
+  ['zknote_6',['zknote',['../structripple_1_1zkp_1_1ZkNote.html#a6a4693232cf382b41e1b5eadf6f19fe9',1,'ripple::zkp::ZkNote::ZkNote()=default'],['../structripple_1_1zkp_1_1ZkNote.html#a6800116ace73eca61634466f5939b5f5',1,'ripple::zkp::ZkNote::ZkNote(uint64_t const &amp;amt, uint256 const &amp;rho_, uint256 const &amp;r_, uint256 const &amp;key_)']]],
+  ['zoned_5ftime_7',['zoned_time',['http://en.cppreference.com/w/cpp/chrono/zoned_time/zoned_time.html',1,'std::chrono::zoned_time']]]
 ];

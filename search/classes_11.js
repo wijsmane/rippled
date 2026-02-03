@@ -114,7 +114,7 @@ var searchData=
   ['ripplecalctestparams_111',['RippleCalcTestParams',['../structripple_1_1test_1_1RippleCalcTestParams.html',1,'ripple::test']]],
   ['rippledcfgguard_112',['RippledCfgGuard',['../classripple_1_1detail_1_1RippledCfgGuard.html',1,'ripple::detail']]],
   ['ripplelinecache_113',['RippleLineCache',['../classripple_1_1RippleLineCache.html',1,'ripple']]],
-  ['risc0_5ftest_114',['Risc0_test',['../classripple_1_1Risc0__test.html',1,'ripple']]],
+  ['risc0_5ftest_114',['Risc0_test',['../classripple_1_1Risc0_1_1Risc0__test.html',1,'ripple::Risc0']]],
   ['robusttransaction_5ftest_115',['RobustTransaction_test',['../classripple_1_1test_1_1RobustTransaction__test.html',1,'ripple::test']]],
   ['roles_5ftest_116',['Roles_test',['../classripple_1_1test_1_1Roles__test.html',1,'ripple::test']]],
   ['root_117',['Root',['../classJson_1_1Object_1_1Root.html',1,'Json::Object']]],

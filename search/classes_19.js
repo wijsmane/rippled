@@ -6,7 +6,8 @@ var searchData=
   ['zerocopyinputstream_3',['ZeroCopyInputStream',['../classripple_1_1ZeroCopyInputStream.html',1,'ripple']]],
   ['zerocopyoutputstream_4',['ZeroCopyOutputStream',['../classripple_1_1ZeroCopyOutputStream.html',1,'ripple']]],
   ['zetta_5',['zetta',['http://en.cppreference.com/w/cpp/numeric/ratio/ratio.html',1,'std']]],
-  ['zktxpayload_6',['ZkTxPayload',['../structripple_1_1ZkTxPayload.html',1,'ripple']]],
-  ['zoned_5ftime_7',['zoned_time',['http://en.cppreference.com/w/cpp/chrono/zoned_time.html',1,'std::chrono']]],
-  ['zoned_5ftraits_8',['zoned_traits',['http://en.cppreference.com/w/cpp/chrono/zoned_traits.html',1,'std::chrono']]]
+  ['zknote_6',['ZkNote',['../structripple_1_1zkp_1_1ZkNote.html',1,'ripple::zkp']]],
+  ['zktxpayload_7',['ZkTxPayload',['../structripple_1_1ZkTxPayload.html',1,'ripple']]],
+  ['zoned_5ftime_8',['zoned_time',['http://en.cppreference.com/w/cpp/chrono/zoned_time.html',1,'std::chrono']]],
+  ['zoned_5ftraits_9',['zoned_traits',['http://en.cppreference.com/w/cpp/chrono/zoned_traits.html',1,'std::chrono']]]
 ];
