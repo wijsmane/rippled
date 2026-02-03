@@ -64,7 +64,7 @@ fn main() {
     let a_sk: [u8; 32]    = priv_bytes[104..136].try_into().unwrap(); //32 for spending key
 
     //recompute
-    let cm = compute_commitment(&value_be, &rho, &r, &a_pk);
+    let cm = compute_commitment(&amount, &rho, &r, &a_pk);
     let nf = compute_nullifier(&a_sk, &rho);
 
     assert_eq!(cm, pub_commitment);

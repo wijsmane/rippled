@@ -12,7 +12,7 @@ use risc0_ffi_methods::{RISC0_FFI_METHODS_GUEST_ELF, RISC0_FFI_METHODS_GUEST_ID}
 //  -1  = null pointer / empty
 //  -2  = internal error / panic / prove/verify failure
 #[no_mangle]
-pub extern "C" fn risc0_prove_zk_inputs(pub_ptr: *const u8, pub_len: usize, priv_ptr: *const u8, priv_len: usize -> i32 {
+pub extern "C" fn risc0_prove_zk_inputs(pub_ptr: *const u8, pub_len: usize, priv_ptr: *const u8, priv_len: usize) -> i32 {
     let result = panic::catch_unwind(|| unsafe {
         // make sure inputs are there
         if pub_ptr.is_null() || priv_ptr.is_null() || pub_len == 0 || priv_len == 0 {

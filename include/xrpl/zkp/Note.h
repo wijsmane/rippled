@@ -32,6 +32,30 @@ namespace zkp {
         }
     };
 
+    // HELPERS for serialising
+
+    // takes a 64 bit integer and appends it to the blob (be = big endia = most significant byte first)
+    inline void
+    append_u64_be(Blob& out, std::uint64_t v)
+    {
+        for (int i = 7; i >= 0; --i)
+            out.push_back(static_cast<std::uint8_t>((v >> (8 * i)) & 0xFF));
+    }
+
+    // takes uint256 and appends the bytes it represents to the blob
+    inline void
+    append_u256(Blob& out, uint256 const& x)
+    {
+        out.insert(out.end(), x.begin(), x.end());
+    }
+
+    // XRPL hash, SHA-512 then take first 32 bytes
+    inline uint256
+    zkHash(Blob const& data)
+    {
+        return sha512Half(makeSlice(data));
+    }
+
     //  commitment = sha512Half( 0x01 || amount_be(8) || rho(32) || r(32) || payingKey(32) )
     // 0x01 flag to distinguish from nullifiers
     inline uint256
@@ -62,30 +86,6 @@ namespace zkp {
         append_u256(buf, note.rho);
 
         return zkHash(buf);
-    }
-
-    // HELPERS for serialising
-
-    // takes a 64 bit integer and appends it to the blob (be = big endia = most significant byte first)
-    inline void
-    append_u64_be(Blob& out, std::uint64_t v)
-    {
-        for (int i = 7; i >= 0; --i)
-            out.push_back(static_cast<std::uint8_t>((v >> (8 * i)) & 0xFF));
-    }
-
-    // takes uint256 and appends the bytes it represents to the blob
-    inline void
-    append_u256(Blob& out, uint256 const& x)
-    {
-        out.insert(out.end(), x.begin(), x.end());
-    }
-
-    // XRPL hash, SHA-512 then take first 32 bytes
-    inline uint256
-    zkHash(Blob const& data)
-    {
-        return sha512Half(makeSlice(data));
     }
 
 }
