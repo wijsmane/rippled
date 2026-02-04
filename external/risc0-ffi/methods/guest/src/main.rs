@@ -42,16 +42,8 @@ fn compute_nullifier(a_sk: &[u8; 32], rho: &[u8; 32]) -> [u8; 32] {
 }
 
 fn main() {
-    // read in the same order that the host writes
-    let pub_bytes: Vec<u8> = env::read();
+    // read from host
     let priv_bytes: Vec<u8> = env::read();
-
-    // public = commitment(32) || nullifier(32)
-    assert_eq!(pub_bytes.len(), 64);
-
-    // split the public bytes to get the computed commitment and nullifier that will be checked
-    let pub_commitment: [u8; 32] = pub_bytes[0..32].try_into().unwrap();
-    let pub_nullifier:  [u8; 32] = pub_bytes[32..64].try_into().unwrap();
 
     // private = value(8) || rho(32) || r(32) || a_pk(32) || a_sk(32)
     assert_eq!(priv_bytes.len(), 136);
@@ -63,15 +55,14 @@ fn main() {
     let a_pk: [u8; 32]    = priv_bytes[72..104].try_into().unwrap(); //32 for paying key   
     let a_sk: [u8; 32]    = priv_bytes[104..136].try_into().unwrap(); //32 for spending key
 
-    //recompute
+    // compute
     let cm = compute_commitment(&amount, &rho, &r, &a_pk);
     let nf = compute_nullifier(&a_sk, &rho);
 
-    assert_eq!(cm, pub_commitment);
-    assert_eq!(nf, pub_nullifier);
-
-    // commit the public commitment and nullifier to the journal so others can use to verify
-    env::commit(&pub_commitment);
-    env::commit(&pub_nullifier);
-
+    // commit the commitment and nullifier to the journal so they can be put into the transaction data
+    let mut j = Vec::with_capacity(64);
+    j.extend_from_slice(&cm);
+    j.extend_from_slice(&nf);
+    env::commit(&j);
+    
 }
