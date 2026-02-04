@@ -1174,9 +1174,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1SHAMapTxPlusMetaLeafNode.html">SHAMapTxPlusMetaLeafNode</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A leaf node for a transaction and its associated metadata.  <a href="classripple_1_1SHAMapTxPlusMetaLeafNode.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1SHAMapZkTxLeafNode.html">SHAMapZkTxLeafNode</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">seperate leaf node for zk transaction Mostly the same except for getType and serialiseForWire  <a href="classripple_1_1SHAMapZkTxLeafNode.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1SharedIntrusive.html">SharedIntrusive</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A shared intrusive pointer class that supports weak pointers.  <a href="classripple_1_1SharedIntrusive.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1539,8 +1536,6 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1ZeroCopyOutputStream.html">ZeroCopyOutputStream</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements <a class="el" href="classripple_1_1ZeroCopyOutputStream.html" title="Implements ZeroCopyOutputStream around a Streambuf.">ZeroCopyOutputStream</a> around a Streambuf.  <a href="classripple_1_1ZeroCopyOutputStream.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structripple_1_1ZkTxPayload.html">ZkTxPayload</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
@@ -2515,14 +2510,10 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespaceripple.html#a5d9fe757c37a7602a883d30b14e1bf3ca88c189a42c87aa49d667fc8ab76bc323">FREE</a> = 3
  }</td></tr>
 <tr class="separator:a5d9fe757c37a7602a883d30b14e1bf3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0356b1de00f841c554c830be509dd58" id="r_ae0356b1de00f841c554c830be509dd58"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#ae0356b1de00f841c554c830be509dd58">SHAMapNodeType</a> { <br />
-&#160;&#160;<a class="el" href="namespaceripple.html#ae0356b1de00f841c554c830be509dd58a603cc9fa7c68a8ccd6d25fbb0dd83248">tnINNER</a> = 1
+<tr class="memitem:ae0356b1de00f841c554c830be509dd58" id="r_ae0356b1de00f841c554c830be509dd58"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#ae0356b1de00f841c554c830be509dd58">SHAMapNodeType</a> { <a class="el" href="namespaceripple.html#ae0356b1de00f841c554c830be509dd58a603cc9fa7c68a8ccd6d25fbb0dd83248">tnINNER</a> = 1
 , <a class="el" href="namespaceripple.html#ae0356b1de00f841c554c830be509dd58a9b447756a7d7ddf4e828beeb38d079f6">tnTRANSACTION_NM</a> = 2
 , <a class="el" href="namespaceripple.html#ae0356b1de00f841c554c830be509dd58a5065e45315e5eab27c63b2dabd8ad150">tnTRANSACTION_MD</a> = 3
 , <a class="el" href="namespaceripple.html#ae0356b1de00f841c554c830be509dd58ab2364e40a67b08ba6170314afc07d07b">tnACCOUNT_STATE</a> = 4
-, <br />
-&#160;&#160;<a class="el" href="namespaceripple.html#ae0356b1de00f841c554c830be509dd58a67579733573b3d195ef6db2711a1db0e">tnZK_TRANSACTION_NM</a> = 5
-<br />
  }</td></tr>
 <tr class="separator:ae0356b1de00f841c554c830be509dd58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22768e0a41b646442c98d38f2f2a307b" id="r_a22768e0a41b646442c98d38f2f2a307b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307b">LedgerNameSpace</a> : std::uint16_t { <br />
@@ -6341,8 +6332,6 @@ Variables</h2></td></tr>
 <tr class="separator:a32350973ba137a0eb4153335a37dd765"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfb0a178d3b182e58fb4736dc90347f0" id="r_acfb0a178d3b182e58fb4736dc90347f0"><td class="memItemLeft" align="right" valign="top">static constexpr unsigned char const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#acfb0a178d3b182e58fb4736dc90347f0">wireTypeTransactionWithMeta</a> = 4</td></tr>
 <tr class="separator:acfb0a178d3b182e58fb4736dc90347f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbc0ceb3fabb6b422e28478b6d9c5313" id="r_abbc0ceb3fabb6b422e28478b6d9c5313"><td class="memItemLeft" align="right" valign="top">static constexpr unsigned char const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#abbc0ceb3fabb6b422e28478b6d9c5313">wireTypeZkTransaction</a> = 5</td></tr>
-<tr class="separator:abbc0ceb3fabb6b422e28478b6d9c5313"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1330e8eb921148a60725bcfc77d0a093" id="r_a1330e8eb921148a60725bcfc77d0a093"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classripple_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#a1330e8eb921148a60725bcfc77d0a093">one</a> {1000000000000000, -15, <a class="el" href="structripple_1_1Number_1_1unchecked.html">Number::unchecked</a>{}}</td></tr>
 <tr class="separator:a1330e8eb921148a60725bcfc77d0a093"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cce8c2bb8c05b8dc96301e32267979b" id="r_a2cce8c2bb8c05b8dc96301e32267979b"><td class="memItemLeft" align="right" valign="top">static <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="classripple_1_1HTTPClientSSLContext.html">HTTPClientSSLContext</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#a2cce8c2bb8c05b8dc96301e32267979b">httpClientSSLContext</a></td></tr>
@@ -10136,10 +10125,9 @@ ledger.
 <tr><td class="fieldname"><a id="ae0356b1de00f841c554c830be509dd58a9b447756a7d7ddf4e828beeb38d079f6" name="ae0356b1de00f841c554c830be509dd58a9b447756a7d7ddf4e828beeb38d079f6"></a>tnTRANSACTION_NM&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ae0356b1de00f841c554c830be509dd58a5065e45315e5eab27c63b2dabd8ad150" name="ae0356b1de00f841c554c830be509dd58a5065e45315e5eab27c63b2dabd8ad150"></a>tnTRANSACTION_MD&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ae0356b1de00f841c554c830be509dd58ab2364e40a67b08ba6170314afc07d07b" name="ae0356b1de00f841c554c830be509dd58ab2364e40a67b08ba6170314afc07d07b"></a>tnACCOUNT_STATE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ae0356b1de00f841c554c830be509dd58a67579733573b3d195ef6db2711a1db0e" name="ae0356b1de00f841c554c830be509dd58a67579733573b3d195ef6db2711a1db0e"></a>tnZK_TRANSACTION_NM&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="SHAMapTreeNode_8h_source.html#l00025">25</a> of file <a class="el" href="SHAMapTreeNode_8h_source.html">SHAMapTreeNode.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SHAMapTreeNode_8h_source.html#l00024">24</a> of file <a class="el" href="SHAMapTreeNode_8h_source.html">SHAMapTreeNode.h</a>.</p>
 
 </div>
 </div>
@@ -59105,30 +59093,6 @@ template&lt;class T &gt; </div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="SHAMapTreeNode_8h_source.html#l00022">22</a> of file <a class="el" href="SHAMapTreeNode_8h_source.html">SHAMapTreeNode.h</a>.</p>
-
-</div>
-</div>
-<a id="abbc0ceb3fabb6b422e28478b6d9c5313" name="abbc0ceb3fabb6b422e28478b6d9c5313"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbc0ceb3fabb6b422e28478b6d9c5313">&#9670;&#160;</a></span>wireTypeZkTransaction</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr unsigned char const ripple::wireTypeZkTransaction = 5</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="SHAMapTreeNode_8h_source.html#l00023">23</a> of file <a class="el" href="SHAMapTreeNode_8h_source.html">SHAMapTreeNode.h</a>.</p>
 
 </div>
 </div>

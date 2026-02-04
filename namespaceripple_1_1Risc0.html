@@ -93,8 +93,6 @@ Functions</h2></td></tr>
 <tr class="separator:a179ba7816bd145adacc8ef2f979790b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46071ec5ecb9c4c6a36ec2f9cbc586e6" id="r_a46071ec5ecb9c4c6a36ec2f9cbc586e6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple_1_1Risc0.html#a46071ec5ecb9c4c6a36ec2f9cbc586e6">spendKeyFromString</a> (<a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> const &amp;s)</td></tr>
 <tr class="separator:a46071ec5ecb9c4c6a36ec2f9cbc586e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a643a6647005e594c376a0ea4e2b5fbb6" id="r_a643a6647005e594c376a0ea4e2b5fbb6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespaceripple.html#ab1f2184bb5938b5508798cd47a561a21">Blob</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple_1_1Risc0.html#a643a6647005e594c376a0ea4e2b5fbb6">pack_public</a> (<a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a> const &amp;commitment, <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a> const &amp;nullifier)</td></tr>
-<tr class="separator:a643a6647005e594c376a0ea4e2b5fbb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8820a3a6c50bdad36dbd49af27603e63" id="r_a8820a3a6c50bdad36dbd49af27603e63"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespaceripple.html#ab1f2184bb5938b5508798cd47a561a21">Blob</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple_1_1Risc0.html#a8820a3a6c50bdad36dbd49af27603e63">pack_private</a> (<a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint64_t</a> amount, <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a> const &amp;rho, <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a> const &amp;r, <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a> const &amp;a_pk, <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a> const &amp;a_sk)</td></tr>
 <tr class="separator:a8820a3a6c50bdad36dbd49af27603e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e329aa658e77eeaae5de3546c365cd9" id="r_a8e329aa658e77eeaae5de3546c365cd9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple_1_1Risc0.html#a8e329aa658e77eeaae5de3546c365cd9">BEAST_DEFINE_TESTSUITE</a> (Risc0, protocol, ripple)</td></tr>
@@ -183,44 +181,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a643a6647005e594c376a0ea4e2b5fbb6" name="a643a6647005e594c376a0ea4e2b5fbb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a643a6647005e594c376a0ea4e2b5fbb6">&#9670;&#160;</a></span>pack_public()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="namespaceripple.html#ab1f2184bb5938b5508798cd47a561a21">Blob</a> ripple::Risc0::pack_public </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>commitment</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>nullifier</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="risc0test_8cpp_source.html#l00051">51</a> of file <a class="el" href="risc0test_8cpp_source.html">risc0test.cpp</a>.</p>
-
-</div>
-</div>
 <a id="a8820a3a6c50bdad36dbd49af27603e63" name="a8820a3a6c50bdad36dbd49af27603e63"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8820a3a6c50bdad36dbd49af27603e63">&#9670;&#160;</a></span>pack_private()</h2>
 
@@ -273,7 +233,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="risc0test_8cpp_source.html#l00061">61</a> of file <a class="el" href="risc0test_8cpp_source.html">risc0test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="risc0test_8cpp_source.html#l00052">52</a> of file <a class="el" href="risc0test_8cpp_source.html">risc0test.cpp</a>.</p>
 
 </div>
 </div>
