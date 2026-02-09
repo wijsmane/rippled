@@ -71,6 +71,8 @@ class Risc0_test : public beast::unit_test::suite
 public:
     void testProveNoteCommitmentNullifier()
     {
+        std::cout << "start test ProveNoteCommitmentNullifier...\n" << std::endl;
+
         std::uint64_t amount = 1000;
 
         uint256 rho  = generateRandomUint256();
@@ -78,29 +80,39 @@ public:
         uint256 a_pk = generateRandomUint256();                 // recipient key
         uint256 a_sk = spendKeyFromString(generateRandomSpendKey()); // private spend key
 
+        std::cout << "generated witness inputs\n" << std::endl;
 
         Blob priv_bytes = pack_private(amount, rho, r, a_pk, a_sk);
 
-        // ensure bytes are packed correctly before trying to run the prover
         BEAST_EXPECT(priv_bytes.size() == 136);
+        std::cout << "witness input bytes packed successfully, now running prover\n" << std::endl;
 
         Risc0Bytes receipt = risc0_prove_zk_inputs(priv_bytes.data(), priv_bytes.size());
 
-        BEAST_EXPECT(receipt.len > 0);
-
-        if (receipt.ptr && receipt.len)
+        if (!(receipt.ptr && receipt.len))
         {
-            int const vrc = risc0_verify_receipt(receipt.ptr, receipt.len); // verify receipt (should technically be done by validators)
-            BEAST_EXPECT(vrc == 0);
-
-            Blob receipt_blob(receipt.ptr, receipt.ptr + receipt.len); // this would be to store the receipt in a transaction
-            BEAST_EXPECT(!receipt_blob.empty());
+            std::cout << "[zkp/Risc0] ERROR: receipt is null/empty\n";
+            return;
         }
+
+        BEAST_EXPECT(receipt.len > 0);
+        std::cout <<"proof generated and receipt was received\n" <<std::endl;
+
+        
+
+        int const vrc = risc0_verify_receipt(receipt.ptr, receipt.len); // verify receipt (should technically be done by validators)
+        BEAST_EXPECT(vrc == 0);
+        std::cout << "receipt verified successfully\n" << std::endl;
+
+        Blob receipt_blob(receipt.ptr, receipt.ptr + receipt.len); // create a blob to store the receipt somewhere
+        BEAST_EXPECT(!receipt_blob.empty());
+        std::cout << "blob created to store receipt" << std::endl;
 
         Risc0Bytes journal = risc0_receipt_get_journal(receipt.ptr, receipt.len);
         BEAST_EXPECT(journal.ptr != nullptr);
         BEAST_EXPECT(journal.len == 64); // expect cm+nf (32 + 32)
         //std::cout << "Journal length: " << journal.len << std::endl;
+        std::cout<< "journal retreived successfully" << std::endl;
 
         if (journal.ptr && journal.len) {
             risc0_free_bytes(journal.ptr, journal.len);
@@ -138,7 +150,7 @@ public:
     }
 };
 
-BEAST_DEFINE_TESTSUITE(Risc0, protocol, ripple);
+BEAST_DEFINE_TESTSUITE(Risc0, zkp, ripple);
 
 }
 }

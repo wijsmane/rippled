@@ -10,8 +10,6 @@
 #include <xrpl/shamap/SHAMapTxLeafNode.h>
 #include <xrpl/shamap/SHAMapTxPlusMetaLeafNode.h>
 
-#include <xrpl/shamap/SHAMapZkTxLeafNode.h>
-
 namespace ripple {
 
 intr_ptr::SharedPtr<SHAMapTreeNode>
@@ -28,23 +26,6 @@ SHAMapTreeNode::makeTransaction(
             std::move(item), 0, hash);
 
     return intr_ptr::make_shared<SHAMapTxLeafNode>(std::move(item), 0);
-}
-
-//new for zk
-intr_ptr::SharedPtr<SHAMapTreeNode>
-SHAMapTreeNode::makeZkTransaction(
-    Slice data,
-    SHAMapHash const& hash,
-    bool hashValid)
-{
-    auto item =
-        make_shamapitem(sha512Half(HashPrefix::transactionID, data), data);
-
-    if (hashValid) //using zk leaf node
-        return intr_ptr::make_shared<SHAMapZkTxLeafNode>(
-            std::move(item), 0, hash);
-
-    return intr_ptr::make_shared<SHAMapZkTxLeafNode>(std::move(item), 0);
 }
 
 
@@ -137,11 +118,6 @@ SHAMapTreeNode::makeFromWire(Slice rawNode)
 
     if (type == wireTypeTransactionWithMeta)
         return makeTransactionWithMeta(rawNode, hash, hashValid);
-
-    //new for ZK
-    //to make sure a zk tx leaf node type is constructed
-    if (type == wireTypeZkTransaction)
-        return makeZkTransaction(rawNode, hash, hashValid);
 
     Throw<std::runtime_error>(
         "wire: Unknown type (" + std::to_string(type) + ")");
