@@ -205,6 +205,11 @@ TYPED_SFIELD(sfLoanBrokerID,             UINT256,   37,
     SField::sMD_PseudoAccount | SField::sMD_Default)
 TYPED_SFIELD(sfLoanID,                   UINT256,   38)
 
+// new for ZK
+TYPED_SFIELD(sfZkNullifier,              UINT256,   39)
+TYPED_SFIELD(sfZkCommitment,             UINT256,   40)
+
+
 // number (common)
 TYPED_SFIELD(sfNumber,                   NUMBER,     1)
 TYPED_SFIELD(sfAssetsAvailable,          NUMBER,     2)

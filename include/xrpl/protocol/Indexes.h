@@ -34,6 +34,14 @@ class SeqProxy;
 */
 namespace keylet {
 
+// new for ZK
+Keylet
+zkNullifier(uint256 const& nullifier) noexcept;
+
+Keylet
+zkCommitment(uint256 const& commitment) noexcept;
+
+
 /** AccountID root */
 Keylet
 account(AccountID const& id) noexcept;

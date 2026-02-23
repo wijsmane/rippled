@@ -44,6 +44,77 @@ SetAccount::getFlagsMask(PreflightContext const& ctx)
     return tfAccountSetMask;
 }
 
+// new for zkp
+struct ZkpPayload
+{
+    ripple::uint256 cm;
+    ripple::uint256 nf;
+};
+
+// Return payload if present + valid.
+// If a zkp memo is present but malformed (wrong length / multiple), set *malformed=true and return nullopt.
+// If no zkp memo is present, set *malformed=false and return nullopt.
+std::optional<ZkpPayload>
+extractZkpPayload(ripple::STTx const& tx, bool* malformed)
+{
+    using namespace ripple;
+
+    if (malformed)
+        *malformed = false;
+
+    if (!tx.isFieldPresent(sfMemos))
+        return std::nullopt;
+
+    auto const& memos = tx.getFieldArray(sfMemos);
+
+    std::optional<ZkpPayload> found;
+
+    for (auto const& item : memos)
+    {
+        STObject const& memoObj = item.isFieldPresent(sfMemo)
+            ? item.getFieldObject(sfMemo)
+            : item;
+
+        if (!memoObj.isFieldPresent(sfMemoType) ||
+            !memoObj.isFieldPresent(sfMemoFormat) ||
+            !memoObj.isFieldPresent(sfMemoData))
+            continue;
+
+        auto const typeBlob = memoObj.getFieldVL(sfMemoType);
+        auto const fmtBlob  = memoObj.getFieldVL(sfMemoFormat);
+        auto const dataBlob = memoObj.getFieldVL(sfMemoData);
+
+        std::string const memoType(typeBlob.begin(), typeBlob.end());
+        std::string const memoFmt(fmtBlob.begin(), fmtBlob.end());
+
+        if (memoType != "zkp" || memoFmt != "cmnf-v1")
+            continue;
+
+        // zkp memo present: validate
+        if (dataBlob.size() != 64)
+        {
+            if (malformed) *malformed = true;
+            return std::nullopt;
+        }
+
+        ZkpPayload p;
+        std::memcpy(p.cm.begin(), dataBlob.data() + 0,  32);
+        std::memcpy(p.nf.begin(), dataBlob.data() + 32, 32);
+
+        if (found) // multiple zkp memos
+        {
+            if (malformed) *malformed = true;
+            return std::nullopt;
+        }
+
+        found = p;
+    }
+
+    return found;
+}
+
+
+
 NotTEC
 SetAccount::preflight(PreflightContext const& ctx)
 {
@@ -161,6 +232,16 @@ SetAccount::preflight(PreflightContext const& ctx)
         tx.isFieldPresent(sfNFTokenMinter))
         return temMALFORMED;
 
+    // new for ZK: field validation
+    bool malformed = false;
+    (void)extractZkpPayload(ctx.tx, &malformed);
+
+    if (malformed)
+    {
+        JLOG(j.trace()) << "Malformed tx: invalid zkp memo.";
+        return temMALFORMED;
+    }
+
     return tesSUCCESS;
 }
 
@@ -230,6 +311,23 @@ SetAccount::preclaim(PreclaimContext const& ctx)
     if (!sle)
         return terNO_ACCOUNT;
 
+    // new for zk: make sure nullifier does not already exist
+    bool malformed = false;
+    if (auto const payload = extractZkpPayload(ctx.tx, &malformed))
+    {
+        if (ctx.view.read(keylet::zkNullifier(payload->nf)))
+        {
+            JLOG(ctx.j.trace()) << "ZKP spend rejected: nullifier already exists.";
+            return tecDUPLICATE;
+        }
+    }
+    else if (malformed)
+    {
+        //should be caught by preflight but just in case
+        JLOG(ctx.j.trace()) << "Malformed tx: invalid zkp memo in preclaim.";
+        return temMALFORMED;
+    }
+
     std::uint32_t const uFlagsIn = sle->getFieldU32(sfFlags);
 
     std::uint32_t const uSetFlag = ctx.tx.getFieldU32(sfSetFlag);
@@ -253,7 +351,6 @@ SetAccount::preclaim(PreclaimContext const& ctx)
     //
     // Clawback
     //
-    if (ctx.view.rules().enabled(featureClawback))
     {
         if (uSetFlag == asfAllowTrustLineClawback)
         {
@@ -634,6 +731,31 @@ SetAccount::doApply()
 
     if (uFlagsIn != uFlagsOut)
         sle->setFieldU32(sfFlags, uFlagsOut);
+
+    // new for zk: insert new ledger entries for cm and nf
+    if (auto const payload = extractZkpPayload(tx, nullptr))
+    {
+        // safety re-check to ensure nullifier not spent already
+        if (view().read(keylet::zkNullifier(payload->nf)))
+            return tecDUPLICATE;
+
+        //insert commitment entry
+        {
+            auto const k = keylet::zkCommitment(payload->cm);
+            auto zsle = std::make_shared<SLE>(k);
+            zsle->setFieldH256(sfZkCommitment, payload->cm);
+            view().insert(zsle);
+        }
+
+        //insert nullifier entry (mark spent)
+        {
+            auto const k = keylet::zkNullifier(payload->nf);
+            auto zsle = std::make_shared<SLE>(k);
+            zsle->setFieldH256(sfZkNullifier, payload->nf);
+            view().insert(zsle);
+        }
+    }
+
 
     ctx_.view().update(sle);
 

@@ -603,5 +603,18 @@ LEDGER_ENTRY(ltLOAN, 0x0089, Loan, loan, ({
     {sfLoanScale,                soeDEFAULT},
 }))
 
+// ledger object representing a spent nullifier (prevents double spend)
+//  \sa keylet::zkNullifier
+LEDGER_ENTRY(ltZK_NULLIFIER, 0x008A, ZKNullifier, zk_nullifier, ({
+    {sfZkNullifier,        soeREQUIRED},
+}))
+
+// ledger object representing a note commitment (records note existence)
+//  \sa keylet::zkCommitment
+LEDGER_ENTRY(ltZK_COMMITMENT, 0x008B, ZKCommitment, zk_commitment, ({
+    {sfZkCommitment,       soeREQUIRED},
+}))
+
+
 #undef EXPAND
 #undef LEDGER_ENTRY_DUPLICATE

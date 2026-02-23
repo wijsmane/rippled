@@ -80,6 +80,11 @@ enum class LedgerNameSpace : std::uint16_t {
     LOAN_BROKER = 'l',  // lower-case L
     LOAN = 'L',
 
+    //new for zk
+    ZK_NULLIFIER = 'Z',
+    ZK_COMMITMENT = 'z',
+
+
     // No longer used or supported. Left here to reserve the space
     // to avoid accidental reuse.
     CONTRACT [[deprecated]] = 'c',
@@ -574,6 +579,22 @@ permissionedDomain(uint256 const& domainID) noexcept
 {
     return {ltPERMISSIONED_DOMAIN, domainID};
 }
+
+//new for ZK
+Keylet
+zkNullifier(uint256 const& nullifier) noexcept
+{
+    return {
+        ltZK_NULLIFIER, indexHash(LedgerNameSpace::ZK_NULLIFIER, nullifier)};
+}
+
+Keylet
+zkCommitment(uint256 const& commitment) noexcept
+{
+    return {
+        ltZK_COMMITMENT, indexHash(LedgerNameSpace::ZK_COMMITMENT, commitment)};
+}
+
 
 }  // namespace keylet
 

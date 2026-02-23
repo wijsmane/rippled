@@ -31,6 +31,7 @@ pub extern "C" fn risc0_free_bytes(ptr: *mut u8, len: usize) {
 }
 
 // prove a ZK statement using private witness: priv_bytes
+//      right now, the proof is that these journal outputs are derived from the private inputs
 
 // return receipt bytes
 //   0  = success (proof generated)

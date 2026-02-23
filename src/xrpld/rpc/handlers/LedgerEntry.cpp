@@ -38,6 +38,36 @@ parseIndex(Json::Value const& params, Json::StaticString const fieldName)
     return parseObjectID(params, fieldName, "hex string");
 }
 
+//new for ZK
+static Expected<uint256, Json::Value>
+parseZKNullifier(Json::Value const& params, Json::StaticString const fieldName)
+{
+    if (!params.isObject())
+        return parseObjectID(params, fieldName);
+
+    auto const nf = LedgerEntryHelpers::requiredUInt256(
+        params, jss::zk_nullifier, "malformedNullifier");
+    if (!nf)
+        return Unexpected(nf.error());
+
+    return keylet::zkNullifier(*nf).key;
+}
+
+static Expected<uint256, Json::Value>
+parseZKCommitment(Json::Value const& params, Json::StaticString const fieldName)
+{
+    if (!params.isObject())
+        return parseObjectID(params, fieldName);
+
+    auto const cm = LedgerEntryHelpers::requiredUInt256(
+        params, jss::zk_commitment, "malformedCommitment");
+    if (!cm)
+        return Unexpected(cm.error());
+
+    return keylet::zkCommitment(*cm).key;
+}
+
+
 static Expected<uint256, Json::Value>
 parseAccountRoot(Json::Value const& params, Json::StaticString const fieldName)
 {

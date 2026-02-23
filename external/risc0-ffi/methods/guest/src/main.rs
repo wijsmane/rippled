@@ -22,13 +22,17 @@ fn sha512_half_parts(parts: &[&[u8]]) -> [u8; 32] {
     out
 }
 
-fn compute_commitment(value_be: &[u8; 8], rho: &[u8; 32], r: &[u8; 32], a_pk: &[u8; 32]) -> [u8; 32] {
+// commitment = sha512Half( 0x01 || value(8) || rho(32) || r(32) || a_pk(32) || bind(32) )
+// bind is to associate the cm/nf with the transaction, so that even if the memo is copied the transaction remains valid
+fn compute_commitment(value_be: &[u8; 8], rho: &[u8; 32], r: &[u8; 32], a_pk: &[u8; 32], bind: &[u8; 32],
+) -> [u8; 32] {
     sha512_half_parts(&[
         &[0x01],
         value_be,
         rho,
         r,
         a_pk,
+        bind,
     ])
 }
 
@@ -37,7 +41,7 @@ fn compute_nullifier(a_sk: &[u8; 32], rho: &[u8; 32]) -> [u8; 32] {
     sha512_half_parts(&[
         &[0x02],
         a_sk,
-        rho,
+        rho
     ])
 }
 
@@ -45,8 +49,8 @@ fn main() {
     // read from host
     let priv_bytes: Vec<u8> = env::read();
 
-    // private = value(8) || rho(32) || r(32) || a_pk(32) || a_sk(32)
-    assert_eq!(priv_bytes.len(), 136);
+    // private = value(8) || rho(32) || r(32) || a_pk(32) || a_sk(32 || bind(32))
+    assert_eq!(priv_bytes.len(), 168);
 
     //split to get all the inputs
     let amount: [u8; 8] = priv_bytes[0..8].try_into().unwrap(); //8 for amount
@@ -54,9 +58,10 @@ fn main() {
     let r: [u8; 32]       = priv_bytes[40..72].try_into().unwrap(); //32 for commitment randomness
     let a_pk: [u8; 32]    = priv_bytes[72..104].try_into().unwrap(); //32 for paying key   
     let a_sk: [u8; 32]    = priv_bytes[104..136].try_into().unwrap(); //32 for spending key
+    let bind: [u8; 32]    = priv_bytes[136..168].try_into().unwrap(); //32 for bind
 
     // compute
-    let cm = compute_commitment(&amount, &rho, &r, &a_pk);
+    let cm = compute_commitment(&amount, &rho, &r, &a_pk, &bind);
     let nf = compute_nullifier(&a_sk, &rho);
 
     // commit the commitment and nullifier to the journal so they can be put into the transaction data
