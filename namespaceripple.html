@@ -147,8 +147,6 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespaceripple_1_1Resource" id="r_namespaceripple_1_1Resource"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple_1_1Resource.html">Resource</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespaceripple_1_1Risc0" id="r_namespaceripple_1_1Risc0"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple_1_1Risc0.html">Risc0</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespaceripple_1_1RPC" id="r_namespaceripple_1_1RPC"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple_1_1RPC.html">RPC</a></td></tr>
 <tr class="memdesc:namespaceripple_1_1RPC"><td class="mdescLeft">&#160;</td><td class="mdescRight">API version numbers used in later API versions. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1537,6 +1535,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1ZeroCopyOutputStream.html">ZeroCopyOutputStream</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements <a class="el" href="classripple_1_1ZeroCopyOutputStream.html" title="Implements ZeroCopyOutputStream around a Streambuf.">ZeroCopyOutputStream</a> around a Streambuf.  <a href="classripple_1_1ZeroCopyOutputStream.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structripple_1_1ZkpPayload.html">ZkpPayload</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
@@ -2559,10 +2559,12 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba92874a346cd096082b8b9489664c6e49">LOAN_BROKER</a> = 'l'
 , <a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba4c9e7581028a01fc71dfc3997bd40912">LOAN</a> = 'L'
-, <a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba1cfc240cb02f638cc9fe1bb3023caa2f">CONTRACT</a> = 'c'
-, <a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307bab2f0af91f1ccdbaae425525f5103c2b5">GENERATOR</a> = 'g'
+, <a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba3b010d201a416014e62ceb7ebc68c5d5">ZK_NULLIFIER</a> = 'Z'
+, <a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba74dd057f6af405b7e97cd8b34da93a57">ZK_COMMITMENT</a> = 'z'
 , <br />
-&#160;&#160;<a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba4ed324309f996b76707fbeed9e29cd5e">NICKNAME</a> = 'n'
+&#160;&#160;<a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba1cfc240cb02f638cc9fe1bb3023caa2f">CONTRACT</a> = 'c'
+, <a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307bab2f0af91f1ccdbaae425525f5103c2b5">GENERATOR</a> = 'g'
+, <a class="el" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba4ed324309f996b76707fbeed9e29cd5e">NICKNAME</a> = 'n'
 <br />
  }</td></tr>
 <tr class="memdesc:a22768e0a41b646442c98d38f2f2a307b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type-specific prefix for calculating ledger indices.  <a href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307b">More...</a><br /></td></tr>
@@ -5183,6 +5185,8 @@ requires (T::ConsequencesFactory == <a class="el" href="classripple_1_1Transacto
 <tr class="separator:a192bafbdc63cae4aff8c9fcd35005c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a492b4810949343331a48f65e0032c8f5" id="r_a492b4810949343331a48f65e0032c8f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classripple_1_1STAmount.html">STAmount</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#a492b4810949343331a48f65e0032c8f5">getMaxSourceAmount</a> (<a class="el" href="namespaceripple.html#a00ae0d729cb3e35b6bcac9a27ebb5284">AccountID</a> const &amp;account, <a class="el" href="classripple_1_1STAmount.html">STAmount</a> const &amp;dstAmount, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="classripple_1_1STAmount.html">STAmount</a> &gt; const &amp;sendMax)</td></tr>
 <tr class="separator:a492b4810949343331a48f65e0032c8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32f45371a15a5b805b275f0162c665f5" id="r_a32f45371a15a5b805b275f0162c665f5"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="structripple_1_1ZkpPayload.html">ZkpPayload</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#a32f45371a15a5b805b275f0162c665f5">extractZkpPayload</a> (<a class="el" href="classripple_1_1STTx.html">ripple::STTx</a> const &amp;tx, bool *malformed)</td></tr>
+<tr class="separator:a32f45371a15a5b805b275f0162c665f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dd1aee6bf19281adb5e399002e74271" id="r_a5dd1aee6bf19281adb5e399002e74271"><td class="memItemLeft" align="right" valign="top">static <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; <a class="el" href="namespaceripple.html#a8792cc3f99463ceba4e96dde34fe17a4">Currency</a>, <a class="el" href="namespaceripple.html#a8792cc3f99463ceba4e96dde34fe17a4">Currency</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#a5dd1aee6bf19281adb5e399002e74271">tokenPairKey</a> (<a class="el" href="classripple_1_1STObject.html">STObject</a> const &amp;pair)</td></tr>
 <tr class="separator:a5dd1aee6bf19281adb5e399002e74271"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a868a93d3fbb97e3ba20ba054df1db3ca" id="r_a868a93d3fbb97e3ba20ba054df1db3ca"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#a868a93d3fbb97e3ba20ba054df1db3ca">adjustOwnerCount</a> (<a class="el" href="classripple_1_1ApplyContext.html">ApplyContext</a> &amp;ctx, int count)</td></tr>
@@ -5632,6 +5636,10 @@ requires (T::ConsequencesFactory == <a class="el" href="classripple_1_1Transacto
 <tr class="separator:abd67b5fc602b315ee5ae8e95213e5675"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4410e8abb571b02075031d4eb1b4611a" id="r_a4410e8abb571b02075031d4eb1b4611a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classripple_1_1Expected.html">Expected</a>&lt; <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a>, <a class="el" href="classJson_1_1Value.html">Json::Value</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#a4410e8abb571b02075031d4eb1b4611a">parseIndex</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> const &amp;params, <a class="el" href="classJson_1_1StaticString.html">Json::StaticString</a> const fieldName)</td></tr>
 <tr class="separator:a4410e8abb571b02075031d4eb1b4611a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cbc5bdb86a39a44d271e55db1a88549" id="r_a8cbc5bdb86a39a44d271e55db1a88549"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classripple_1_1Expected.html">Expected</a>&lt; <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a>, <a class="el" href="classJson_1_1Value.html">Json::Value</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#a8cbc5bdb86a39a44d271e55db1a88549">parseZKNullifier</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> const &amp;params, <a class="el" href="classJson_1_1StaticString.html">Json::StaticString</a> const fieldName)</td></tr>
+<tr class="separator:a8cbc5bdb86a39a44d271e55db1a88549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4818fce56e5602dceccd7193795eb32" id="r_aa4818fce56e5602dceccd7193795eb32"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classripple_1_1Expected.html">Expected</a>&lt; <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a>, <a class="el" href="classJson_1_1Value.html">Json::Value</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#aa4818fce56e5602dceccd7193795eb32">parseZKCommitment</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> const &amp;params, <a class="el" href="classJson_1_1StaticString.html">Json::StaticString</a> const fieldName)</td></tr>
+<tr class="separator:aa4818fce56e5602dceccd7193795eb32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab117994e6a4ce3a9e94aa833add788d2" id="r_ab117994e6a4ce3a9e94aa833add788d2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classripple_1_1Expected.html">Expected</a>&lt; <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a>, <a class="el" href="classJson_1_1Value.html">Json::Value</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#ab117994e6a4ce3a9e94aa833add788d2">parseAccountRoot</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> const &amp;params, <a class="el" href="classJson_1_1StaticString.html">Json::StaticString</a> const fieldName)</td></tr>
 <tr class="separator:ab117994e6a4ce3a9e94aa833add788d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafdc2175930d5c616d5a1b4d51c9bfe9" id="r_aafdc2175930d5c616d5a1b4d51c9bfe9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classripple_1_1Expected.html">Expected</a>&lt; <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a>, <a class="el" href="classJson_1_1Value.html">Json::Value</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceripple.html#aafdc2175930d5c616d5a1b4d51c9bfe9">parseAmendments</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> const &amp;params, <a class="el" href="classJson_1_1StaticString.html">Json::StaticString</a> const fieldName)</td></tr>
@@ -8752,7 +8760,7 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00719">719</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00749">749</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -10191,6 +10199,8 @@ ledger.
 <tr><td class="fieldname"><a id="a22768e0a41b646442c98d38f2f2a307bae9569439466b447c2678d48306e433f9" name="a22768e0a41b646442c98d38f2f2a307bae9569439466b447c2678d48306e433f9"></a>VAULT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a22768e0a41b646442c98d38f2f2a307ba92874a346cd096082b8b9489664c6e49" name="a22768e0a41b646442c98d38f2f2a307ba92874a346cd096082b8b9489664c6e49"></a>LOAN_BROKER&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a22768e0a41b646442c98d38f2f2a307ba4c9e7581028a01fc71dfc3997bd40912" name="a22768e0a41b646442c98d38f2f2a307ba4c9e7581028a01fc71dfc3997bd40912"></a>LOAN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a22768e0a41b646442c98d38f2f2a307ba3b010d201a416014e62ceb7ebc68c5d5" name="a22768e0a41b646442c98d38f2f2a307ba3b010d201a416014e62ceb7ebc68c5d5"></a>ZK_NULLIFIER&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a22768e0a41b646442c98d38f2f2a307ba74dd057f6af405b7e97cd8b34da93a57" name="a22768e0a41b646442c98d38f2f2a307ba74dd057f6af405b7e97cd8b34da93a57"></a>ZK_COMMITMENT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a22768e0a41b646442c98d38f2f2a307ba1cfc240cb02f638cc9fe1bb3023caa2f" name="a22768e0a41b646442c98d38f2f2a307ba1cfc240cb02f638cc9fe1bb3023caa2f"></a>CONTRACT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a22768e0a41b646442c98d38f2f2a307bab2f0af91f1ccdbaae425525f5103c2b5" name="a22768e0a41b646442c98d38f2f2a307bab2f0af91f1ccdbaae425525f5103c2b5"></a>GENERATOR&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a22768e0a41b646442c98d38f2f2a307ba4ed324309f996b76707fbeed9e29cd5e" name="a22768e0a41b646442c98d38f2f2a307ba4ed324309f996b76707fbeed9e29cd5e"></a>NICKNAME&#160;</td><td class="fielddoc"></td></tr>
@@ -21288,7 +21298,7 @@ template&lt;class Hasher &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00098">98</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00103">103</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
 
 </div>
 </div>
@@ -21308,7 +21318,7 @@ template&lt;class Hasher &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00124">124</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00129">129</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
 
 </div>
 </div>
@@ -21328,7 +21338,7 @@ template&lt;class Hasher &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00132">132</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00137">137</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
 
 </div>
 </div>
@@ -21358,7 +21368,7 @@ template&lt;class Hasher &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00139">139</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00144">144</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
 
 </div>
 </div>
@@ -21388,7 +21398,7 @@ template&lt;class Hasher &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00146">146</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00151">151</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
 
 </div>
 </div>
@@ -21418,7 +21428,7 @@ template&lt;class Hasher &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00153">153</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00158">158</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
 
 </div>
 </div>
@@ -29604,7 +29614,7 @@ template&lt;class... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00092">92</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00097">97</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
 
 </div>
 </div>
@@ -46023,6 +46033,36 @@ template&lt;class TIn , class TOut &gt; </div>
 
 </div>
 </div>
+<a id="a32f45371a15a5b805b275f0162c665f5" name="a32f45371a15a5b805b275f0162c665f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32f45371a15a5b805b275f0162c665f5">&#9670;&#160;</a></span>extractZkpPayload()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="structripple_1_1ZkpPayload.html">ZkpPayload</a> &gt; ripple::extractZkpPayload </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classripple_1_1STTx.html">ripple::STTx</a> const &amp;&#160;</td>
+          <td class="paramname"><em>tx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>malformed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="SetAccount_8cpp_source.html#l00058">58</a> of file <a class="el" href="SetAccount_8cpp_source.html">SetAccount.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a5dd1aee6bf19281adb5e399002e74271" name="a5dd1aee6bf19281adb5e399002e74271"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5dd1aee6bf19281adb5e399002e74271">&#9670;&#160;</a></span>tokenPairKey()</h2>
 
@@ -50070,7 +50110,7 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00872">872</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00902">902</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -51256,7 +51296,7 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00736">736</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00766">766</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52158,6 +52198,82 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a id="a8cbc5bdb86a39a44d271e55db1a88549" name="a8cbc5bdb86a39a44d271e55db1a88549"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cbc5bdb86a39a44d271e55db1a88549">&#9670;&#160;</a></span>parseZKNullifier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classripple_1_1Expected.html">Expected</a>&lt; <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a>, <a class="el" href="classJson_1_1Value.html">Json::Value</a> &gt; ripple::parseZKNullifier </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classJson_1_1Value.html">Json::Value</a> const &amp;&#160;</td>
+          <td class="paramname"><em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classJson_1_1StaticString.html">Json::StaticString</a> const&#160;</td>
+          <td class="paramname"><em>fieldName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00043">43</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa4818fce56e5602dceccd7193795eb32" name="aa4818fce56e5602dceccd7193795eb32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4818fce56e5602dceccd7193795eb32">&#9670;&#160;</a></span>parseZKCommitment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classripple_1_1Expected.html">Expected</a>&lt; <a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a>, <a class="el" href="classJson_1_1Value.html">Json::Value</a> &gt; ripple::parseZKCommitment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classJson_1_1Value.html">Json::Value</a> const &amp;&#160;</td>
+          <td class="paramname"><em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classJson_1_1StaticString.html">Json::StaticString</a> const&#160;</td>
+          <td class="paramname"><em>fieldName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00057">57</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+
+</div>
+</div>
 <a id="ab117994e6a4ce3a9e94aa833add788d2" name="ab117994e6a4ce3a9e94aa833add788d2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab117994e6a4ce3a9e94aa833add788d2">&#9670;&#160;</a></span>parseAccountRoot()</h2>
 
@@ -52192,7 +52308,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00042">42</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00072">72</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52230,7 +52346,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00054">54</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00084">84</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52268,7 +52384,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00060">60</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00090">90</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52306,7 +52422,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00087">87</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00117">117</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52344,7 +52460,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00118">118</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00148">148</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52382,7 +52498,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00124">124</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00154">154</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52420,7 +52536,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00155">155</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00185">185</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52448,7 +52564,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00176">176</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00206">206</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52486,7 +52602,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00246">246</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00276">276</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52524,7 +52640,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00299">299</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00329">329</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52562,7 +52678,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00312">312</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00342">342</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52600,7 +52716,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00367">367</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00397">397</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52638,7 +52754,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00387">387</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00417">417</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52676,7 +52792,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00393">393</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00423">423</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52714,7 +52830,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00399">399</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00429">429</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52752,7 +52868,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00419">419</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00449">449</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52790,7 +52906,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00439">439</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00469">469</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52828,7 +52944,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00460">460</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00490">490</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52866,7 +52982,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00473">473</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00503">503</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52904,7 +53020,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00479">479</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00509">509</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52942,7 +53058,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00485">485</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00515">515</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -52980,7 +53096,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00491">491</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00521">521</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -53018,7 +53134,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00512">512</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00542">542</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -53056,7 +53172,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00533">533</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00563">563</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -53094,7 +53210,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00539">539</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00569">569</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -53132,7 +53248,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00568">568</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00598">598</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -53170,7 +53286,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00620">620</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00650">650</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -53208,7 +53324,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00626">626</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00656">656</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -53246,7 +53362,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00647">647</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00677">677</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -53284,7 +53400,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00668">668</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00698">698</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -53322,7 +53438,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00693">693</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LedgerEntry_8cpp_source.html#l00723">723</a> of file <a class="el" href="LedgerEntry_8cpp_source.html">LedgerEntry.cpp</a>.</p>
 
 </div>
 </div>
@@ -54287,7 +54403,7 @@ template&lt;class T &gt; </div>
 <div class="line">     {&amp;keylet::nftpage_max, jss::NFTokenPage, <span class="keyword">true</span>},</div>
 <div class="line">     {&amp;keylet::did, jss::DID, <span class="keyword">true</span>}}}</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="Indexes_8h_source.html#l00383">383</a> of file <a class="el" href="Indexes_8h_source.html">Indexes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Indexes_8h_source.html#l00391">391</a> of file <a class="el" href="Indexes_8h_source.html">Indexes.h</a>.</p>
 
 </div>
 </div>
