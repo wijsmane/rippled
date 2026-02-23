@@ -84,28 +84,6 @@ makeBind(AccountID const& account, std::uint32_t seq)
     return sha512Half(Slice(b.data(), b.size()));
 }
 
-
-// witness = amount(8) || rho(32) || r(32) || a_pk(32) || a_sk(32) || bind(32)
-static Blob
-pack_private(
-    std::uint64_t amount,
-    uint256 const& rho,
-    uint256 const& r,
-    uint256 const& a_pk,
-    uint256 const& a_sk,
-    uint256 const& bind)
-{
-    Blob out;
-    out.reserve(168);
-    ripple::zkp::append_u64_be(out, amount);
-    ripple::zkp::append_u256(out, rho);
-    ripple::zkp::append_u256(out, r);
-    ripple::zkp::append_u256(out, a_pk);
-    ripple::zkp::append_u256(out, a_sk);
-    ripple::zkp::append_u256(out, bind);
-    return out;
-}
-
 // retrieve cm and nf (public outputs) from journal
 static std::pair<uint256, uint256>
 parseJournalCmNf(Risc0Bytes const& journal)
@@ -180,6 +158,8 @@ public:
         uint256 const r1    = randomUint256();
         uint256 const a_pk1 = randomUint256();
 
+        ripple::zkp::ZkNote note1 = ripple::zkp::ZkNote(amount1, rho, r1, a_pk1);
+
         std::cout<< "generated private inputs\n" <<std::endl;
 
         //retrieve sequence number so we can bind to the current sequence
@@ -191,7 +171,7 @@ public:
         std::cout<<"bound inputs to this tx\n"<<std::endl;
 
         //put all private inputs together to send to prover as the witness
-        Blob const witness1 = pack_private(amount1, rho, r1, a_pk1, a_sk, bind1);
+        Blob const witness1 = ripple::zkp::packWitness(note1, a_sk, bind1);
         BEAST_EXPECT(witness1.size() == 168);
         std::cout<<"packed bytes to send to Risc0 prover, now generating proof\n"<<std::endl;
 
@@ -271,10 +251,12 @@ public:
         uint256 const r2    = randomUint256();
         uint256 const a_pk2 = randomUint256();
 
+        ripple::zkp::ZkNote note2 = ripple::zkp::ZkNote(amount2, rho, r2, a_pk2);
+
         std::uint32_t const seq2 = currentAccountSequence(env, alice);
         uint256 const bind2 = makeBind(alice.id(), seq2);
 
-        Blob const witness2 = pack_private(amount2, rho, r2, a_pk2, a_sk, bind2);
+        Blob const witness2 = ripple::zkp::packWitness(note2, a_sk, bind2);
         BEAST_EXPECT(witness2.size() == 168);
 
         Risc0Bytes receipt2 = risc0_prove_zk_inputs(witness2.data(), witness2.size());

@@ -21,13 +21,13 @@ namespace zkp {
         uint64_t  amount;
         uint256   rho; // uniqueness randomizer (no replay)
         uint256   r;  // commitment randomness
-        uint256   payingKey; //recipient key so they can receive without revealing who they are
+        uint256   a_pk; //recipient key so they can receive without revealing who they are
 
         ZkNote() = default;
 
         ZkNote(
             uint64_t const& amt, uint256 const& rho_, uint256 const& r_,  uint256 const& key_)
-            : amount(amt), rho(rho_), r(r_), payingKey(key_)
+            : amount(amt), rho(rho_), r(r_), a_pk(key_)
         {
         }
     };
@@ -56,10 +56,10 @@ namespace zkp {
         return sha512Half(makeSlice(data));
     }
 
-    //  commitment = sha512Half( 0x01 || amount_be(8) || rho(32) || r(32) || payingKey(32) )
+    //  commitment = sha512Half( 0x01 || amount(8) || rho(32) || r(32) || a_pk(32) || bind(32))
     // 0x01 flag to distinguish from nullifiers
     inline uint256
-    computeCommitment(ZkNote const& note)
+    computeCommitment(ZkNote const& note, uint256 const& bind)
     {
         Blob buf;
         buf.reserve(1 + 8 + 32 + 32 + 32);
@@ -68,24 +68,42 @@ namespace zkp {
         append_u64_be(buf, note.amount);
         append_u256(buf, note.rho);
         append_u256(buf, note.r);
-        append_u256(buf, note.payingKey);
+        append_u256(buf, note.a_pk);
+        append_u256(buf, bind);
 
         return zkHash(buf);
     }
 
     
-    //  nullifier = sha512Half( 0x02 || spendKey(32) || rho(32) )
+    //  nullifier = sha512Half( 0x02 || a_sk(32) || rho(32) )
     inline uint256
-    computeNullifier(uint256 const& spendKey, ZkNote const& note)
+    computeNullifier(uint256 const& a_sk, ZkNote const& note)
     {
         Blob buf;
         buf.reserve(1 + 32 + 32);
 
         buf.push_back(0x02);
-        append_u256(buf, spendKey);
+        append_u256(buf, a_sk);
         append_u256(buf, note.rho);
 
         return zkHash(buf);
+    }
+
+    // amount(8) || rho(32) || r(32) || a_pk(32) || a_sk(32) || bind(32)
+    inline Blob
+    packWitness(ZkNote const& note, uint256 const& a_sk, uint256 const& bind)
+    {
+        Blob out;
+        out.reserve(168);
+
+        append_u64_be(out, note.amount);
+        append_u256(out, note.rho);
+        append_u256(out, note.r);
+        append_u256(out, note.a_pk);
+        append_u256(out, a_sk);
+        append_u256(out, bind);
+
+        return out;
     }
 
 }
