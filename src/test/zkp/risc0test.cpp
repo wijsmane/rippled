@@ -63,7 +63,7 @@ public:
 
         Risc0Bytes journal = risc0_receipt_get_journal(receipt.ptr, receipt.len);
         BEAST_EXPECT(journal.ptr != nullptr);
-        BEAST_EXPECT(journal.len == 64); // expect cm+nf (32 + 32)
+        BEAST_EXPECT(journal.len == 65); // expect type+cm+nf (1+ 32 + 32)
         //std::cout << "Journal length: " << journal.len << std::endl;
         std::cout<< "journal retreived successfully" << std::endl;
 
