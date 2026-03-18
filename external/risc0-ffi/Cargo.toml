@@ -14,3 +14,5 @@ bincode = "1"
 sha2 = "0.10"
 risc0-ffi-methods = { path = "./methods" }
 
+[patch.crates-io]
+sha2 = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.9-risczero.0" }

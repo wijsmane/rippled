@@ -12,61 +12,10 @@
 
 #include <risc0-ffi.h>
 #include <../include/xrpl/zkp/Note.h>
+#include "test_helpers.h"
 
 namespace ripple {
 namespace test {
-
-//from libsnark
-static uint256 generateRandomUint256()
-{
-    uint256 result;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<std::uint32_t> dis;
-
-    for (int i = 0; i < 8; ++i)
-    {
-        std::uint32_t v = dis(gen);
-        std::memcpy(result.begin() + i * 4, &v, 4);
-    }
-    return result;
-}
-
-//from libsnark
-static std::string generateRandomSpendKey()
-{
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dis(100000, 999999);
-    return "spend_key_" + std::to_string(dis(gen));
-}
-
-// map string -> uint256
-static uint256 spendKeyFromString(std::string const& s)
-{
-    return sha512Half(makeSlice(s));
-}
-
-
-// private = amount(8) || rho(32) || r(32) || a_pk(32) || a_sk(32) || bind(32) => 168 bytes
-static Blob pack_private(
-    std::uint64_t amount,
-    uint256 const& rho,
-    uint256 const& r,
-    uint256 const& a_pk,
-    uint256 const& a_sk,
-    uint256 const& bind)
-{
-    Blob out;
-    out.reserve(168);
-    ripple::zkp::append_u64_be(out, amount);
-    ripple::zkp::append_u256(out, rho);
-    ripple::zkp::append_u256(out, r);
-    ripple::zkp::append_u256(out, a_pk);
-    ripple::zkp::append_u256(out, a_sk);
-    ripple::zkp::append_u256(out, bind);  
-    return out;
-}
 
 
 class Risc0_test : public beast::unit_test::suite
@@ -76,19 +25,19 @@ public:
     {
         std::cout << "start test ProveNoteCommitmentNullifier...\n" << std::endl;
 
-        std::uint64_t amount = 1000;
+        std::uint64_t amount1 = 1000;
 
-        uint256 rho  = generateRandomUint256();
-        uint256 r    = generateRandomUint256();
-        uint256 a_pk = generateRandomUint256();                 // recipient key
-        uint256 a_sk = spendKeyFromString(generateRandomSpendKey()); // private spend key
-        uint256 bind = generateRandomUint256();
+        uint256 rho1  = generateRandomUint256();
+        uint256 r1    = generateRandomUint256();
+        uint256 a_pk1 = generateRandomUint256();                 // recipient key
+        uint256 a_sk1 = spendKeyFromString(generateRandomSpendKey()); // private spend key
 
         std::cout << "generated witness inputs\n" << std::endl;
 
-        Blob priv_bytes = pack_private(amount, rho, r, a_pk, a_sk, bind);
+        ripple::zkp::ZkNote note1 = ripple::zkp::ZkNote(amount1, rho1, r1, a_pk1);
+        Blob priv_bytes = ripple::zkp::packWitnessSpend(note1, a_sk1);
 
-        BEAST_EXPECT(priv_bytes.size() == 168);
+        BEAST_EXPECT(priv_bytes.size() == 137);
         std::cout << "witness input bytes packed successfully, now running prover\n" << std::endl;
 
         Risc0Bytes receipt = risc0_prove_zk_inputs(priv_bytes.data(), priv_bytes.size());
@@ -102,7 +51,7 @@ public:
         BEAST_EXPECT(receipt.len > 0);
         std::cout <<"proof generated and receipt was received\n" <<std::endl;
 
-        
+        std::cout<<"recipet len:"<<receipt.len<<std::endl;
 
         int const vrc = risc0_verify_receipt(receipt.ptr, receipt.len); // verify receipt (should technically be done by validators)
         BEAST_EXPECT(vrc == 0);
@@ -129,16 +78,16 @@ public:
 
     void testTamperFails()
     {
-        std::uint64_t amount = 1000;
+        std::uint64_t amount2 = 1000;
 
-        uint256 rho  = generateRandomUint256();
-        uint256 r    = generateRandomUint256();
-        uint256 a_pk = generateRandomUint256();
-        uint256 a_sk = spendKeyFromString(generateRandomSpendKey());
-        uint256 bind = generateRandomUint256();
+        uint256 rho2  = generateRandomUint256();
+        uint256 r2    = generateRandomUint256();
+        uint256 a_pk2 = generateRandomUint256();
+        uint256 a_sk2 = spendKeyFromString(generateRandomSpendKey());
 
+        ripple::zkp::ZkNote note2 = ripple::zkp::ZkNote(amount2, rho2, r2, a_pk2);
+        Blob priv_bytes = ripple::zkp::packWitnessSpend(note2, a_sk2);
 
-        Blob priv_bytes = pack_private(amount, rho, r, a_pk, a_sk, bind);
 
         // flip one byte, guest should fail the equality check so the proving fails
         priv_bytes[0] ^= 0x01;

@@ -10,6 +10,9 @@
 #include <xrpl/protocol/Quality.h>
 #include <xrpl/protocol/st.h>
 
+#include <optional>
+#include <vector>
+
 namespace ripple {
 
 TxConsequences
@@ -45,15 +48,20 @@ SetAccount::getFlagsMask(PreflightContext const& ctx)
 }
 
 // new for zkp
-struct ZkpPayload
+enum class ZkpMemoKind
 {
-    ripple::uint256 cm;
-    ripple::uint256 nf;
+    deposit,
+    spend
 };
 
-// Return payload if present + valid.
-// If a zkp memo is present but malformed (wrong length / multiple), set *malformed=true and return nullopt.
-// If no zkp memo is present, set *malformed=false and return nullopt.
+struct ZkpPayload
+{
+    ZkpMemoKind kind;
+    ripple::uint256 cm;                    // deposit cm, or spend cm_old
+    std::optional<ripple::uint256> nf;     // only present for spend
+};
+
+// extract the zk data ((cm / nf) from the transaction memo
 std::optional<ZkpPayload>
 extractZkpPayload(ripple::STTx const& tx, bool* malformed)
 {
@@ -87,24 +95,46 @@ extractZkpPayload(ripple::STTx const& tx, bool* malformed)
         std::string const memoType(typeBlob.begin(), typeBlob.end());
         std::string const memoFmt(fmtBlob.begin(), fmtBlob.end());
 
-        if (memoType != "zkp" || memoFmt != "cmnf-v1")
+        if (memoType != "zkp")
             continue;
 
-        // zkp memo present: validate
-        if (dataBlob.size() != 64)
+        bool const isDeposit = (memoFmt == "cm-v1");
+        bool const isSpend   = (memoFmt == "cmnf-v1");
+
+        if (!isDeposit && !isSpend)
+            continue;
+
+        // reject multiple zkp memos in one tx
+        if (found)
         {
-            if (malformed) *malformed = true;
+            if (malformed)
+                *malformed = true;
+            return std::nullopt;
+        }
+
+        std::size_t const expectedBytes = isDeposit ? 32 : 64;
+        if (dataBlob.size() != expectedBytes)
+        {
+            if (malformed)
+                *malformed = true;
             return std::nullopt;
         }
 
         ZkpPayload p;
-        std::memcpy(p.cm.begin(), dataBlob.data() + 0,  32);
-        std::memcpy(p.nf.begin(), dataBlob.data() + 32, 32);
 
-        if (found) // multiple zkp memos
+        if (isDeposit)
         {
-            if (malformed) *malformed = true;
-            return std::nullopt;
+            p.kind = ZkpMemoKind::deposit;
+            std::memcpy(p.cm.begin(), dataBlob.data(), 32);
+        }
+        else
+        {
+            p.kind = ZkpMemoKind::spend;
+            std::memcpy(p.cm.begin(), dataBlob.data(), 32);
+
+            uint256 nf;
+            std::memcpy(nf.begin(), dataBlob.data() + 32, 32);
+            p.nf = nf;
         }
 
         found = p;
@@ -311,19 +341,41 @@ SetAccount::preclaim(PreclaimContext const& ctx)
     if (!sle)
         return terNO_ACCOUNT;
 
-    // new for zk: make sure nullifier does not already exist
+    // new for zk: 
+    // deposit: make sure cm does not already exist  
+    // spend: make sure cm exists and nullifier does not already exist
     bool malformed = false;
     if (auto const payload = extractZkpPayload(ctx.tx, &malformed))
     {
-        if (ctx.view.read(keylet::zkNullifier(payload->nf)))
+        if (payload->kind == ZkpMemoKind::deposit)
         {
-            JLOG(ctx.j.trace()) << "ZKP spend rejected: nullifier already exists.";
-            return tecDUPLICATE;
+            if (ctx.view.read(keylet::zkCommitment(payload->cm)))
+            {
+                JLOG(ctx.j.trace()) << "ZKP deposit rejected: commitment already exists.";
+                return tecDUPLICATE;
+            }
+        }
+        else if (payload->kind == ZkpMemoKind::spend)
+        {
+            XRPL_ASSERT(payload->nf.has_value(), "spend payload must contain nf");
+
+            if (ctx.view.read(keylet::zkNullifier(*payload->nf)))
+            {
+                JLOG(ctx.j.trace()) << "ZKP spend rejected: nullifier already exists.";
+                return tecDUPLICATE;
+            }
+
+            if (!ctx.view.read(keylet::zkCommitment(payload->cm)))
+            {
+                JLOG(ctx.j.trace()) << "ZKP spend rejected: referenced commitment missing.";
+                return tecNO_ENTRY;
+            }
+
+            
         }
     }
     else if (malformed)
     {
-        //should be caught by preflight but just in case
         JLOG(ctx.j.trace()) << "Malformed tx: invalid zkp memo in preclaim.";
         return temMALFORMED;
     }
@@ -732,27 +784,53 @@ SetAccount::doApply()
     if (uFlagsIn != uFlagsOut)
         sle->setFieldU32(sfFlags, uFlagsOut);
 
-    // new for zk: insert new ledger entries for cm and nf
+    // new for zk: apply deposit/spend ledger entry changes
     if (auto const payload = extractZkpPayload(tx, nullptr))
     {
-        // safety re-check to ensure nullifier not spent already
-        if (view().read(keylet::zkNullifier(payload->nf)))
-            return tecDUPLICATE;
-
-        //insert commitment entry
+        if (payload->kind == ZkpMemoKind::deposit)
         {
+            // re-check
+            if (view().read(keylet::zkCommitment(payload->cm)))
+                return tecDUPLICATE;
+
             auto const k = keylet::zkCommitment(payload->cm);
             auto zsle = std::make_shared<SLE>(k);
             zsle->setFieldH256(sfZkCommitment, payload->cm);
             view().insert(zsle);
+            std::cout<< "inserting cm for deposit" << std::endl;
         }
-
-        //insert nullifier entry (mark spent)
+        else if (payload->kind == ZkpMemoKind::spend)
         {
-            auto const k = keylet::zkNullifier(payload->nf);
-            auto zsle = std::make_shared<SLE>(k);
-            zsle->setFieldH256(sfZkNullifier, payload->nf);
-            view().insert(zsle);
+            XRPL_ASSERT(payload->nf.has_value(), "spend payload must contain nf");
+            auto const nf = *payload->nf;
+            auto const cmOld = payload->cm;
+
+            //re-checks
+            if (view().read(keylet::zkNullifier(nf)))
+                return tecDUPLICATE;
+
+            if (!view().read(keylet::zkCommitment(cmOld)))
+                return tecNO_ENTRY;
+
+            // insert nullifier
+            {
+                auto const k = keylet::zkNullifier(nf);
+                auto zsle = std::make_shared<SLE>(k);
+                zsle->setFieldH256(sfZkNullifier, nf);
+                view().insert(zsle);
+                std::cout<< "inserting nullifier for spend" << std::endl;
+            }
+
+            // // delete old commitment
+            // if (auto cmSle = view().peek(keylet::zkCommitment(cmOld)))
+            // {
+            //     std::cout << "deleting spent commitment" << std::endl;
+            //     view().erase(cmSle);
+            // }
+            // else
+            // {
+            //     return tecNO_ENTRY;
+            // }
         }
     }
 
