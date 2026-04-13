@@ -151,7 +151,8 @@ var menudata={children:[
 {text:"s",url:"namespacemembers_enum.html#index_s"},
 {text:"t",url:"namespacemembers_enum.html#index_t"},
 {text:"v",url:"namespacemembers_enum.html#index_v"},
-{text:"w",url:"namespacemembers_enum.html#index_w"}]},
+{text:"w",url:"namespacemembers_enum.html#index_w"},
+{text:"z",url:"namespacemembers_enum.html#index_z"}]},
 {text:"Enumerator",url:"namespacemembers_eval.html",children:[
 {text:"a",url:"namespacemembers_eval.html#index_a"},
 {text:"b",url:"namespacemembers_eval_b.html#index_b"},

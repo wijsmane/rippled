@@ -356,7 +356,7 @@ var searchData=
   ['loadtype_353',['loadType',['../structripple_1_1RPC_1_1Context.html#a53cf66700be4d73f6249db71ed263bc4',1,'ripple::RPC::Context']]],
   ['loadtype_5f_354',['loadType_',['../classripple_1_1GRPCServerImpl_1_1CallData.html#a0ae09c52f2779b91e09b7a7de7f8de07',1,'ripple::GRPCServerImpl::CallData']]],
   ['loadvalidatortoken_355',['loadValidatorToken',['../namespaceripple.html#ac6efcb88018ad82c1a2be29369eff4cc',1,'ripple']]],
-  ['loan_356',['loan',['../namespaceripple_1_1keylet.html#a97af089e1944dce110f74a76977e690d',1,'ripple::keylet::loan(uint256 const &amp;loanBrokerID, std::uint32_t loanSeq) noexcept'],['../namespaceripple_1_1keylet.html#acb3fddb72cf99179c35d4cf9237ad0b0',1,'ripple::keylet::loan(uint256 const &amp;key)'],['../namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba4c9e7581028a01fc71dfc3997bd40912',1,'ripple::LOAN']]],
+  ['loan_356',['loan',['../namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba4c9e7581028a01fc71dfc3997bd40912',1,'ripple::LOAN'],['../namespaceripple_1_1keylet.html#a97af089e1944dce110f74a76977e690d',1,'ripple::keylet::loan(uint256 const &amp;loanBrokerID, std::uint32_t loanSeq) noexcept'],['../namespaceripple_1_1keylet.html#acb3fddb72cf99179c35d4cf9237ad0b0',1,'ripple::keylet::loan(uint256 const &amp;key)']]],
   ['loan_5fbroker_357',['LOAN_BROKER',['../namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba92874a346cd096082b8b9489664c6e49',1,'ripple']]],
   ['loan_5ftest_358',['Loan_test',['../classripple_1_1test_1_1Loan__test.html',1,'ripple::test']]],
   ['loanaccruedinterest_359',['loanAccruedInterest',['../namespaceripple_1_1detail.html#a2740418160325dc636cecf5204c6d467',1,'ripple::detail']]],
