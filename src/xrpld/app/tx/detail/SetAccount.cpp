@@ -77,7 +77,7 @@ extractZkpPayload(ripple::STTx const& tx, bool* malformed)
 
     std::optional<ZkpPayload> found;
 
-    for (auto const& item : memos)
+    for (auto const& item : memos) //memos is an array
     {
         STObject const& memoObj = item.isFieldPresent(sfMemo)
             ? item.getFieldObject(sfMemo)
@@ -370,7 +370,6 @@ SetAccount::preclaim(PreclaimContext const& ctx)
                 JLOG(ctx.j.trace()) << "ZKP spend rejected: referenced commitment missing.";
                 return tecNO_ENTRY;
             }
-
             
         }
     }

@@ -15,7 +15,7 @@ public:
     testAccountSetNoMemo()
     {
         using namespace test::jtx;
-        testcase("AccountSet without memos behaves normally (no ZK side effects)");
+        testcase("AccountSet without memos behaves normally");
 
         Account alice{"alice"};
         Env env(*this);

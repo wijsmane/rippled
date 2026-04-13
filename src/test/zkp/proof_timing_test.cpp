@@ -67,122 +67,140 @@ public:
         std::uint64_t const amountBase = 1000;
         uint256 const a_sk = spendKeyFromString("proof_timing_spend_key");
 
-        for (int i = 0; i < 5; ++i)
+        
+        for (int i = 0; i < 3; ++i)
         {
-            std::cout<<"deposit proof " << i << std::endl;
             uint256 const rho  = generateRandomUint256();
             uint256 const r    = generateRandomUint256();
             uint256 const a_pk = generateRandomUint256();
 
             ripple::zkp::ZkNote note(amountBase + i, rho, r, a_pk);
-
             Blob const witness = ripple::zkp::packWitnessDeposit(note);
-            BEAST_EXPECT(witness.size() == 105);
 
-            Risc0BytesGuard receipt;
-            Risc0BytesGuard journal;
-
-            auto const proveStart = std::chrono::steady_clock::now();
-            receipt.bytes =
+            Risc0Bytes tmp =
                 risc0_prove_zk_inputs(witness.data(), witness.size());
-            auto const proveEnd = std::chrono::steady_clock::now();
 
-            BEAST_EXPECT(receipt.bytes.ptr && receipt.bytes.len);
-            if (!(receipt.bytes.ptr && receipt.bytes.len))
-                return;
-
-            auto const verifyStart = std::chrono::steady_clock::now();
-            int const verifyRc =
-                risc0_verify_receipt(receipt.bytes.ptr, receipt.bytes.len);
-            auto const verifyEnd = std::chrono::steady_clock::now();
-
-            BEAST_EXPECT(verifyRc == 0);
-            if (verifyRc != 0)
-                return;
-
-            auto const journalStart = std::chrono::steady_clock::now();
-            journal.bytes =
-                risc0_receipt_get_journal(receipt.bytes.ptr, receipt.bytes.len);
-            auto const journalEnd = std::chrono::steady_clock::now();
-
-            BEAST_EXPECT(journal.bytes.ptr != nullptr);
-            BEAST_EXPECT(journal.bytes.len == 33);
-            if (!(journal.bytes.ptr && journal.bytes.len == 33))
-                return;
-
-            auto const cmOpt = parseJournalDepositCm(journal.bytes);
-            BEAST_EXPECT(cmOpt.has_value());
-            if (!cmOpt)
-                return;
-
-            csv << "deposit"
-                << "," << i
-                << "," << witness.size()
-                << "," << receipt.bytes.len
-                << "," << journal.bytes.len
-                << "," << msBetween(proveStart, proveEnd)
-                << "," << msBetween(verifyStart, verifyEnd)
-                << "," << msBetween(journalStart, journalEnd)
-                << "\n";
+            if (tmp.ptr && tmp.len)
+                risc0_free_bytes(
+                    const_cast<std::uint8_t*>(tmp.ptr), tmp.len);
         }
 
-        for (int i = 0; i < 5; ++i)
+        //alternate between deposit and spend
+        for (int i = 0; i < 10; ++i)
         {
-            std::cout<<"spend proof " << i << std::endl;
-            uint256 const rho  = generateRandomUint256();
-            uint256 const r    = generateRandomUint256();
-            uint256 const a_pk = generateRandomUint256();
+            {
+                std::cout << "deposit proof " << i << std::endl;
 
-            ripple::zkp::ZkNote note(amountBase + 100 + i, rho, r, a_pk);
+                uint256 const rho  = generateRandomUint256();
+                uint256 const r    = generateRandomUint256();
+                uint256 const a_pk = generateRandomUint256();
 
-            Blob const witness = ripple::zkp::packWitnessSpend(note, a_sk);
-            BEAST_EXPECT(witness.size() == 137);
+                ripple::zkp::ZkNote note(amountBase + i, rho, r, a_pk);
+                Blob const witness = ripple::zkp::packWitnessDeposit(note);
+                BEAST_EXPECT(witness.size() == 105);
 
-            Risc0BytesGuard receipt;
-            Risc0BytesGuard journal;
+                Risc0BytesGuard receipt;
+                Risc0BytesGuard journal;
 
-            auto const proveStart = std::chrono::steady_clock::now();
-            receipt.bytes =
-                risc0_prove_zk_inputs(witness.data(), witness.size());
-            auto const proveEnd = std::chrono::steady_clock::now();
+                auto const proveStart = std::chrono::steady_clock::now();
+                receipt.bytes =
+                    risc0_prove_zk_inputs(witness.data(), witness.size());
+                auto const proveEnd = std::chrono::steady_clock::now();
 
-            BEAST_EXPECT(receipt.bytes.ptr && receipt.bytes.len);
-            if (!(receipt.bytes.ptr && receipt.bytes.len))
-                return;
+                BEAST_EXPECT(receipt.bytes.ptr && receipt.bytes.len);
+                if (!(receipt.bytes.ptr && receipt.bytes.len))
+                    return;
 
-            auto const verifyStart = std::chrono::steady_clock::now();
-            int const verifyRc =
-                risc0_verify_receipt(receipt.bytes.ptr, receipt.bytes.len);
-            auto const verifyEnd = std::chrono::steady_clock::now();
+                auto const verifyStart = std::chrono::steady_clock::now();
+                int const verifyRc =
+                    risc0_verify_receipt(receipt.bytes.ptr, receipt.bytes.len);
+                auto const verifyEnd = std::chrono::steady_clock::now();
 
-            BEAST_EXPECT(verifyRc == 0);
-            if (verifyRc != 0)
-                return;
+                BEAST_EXPECT(verifyRc == 0);
+                if (verifyRc != 0)
+                    return;
 
-            auto const journalStart = std::chrono::steady_clock::now();
-            journal.bytes =
-                risc0_receipt_get_journal(receipt.bytes.ptr, receipt.bytes.len);
-            auto const journalEnd = std::chrono::steady_clock::now();
+                auto const journalStart = std::chrono::steady_clock::now();
+                journal.bytes =
+                    risc0_receipt_get_journal(receipt.bytes.ptr, receipt.bytes.len);
+                auto const journalEnd = std::chrono::steady_clock::now();
 
-            BEAST_EXPECT(journal.bytes.ptr != nullptr);
-            BEAST_EXPECT(journal.bytes.len == 65);
-            if (!(journal.bytes.ptr && journal.bytes.len == 65))
-                return;
+                BEAST_EXPECT(journal.bytes.ptr != nullptr);
+                BEAST_EXPECT(journal.bytes.len == 33);
 
-            auto const spendOpt = parseJournalSpendCmNf(journal.bytes);
-            BEAST_EXPECT(spendOpt.has_value());
-            if (!spendOpt)
-                return;
+                auto const cmOpt = parseJournalDepositCm(journal.bytes);
+                BEAST_EXPECT(cmOpt.has_value());
+                if (!cmOpt)
+                    return;
 
-            csv << "spend"
-                << "," << i
-                << "," << witness.size()
-                << "," << receipt.bytes.len
-                << "," << journal.bytes.len
-                << "," << msBetween(proveStart, proveEnd)
-                << "," << msBetween(verifyStart, verifyEnd)
-                << "," << msBetween(journalStart, journalEnd)
-                << "\n";
+                csv << "deposit"
+                    << "," << i
+                    << "," << witness.size()
+                    << "," << receipt.bytes.len
+                    << "," << journal.bytes.len
+                    << "," << msBetween(proveStart, proveEnd)
+                    << "," << msBetween(verifyStart, verifyEnd)
+                    << "," << msBetween(journalStart, journalEnd)
+                    << "\n";
+            }
+
+            {
+                std::cout << "spend proof " << i << std::endl;
+
+                uint256 const rho  = generateRandomUint256();
+                uint256 const r    = generateRandomUint256();
+                uint256 const a_pk = generateRandomUint256();
+
+                ripple::zkp::ZkNote note(amountBase + 100 + i, rho, r, a_pk);
+                Blob const witness =
+                    ripple::zkp::packWitnessSpend(note, a_sk);
+                BEAST_EXPECT(witness.size() == 137);
+
+                Risc0BytesGuard receipt;
+                Risc0BytesGuard journal;
+
+                auto const proveStart = std::chrono::steady_clock::now();
+                receipt.bytes =
+                    risc0_prove_zk_inputs(witness.data(), witness.size());
+                auto const proveEnd = std::chrono::steady_clock::now();
+
+                BEAST_EXPECT(receipt.bytes.ptr && receipt.bytes.len);
+                if (!(receipt.bytes.ptr && receipt.bytes.len))
+                    return;
+
+                auto const verifyStart = std::chrono::steady_clock::now();
+                int const verifyRc =
+                    risc0_verify_receipt(receipt.bytes.ptr, receipt.bytes.len);
+                auto const verifyEnd = std::chrono::steady_clock::now();
+
+                BEAST_EXPECT(verifyRc == 0);
+                if (verifyRc != 0)
+                    return;
+
+                auto const journalStart = std::chrono::steady_clock::now();
+                journal.bytes =
+                    risc0_receipt_get_journal(receipt.bytes.ptr, receipt.bytes.len);
+                auto const journalEnd = std::chrono::steady_clock::now();
+
+                BEAST_EXPECT(journal.bytes.ptr != nullptr);
+                BEAST_EXPECT(journal.bytes.len == 65);
+
+                auto const spendOpt =
+                    parseJournalSpendCmNf(journal.bytes);
+                BEAST_EXPECT(spendOpt.has_value());
+                if (!spendOpt)
+                    return;
+
+                csv << "spend"
+                    << "," << i
+                    << "," << witness.size()
+                    << "," << receipt.bytes.len
+                    << "," << journal.bytes.len
+                    << "," << msBetween(proveStart, proveEnd)
+                    << "," << msBetween(verifyStart, verifyEnd)
+                    << "," << msBetween(journalStart, journalEnd)
+                    << "\n";
+            }
         }
 
         csv.flush();
